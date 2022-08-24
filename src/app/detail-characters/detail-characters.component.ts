@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
-import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
-import { Subscription } from 'rxjs';
+import { ActivatedRoute, Router } from '@angular/router';
 import { CharactersService } from '../service/characters.service';
 
 
@@ -12,6 +11,8 @@ import { CharactersService } from '../service/characters.service';
 })
 export class DetailCharactersComponent implements OnInit {
   selectedOption: any
+  selectedOptionFrom: any
+  selectedOptionTo: any
 
   nbMat: number[] = [0, 1, 2, 3]
 
@@ -30,8 +31,15 @@ export class DetailCharactersComponent implements OnInit {
   imagePlaceName: string[] = []
 
   choicedRank?: any
-
   choicedRankMat: any[] = []
+
+  choicedRankFrom?: any
+  choicedRankMatFrom: any[] = []
+
+  choicedRankTo?: any
+  choicedRankMatTo: any[] = []
+
+  choicedRankFromTo = '0'
   // currentRoute: string
 
   constructor(private route: ActivatedRoute, private characServ: CharactersService, private router: Router, private sanitizer: DomSanitizer) {
@@ -48,10 +56,15 @@ export class DetailCharactersComponent implements OnInit {
 
 
       if (this.selectedOption !== undefined)
-        this.wichRank(this.selectedOption)
+        setTimeout(() => {
+
+          this.wichRank(this.selectedOption - 1)
+        }, 300);
     })
     setTimeout(() => {
       console.log(this.elevation);
+      console.log(this.elevation[this.elevation.length - 1]);
+
       this.selectedOption = this.elevation[this.elevation.length - 1];
     }, 200);
   }
@@ -86,13 +99,16 @@ export class DetailCharactersComponent implements OnInit {
   }
 
   getImg() {
-    const regex = new RegExp(' ', 'gi')
+    const regEspace = new RegExp(' ', 'gi')
+    const regPostrophe = new RegExp("'", 'gi')
 
 
     for (let i = 0; i <= 5; i++) {
       let materials = [this.elevation[i].mat1, this.elevation[i].mat2, this.elevation[i].mat3, this.elevation[i].mat4]
       for (let i = 0; i <= materials.length - 1; i++) {
-        let name = (<string>materials[i].name).replace(regex, '-')
+        let name = (<string>materials[i].name).replace(regEspace, '-')
+        name = name.replace(regPostrophe, '-')
+
         if (name !== 'none') {
           let item = this.oukilai(name)
           materials[i].pathName = item.name
@@ -144,9 +160,34 @@ export class DetailCharactersComponent implements OnInit {
   }
 
 
-  wichRank(pouet: any) {
-    this.choicedRank = this.elevation[pouet]
-    this.choicedRankMat = [this.choicedRank.mat1, this.choicedRank.mat2, this.choicedRank.mat3, this.choicedRank.mat4]
+  wichRank(pouet: any, option: string = 'one') {
+    let tempRank: any
+    let tempRankMat: any
+
+
+    if (pouet === 'none') {
+      tempRank = undefined
+      tempRankMat = []
+    } else {
+      tempRank = this.elevation[pouet]
+      tempRankMat = [tempRank.mat1, tempRank.mat2, tempRank.mat3, tempRank.mat4]
+    }
+    if (option === 'one') {
+      this.choicedRank = tempRank
+      this.choicedRankMat = tempRankMat
+    } else if (option === 'from') {
+      this.choicedRankFrom = tempRank
+      this.choicedRankMatFrom = tempRankMat
+    } else if (option === 'to') {
+      this.choicedRankTo = tempRank
+      this.choicedRankMatTo = tempRankMat
+    }
+
+    console.log(this.choicedRank, this.choicedRankMat);
+    console.log(this.choicedRankFrom, this.choicedRankMatFrom);
+    console.log(this.choicedRankTo, this.choicedRankMatTo);
+
+
   }
 
   morasForm(num: number) {

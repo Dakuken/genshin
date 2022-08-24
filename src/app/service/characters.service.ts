@@ -1,8 +1,6 @@
 import { Injectable } from '@angular/core';
-import { catchError } from 'rxjs/internal/operators';
-import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
-import { Observable, of, throwError } from 'rxjs';
-import { map, retry, tap } from 'rxjs/operators';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Observable } from 'rxjs';
 
 const endpoint = 'http://localhost:5000/';
 const token = 'my JWT';
