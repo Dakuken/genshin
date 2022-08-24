@@ -1,0 +1,56 @@
+<app-search-bar></app-search-bar>
+<p>{{character}}</p>
+
+
+<nb-card>
+    <nb-card-body>
+        <div class="headerElevation">
+
+            <nb-select placeholder="Select a rank" [(selected)]="selectedOption">
+                <nb-option *ngFor=" let elev of elevation" [value]="elev.rank" (selectionChange)="wichRank(elev.rank-1)">
+                    Rank : {{elev.rank}}
+                </nb-option>
+            </nb-select>
+            <p *ngIf="choicedRank !== undefined"> LEVEL REQUIRED : {{choicedRank.lvl}}</p>
+            <p *ngIf="choicedRank !== undefined"> MORAS REQUIRED: {{morasForm(choicedRank.cost)}}</p>
+        </div>
+
+        <div class="elevation1" *ngIf="choicedRank !== undefined && choicedRank !== null">
+
+            <nb-card accent="info" *ngFor="let i of nbMat" class="item">
+                <nb-card-header>
+                    <div class="itemRankHeader">
+                        <img [src]="choicedRankMat[i].url" class="imageItem">
+                        <p>{{choicedRankMat[i].name}}</p>
+                    </div>
+                </nb-card-header>
+                <nb-card-body>
+                    <label [for]="choicedRankMat[i].name">
+                        <div class="counter">
+                            <div class="styledCounter">
+                                <input [id]='choicedRankMat[i].name' type="number" nbInput placeholder="0"><!-- [max]="choicedRankMat[i].qte" -->
+                                <p>/ {{choicedRankMat[i].qte}}</p>
+                            </div>
+                        </div>
+                    </label>
+                </nb-card-body>
+            </nb-card>
+        </div>
+
+    </nb-card-body>
+</nb-card>
+
+<!-- <div *ngFor="let elev of elevation">
+    <p>----------------------------------------------------------------</p>
+    <p>Rank : {{elev.rank}}</p>
+    <p>Level : {{elev.lvl}}</p>
+    <p>Cost : {{elev.cost}}</p>
+    <p>material 1 : {{elev.mat1.name}} x{{elev.mat1.qte}} </p> <img [src]="elev.mat1.url">
+    <p>material 2 : {{elev.mat2.name}} x{{elev.mat2.qte}}</p><img [src]="elev.mat2.url">
+    <p>material 3 : {{elev.mat3.name}} x{{elev.mat3.qte}}</p><img [src]="elev.mat3.url">
+    <p>material 4 : {{elev.mat4.name}} <span *ngIf="elev.mat4.name !== 'none'">x{{elev.mat4.qte}}</span></p> <img *ngIf="elev.mat4.name !== 'none'" [src]="elev.mat4.url">
+</div>
+
+<div *ngFor="let x of img">
+    <img [src]="x">
+</div> -->

@@ -1,0 +1,84 @@
+@use '../../themes.scss' as *;
+
+
+.headerElevation {
+    display: flex;
+}
+
+.headerElevation>* {
+    margin-right: 5%;
+}
+
+.item {
+    margin-top: 2%;
+    margin-right: 2.5%;
+    margin-left: 2.5%;
+    width: 20%;
+}
+
+.elevation1 {
+    display: flex;
+    flex-direction: row;
+
+}
+
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+    -moz-appearance: textfield;
+}
+
+.counter {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+}
+
+.styledCounter {
+    border-radius: 12.5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: nb-theme(color-basic-900);
+    width: 50%;
+}
+
+.styledCounter>input {
+    background: none;
+    padding-right: 10px;
+    text-indent: 10%;
+    text-align: right;
+}
+
+.styledCounter>p {
+    padding: 1rem 0 1rem 0;
+}
+
+.styledCounter>input,
+.styledCounter>p {
+    width: 50%;
+    height: 35%;
+    border: none;
+    margin: 0;
+
+}
+
+.imageItem {
+    width: 150px;
+    height: 115px;
+    object-fit: cover;
+}
+
+.itemRankHeader {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+
+}

@@ -1,0 +1,52 @@
+import { Injectable } from '@angular/core';
+import { catchError } from 'rxjs/internal/operators';
+import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
+import { Observable, of, throwError } from 'rxjs';
+import { map, retry, tap } from 'rxjs/operators';
+
+const endpoint = 'http://localhost:5000/';
+const token = 'my JWT';
+const headers = new HttpHeaders({
+  'Content-Type': 'file',
+}).set('authorization', 'Bearer ' + token)
+@Injectable({
+  providedIn: 'root'
+})
+export class CharactersService {
+
+
+  constructor(private http: HttpClient) { }
+  // Http Headers
+
+
+  // GET
+  GetIssue(): Observable<any> {
+    return this.http.get(endpoint + `characters`)
+  }
+
+  GetOneCarac(str: string): Observable<any> {
+    return this.http.get(endpoint + `characters/${str}`)
+  }
+
+  GetElevation(str: string): Observable<any> {
+    return this.http.get(endpoint + `elevation/${str}`)
+  }
+
+  GetImage(str: string): Observable<any> {
+    return this.http.get(endpoint + `materials/${str}`, { responseType: 'blob' })
+  }
+
+  GetImagePath(): Observable<any> {
+    return this.http.get(endpoint + `nations/moi`)
+  }
+
+
+  searchCharcList(term: string): Observable<any[]> {
+    return this.http.get<any[]>(`http://localhost:5000/characters/?name=${term}`)
+  }
+
+  errorHandl(error: any) {
+    console.log(error);
+
+  }
+}
