@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
-const endpoint = 'http://localhost:5000/';
+const endpoint = 'http://35.241.128.70:5000/';
 const token = 'my JWT';
 const headers = new HttpHeaders({
   'Content-Type': 'file',

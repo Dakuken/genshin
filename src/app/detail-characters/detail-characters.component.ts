@@ -62,9 +62,6 @@ export class DetailCharactersComponent implements OnInit {
         }, 300);
     })
     setTimeout(() => {
-      console.log(this.elevation);
-      console.log(this.elevation[this.elevation.length - 1]);
-
       this.selectedOption = this.elevation[this.elevation.length - 1];
     }, 200);
   }
@@ -135,7 +132,6 @@ export class DetailCharactersComponent implements OnInit {
       let index: number = skifo[i].map((e: any) => e).indexOf(name)
       if (index !== -1) {
         let name = this.caseImagePath(i)
-        // console.log(name, index);
         return { name, index }
       }
     }
