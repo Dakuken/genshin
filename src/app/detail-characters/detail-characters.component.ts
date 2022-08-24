@@ -45,6 +45,7 @@ export class DetailCharactersComponent implements OnInit {
   constructor(private route: ActivatedRoute, private characServ: CharactersService, private router: Router, private sanitizer: DomSanitizer) {
     this.characServ.GetImagePath().subscribe((data: any) => {
       this.imagePath = data
+
       this.imagePlaceName = Object.getOwnPropertyNames(this.imagePath);
     })
   }
@@ -105,6 +106,7 @@ export class DetailCharactersComponent implements OnInit {
       for (let i = 0; i <= materials.length - 1; i++) {
         let name = (<string>materials[i].name).replace(regEspace, '-')
         name = name.replace(regPostrophe, '-')
+        name = name.toLowerCase()
 
         if (name !== 'none') {
           let item = this.oukilai(name)
@@ -169,6 +171,8 @@ export class DetailCharactersComponent implements OnInit {
       tempRankMat = [tempRank.mat1, tempRank.mat2, tempRank.mat3, tempRank.mat4]
     }
     if (option === 'one') {
+      console.log(tempRank);
+
       this.choicedRank = tempRank
       this.choicedRankMat = tempRankMat
     } else if (option === 'from') {
