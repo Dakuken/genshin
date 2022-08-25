@@ -10,10 +10,10 @@
         <div class="headerElevation">
 
             <nb-select placeholder="Select a rank" [(selected)]="selectedOption">
-                <nb-option [value]="'none'" (selectionChange)="wichRank('none')">
+                <nb-option [value]="-1" (selectionChange)="wichRank('-1')">
                     none
                 </nb-option>
-                <nb-option *ngFor=" let elev of elevation" [value]="elev.rank" (selectionChange)="wichRank(elev.rank-1)">
+                <nb-option *ngFor=" let elev of elevation" [value]="elev.rank" (selectionChange)="wichRank(elev.rank)">
                     Rank : {{elev.rank}}
                 </nb-option>
 
@@ -22,7 +22,7 @@
             <p *ngIf="choicedRank !== undefined"> MORAS REQUIRED: {{morasForm(choicedRank.cost)}}</p>
         </div>
 
-        <div class="elevation1" *ngIf="choicedRank !== undefined && choicedRank !== null">
+        <div class="elevation1" *ngIf="choicedRank !== undefined && choicedRank !== null && selectedOption !== -1">
 
             <nb-card accent="info" *ngFor="let i of nbMat" class="item">
                 <nb-card-header>
@@ -56,28 +56,28 @@
         <div class="headerElevation">
 
             <nb-select placeholder="Select a rank" [(selected)]="selectedOptionFrom">
-                <nb-option [value]="'none'" (selectionChange)="wichRank('none')">
+                <nb-option [value]="'none'" (selectionChange)="wichRank('-1', 'from')">
                     none
                 </nb-option>
-                <nb-option *ngFor=" let elev of elevation" [value]="elev.rank" (selectionChange)="wichRank(elev.rank-1,'from')">
+                <nb-option *ngFor=" let elev of elevation" [value]="elev.rank" (selectionChange)="wichRank(elev.rank ,'from')">
                     Rank : {{elev.rank}}
                 </nb-option>
 
             </nb-select>
-            <nb-select placeholder="Select a rank" [(selected)]="selectedOptionTo" (selectionChange)="wichRank('none')">
+            <nb-select placeholder="Select a rank" [(selected)]="selectedOptionTo" (selectionChange)="wichRank('-1', 'to')">
                 <nb-option [value]="'none'">
                     none
                 </nb-option>
-                <nb-option *ngFor=" let elev of elevation" [value]="elev.rank" (selectionChange)="wichRank(elev.rank-1,'to')">
+                <nb-option *ngFor=" let elev of elevation" [value]="elev.rank" (selectionChange)="wichRank(elev.rank,'to')">
                     Rank : {{elev.rank}}
                 </nb-option>
 
             </nb-select>
-            <p *ngIf="choicedRankFrom !== undefined && choicedRankTo !== undefined"> LEVEL REQUIRED : {{choicedRankFromTo}}</p>
-            <p *ngIf="choicedRankFrom !== undefined && choicedRankTo !== undefined"> MORAS REQUIRED: {{choicedRankFromTo}}</p>
+            <p *ngIf="choicedRankFromToObject.rank !== ''"> LEVEL REQUIRED : {{choicedRankFromTo}}</p>
+            <p *ngIf="choicedRankFromToObject.rank !== ''"> MORAS REQUIRED: {{choicedRankFromTo}}</p>
         </div>
-        <!-- 
-        <div class="elevation1" *ngIf="choicedRank !== undefined && choicedRank !== null">
+
+        <div class="elevation1" *ngIf="choicedRankFromToObject.rank !== ''">
 
             <nb-card accent="info" *ngFor="let i of nbMat" class="item">
                 <nb-card-header>
@@ -90,14 +90,14 @@
                     <label [for]="choicedRankMat[i].name">
                         <div class="counter">
                             <div class="styledCounter">
-                                <input [id]='choicedRankMat[i].name' type="number" nbInput placeholder="0"><!-- [max]="choicedRankMat[i].qte" 
-        <p>/ {{choicedRankMat[i].qte}}</p>
+                                <input [id]='choicedRankMat[i].name' type="number" nbInput placeholder="0"><!-- [max]="choicedRankMat[i].qte"  -->
+                                <p>/ {{choicedRankMat[i].qte}}</p>
+                            </div>
+                      </div>
+                    </label>
+                </nb-card-body>
+            </nb-card>
         </div>
-        </div>
-        </label>
-    </nb-card-body>
-</nb-card>
-</div> -->
 
     </nb-card-body>
 </nb-card>

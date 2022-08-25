@@ -18,17 +18,11 @@ export class CharactersService {
 
 
   // GET
-  GetIssue(): Observable<any> {
-    console.log('zpozspfd,');
-    console.log(this.http.get(endpoint + `characters`));
-    console.log(endpoint + 'characters');
-
+  GetCharacList(): Observable<any> {
     return this.http.get(endpoint + `characters`)
   }
 
   GetOneCarac(str: string): Observable<any> {
-    console.log(this.http.get(endpoint + `characters/${str}`));
-
     return this.http.get(endpoint + `characters/${str}`)
   }
 
@@ -41,10 +35,6 @@ export class CharactersService {
   }
 
   GetImagePath(): Observable<any> {
-    console.log('pmsokmlkd,f');
-
-    console.log(this.http.get(endpoint + `nations/moi`));
-
     return this.http.get(endpoint + `nations/moi`)
   }
 

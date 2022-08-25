@@ -36,7 +36,7 @@ export class SearchBarComponent implements OnInit {
   }
 
   getAllCarac() {
-    return this.charac.GetIssue().subscribe((data: {}) => {
+    return this.charac.GetCharacList().subscribe((data: {}) => {
       this.allCharac = <string[]>data
 
     })
@@ -58,7 +58,6 @@ export class SearchBarComponent implements OnInit {
         return false;
       }
     });
-    console.log(this.charachters);
   }
 
 

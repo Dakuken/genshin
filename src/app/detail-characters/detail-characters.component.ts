@@ -1,8 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 import { CharactersService } from '../service/characters.service';
-
+import { Mat } from '../interface/mat.interface';
+import { Elevation } from '../interface/elevation.interface';
+import { Character } from '../interface/character.interface';
+import { imageRef } from '../interface/image-ref.interface';
 
 @Component({
   selector: 'app-detail-characters',
@@ -10,97 +13,127 @@ import { CharactersService } from '../service/characters.service';
   styleUrls: ['./detail-characters.component.scss']
 })
 export class DetailCharactersComponent implements OnInit {
-  selectedOption: any
-  selectedOptionFrom: any
-  selectedOptionTo: any
+  selectedOption: number | undefined //let undefined to start
+  selectedOptionFrom: number | undefined
+  selectedOptionTo: number | undefined
 
   nbMat: number[] = [0, 1, 2, 3]
 
-  elevation: any
+  elevation: Elevation[] = []
 
   img: { name: string, url: SafeUrl }[] = []
 
   character: string | undefined
 
-  detail: any
+  detail?: Character // define OnInit
 
-  paramss: any
+  routeParams: Params //define OnInit
 
-  imagePath: any
+  imagePath?: imageRef  //OnInit
 
   imagePlaceName: string[] = []
+  characList: string[] = []
 
-  choicedRank?: any
-  choicedRankMat: any[] = []
+  choicedRank?: Elevation
+  choicedRankMat: Mat[] = []
 
-  choicedRankFrom?: any
-  choicedRankMatFrom: any[] = []
+  choicedRankFrom?: Elevation
+  choicedRankMatFrom: Mat[] = []
 
-  choicedRankTo?: any
-  choicedRankMatTo: any[] = []
+  choicedRankTo?: Elevation
+  choicedRankMatTo: Mat[] = []
 
-  choicedRankFromTo = '0'
+  choicedRankFromTo = false
+  choicedRankFromToObject: Elevation = {
+    "rank": '',
+    "lvl": '',
+    "cost": '',
+    "mat1": {
+      "name": '',
+      "qte": '',
+      "pathName": '',
+      "pathIndex": -1,
+      "url": ''
+    },
+    "mat4": {
+      "name": '',
+      "qte": '',
+      "pathName": '',
+      "pathIndex": -1,
+      "url": ''
+    },
+    "mat2": {
+      "name": '',
+      "qte": '',
+      "pathName": '',
+      "pathIndex": -1,
+      "url": ''
+    },
+    "mat3": {
+      "name": '',
+      "qte": '',
+      "pathName": '',
+      "pathIndex": -1,
+      "url": ''
+    }
+  }
   // currentRoute: string
 
   constructor(private route: ActivatedRoute, private characServ: CharactersService, private router: Router, private sanitizer: DomSanitizer) {
+
     this.characServ.GetImagePath().subscribe((data: any) => {
       this.imagePath = data
-
-      this.imagePlaceName = Object.getOwnPropertyNames(this.imagePath);
     })
+    this.routeParams = this.route.params
   }
 
   ngOnInit(): void {
-    this.route.params.subscribe((data) => {
-      this.paramss = data
-      this.toutFaire()
+
+    this.characServ.GetCharacList().subscribe((data: string[]) => {
+      this.characList = data
+      this.route.params.subscribe((data: Params) => {
+        this.routeParams = data
+
+        this.toutFaire()
 
 
-      if (this.selectedOption !== undefined)
-        setTimeout(() => {
-
-          this.wichRank(this.selectedOption - 1)
-        }, 300);
+      })
     })
-    setTimeout(() => {
-      this.selectedOption = this.elevation[this.elevation.length - 1];
-    }, 200);
+
   }
 
   toutFaire() {
-
-
-
     const persoId: string | null = this.route.snapshot.paramMap.get('id')
+    if (this.characList.indexOf(<string>persoId) === -1) {
+      this.router.navigate(['home'])
+      return
+    }
     if (persoId) {
       this.character = persoId.charAt(0).toUpperCase() + persoId.slice(1);
     }
     this.oneCarac()
     this.getElevation()
-    setTimeout(() => {
-      this.getImg()
-    }, 200);
   }
 
   oneCarac() {
-    return this.characServ.GetOneCarac(<string>this.character).subscribe((data: {}) => {
+    return this.characServ.GetOneCarac(<string>this.character).subscribe((data: Character) => {
       this.detail = data
     })
 
   }
 
   getElevation() {
-    return this.characServ.GetElevation(<string>this.character).subscribe((data: {}) => {
-      this.elevation = data
-      this.elevation = this.elevation.items
+    return this.characServ.GetElevation(<string>this.character).subscribe((data: { items: any }) => {
+      this.elevation = data.items
+      this.getImg()
+      this.selectedOption = this.elevation.length - 1;
+      this.wichRank(String(this.selectedOption))
     })
   }
 
   getImg() {
     const regEspace = new RegExp(' ', 'gi')
     const regPostrophe = new RegExp("'", 'gi')
-
-
     for (let i = 0; i <= 5; i++) {
       let materials = [this.elevation[i].mat1, this.elevation[i].mat2, this.elevation[i].mat3, this.elevation[i].mat4]
       for (let i = 0; i <= materials.length - 1; i++) {
@@ -125,13 +158,13 @@ export class DetailCharactersComponent implements OnInit {
 
   oukilai(name: string): { name: string, index: number } {
     name = name.toLowerCase()
-    const skifo = [this.imagePath.boss_material, this.imagePath.character_ascension, this.imagePath.character_experience,
-    this.imagePath.common_ascension, this.imagePath.cooking_ingredients, this.imagePath.local_specialties,
-    this.imagePath.talent_book, this.imagePath.talent_boss, this.imagePath.weapon_ascension,
-    this.imagePath.weapon_experience]
+    const skifo = [this.imagePath?.boss_material, this.imagePath?.character_ascension, this.imagePath?.character_experience,
+    this.imagePath?.common_ascension, this.imagePath?.cooking_ingredients, this.imagePath?.local_specialties,
+    this.imagePath?.talent_book, this.imagePath?.talent_boss, this.imagePath?.weapon_ascension,
+    this.imagePath?.weapon_experience]
 
     for (let i = 0; i <= skifo.length - 1; i++) {
-      let index: number = skifo[i].map((e: any) => e).indexOf(name)
+      let index: number = <number>skifo[i]?.map((e: any) => e).indexOf(name)
       if (index !== -1) {
         let name = this.caseImagePath(i)
         return { name, index }
@@ -158,21 +191,27 @@ export class DetailCharactersComponent implements OnInit {
   }
 
 
-  wichRank(pouet: any, option: string = 'one') {
+  wichRank(r: string, option: string = 'one') {
+    let rank = Number(r)
+    if (isNaN(rank) || rank < 0) {
+      this.selectedOption = -1
+      return
+    }
+    rank = rank - 1
     let tempRank: any
     let tempRankMat: any
 
 
-    if (pouet === 'none') {
+    if (rank === -1) {
       tempRank = undefined
       tempRankMat = []
     } else {
-      tempRank = this.elevation[pouet]
+      tempRank = this.elevation[rank]
       tempRankMat = [tempRank.mat1, tempRank.mat2, tempRank.mat3, tempRank.mat4]
+
+
     }
     if (option === 'one') {
-      console.log(tempRank);
-
       this.choicedRank = tempRank
       this.choicedRankMat = tempRankMat
     } else if (option === 'from') {
@@ -182,15 +221,32 @@ export class DetailCharactersComponent implements OnInit {
       this.choicedRankTo = tempRank
       this.choicedRankMatTo = tempRankMat
     }
+    if (this.choicedRankFrom !== undefined && this.choicedRankTo !== undefined) {
+      if (this.choicedRankFrom.rank <= this.choicedRankTo.rank) {
+        this.calculFromTo()
 
-    console.log(this.choicedRank, this.choicedRankMat);
-    console.log(this.choicedRankFrom, this.choicedRankMatFrom);
-    console.log(this.choicedRankTo, this.choicedRankMatTo);
+      } else {
+        this.choicedRankFromToObject.rank = ''
+      }
 
-
+    } else {
+      this.choicedRankFromToObject.rank = ''
+    }
   }
 
-  morasForm(num: number) {
+  morasForm(num: any) {
     return `${num}`.replace(/\B(?=(\d{3})+(?!\d))/g, ' '); // copyright pierre bregeard
+  }
+
+  calculFromTo() {
+    let from = Number(this.choicedRankFrom?.rank)
+    let to = Number(this.choicedRankTo?.rank)
+    this.choicedRankFromToObject.cost = '0'
+    for (let i = 0; i <= to - from; i++) {
+      this.choicedRankFromToObject.cost = String(Number(this.choicedRankFromToObject.cost) + Number(this.elevation[i].cost))
+    }
+    console.log(this.choicedRankFromToObject.cost);
+    this.choicedRankFromToObject.rank = 'done'
+
   }
 }
