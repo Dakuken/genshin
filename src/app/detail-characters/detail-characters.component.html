@@ -56,7 +56,7 @@
         <div class="headerElevation">
 
             <nb-select placeholder="Select a rank" [(selected)]="selectedOptionFrom">
-                <nb-option [value]="'none'" (selectionChange)="wichRank('-1', 'from')">
+                <nb-option [value]="-1" (selectionChange)="wichRank('-1', 'from')">
                     none
                 </nb-option>
                 <nb-option *ngFor=" let elev of elevation" [value]="elev.rank" (selectionChange)="wichRank(elev.rank ,'from')">
@@ -65,7 +65,7 @@
 
             </nb-select>
             <nb-select placeholder="Select a rank" [(selected)]="selectedOptionTo" (selectionChange)="wichRank('-1', 'to')">
-                <nb-option [value]="'none'">
+                <nb-option [value]="-1">
                     none
                 </nb-option>
                 <nb-option *ngFor=" let elev of elevation" [value]="elev.rank" (selectionChange)="wichRank(elev.rank,'to')">
@@ -73,27 +73,26 @@
                 </nb-option>
 
             </nb-select>
-            <p *ngIf="choicedRankFromToObject.rank !== ''"> LEVEL REQUIRED : {{choicedRankFromTo}}</p>
-            <p *ngIf="choicedRankFromToObject.rank !== ''"> MORAS REQUIRED: {{choicedRankFromTo}}</p>
+            <p *ngIf="choicedRankFromToObject.rank !== ''"> MORAS REQUIRED: {{morasForm(this.choicedRankFromToObject.cost)}}</p>
         </div>
 
         <div class="elevation1" *ngIf="choicedRankFromToObject.rank !== ''">
 
-            <nb-card accent="info" *ngFor="let i of nbMat" class="item">
+            <nb-card accent="info" *ngFor="let i of NBchoicedRankFromToMatList" class="item" >
                 <nb-card-header>
                     <div class="itemRankHeader">
-                        <img [src]="choicedRankMat[i].url" class="imageItem">
-                        <p>{{choicedRankMat[i].name}}</p>
+                        <img [src]="choicedRankFromToMatList[i].url" class="imageItem">
+                        <p>{{choicedRankFromToMatList[i].name}}</p>
                     </div>
                 </nb-card-header>
                 <nb-card-body>
-                    <label [for]="choicedRankMat[i].name">
+                    <label [for]="choicedRankFromToMatList[i].name">
                         <div class="counter">
                             <div class="styledCounter">
-                                <input [id]='choicedRankMat[i].name' type="number" nbInput placeholder="0"><!-- [max]="choicedRankMat[i].qte"  -->
-                                <p>/ {{choicedRankMat[i].qte}}</p>
+                                <input [id]='choicedRankFromToMatList[i].name' type="number" nbInput placeholder="0"><!-- [max]="choicedRankMat[i].qte"  -->
+                                <p>/ {{choicedRankFromToMatList[i].qte}}</p>
                             </div>
-                      </div>
+                        </div>
                     </label>
                 </nb-card-body>
             </nb-card>
