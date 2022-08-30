@@ -13,9 +13,9 @@ import { imageRef } from '../interface/image-ref.interface';
   styleUrls: ['./detail-characters.component.scss']
 })
 export class DetailCharactersComponent implements OnInit {
-  selectedOption: number = -1 //let undefined to start
-  selectedOptionFrom: number = -1
-  selectedOptionTo: number = -1
+  selectedOption: string = '-1' //let undefined to start
+  selectedOptionFrom: string = '-1'
+  selectedOptionTo: string = '-1'
 
   nbMat: number[] = []
 
@@ -53,6 +53,7 @@ export class DetailCharactersComponent implements OnInit {
       "qte": '',
       "pathName": '',
       "pathIndex": -1,
+      "unsafeUrl": '',
       "url": ''
     },
     "mat4": {
@@ -60,6 +61,7 @@ export class DetailCharactersComponent implements OnInit {
       "qte": '',
       "pathName": '',
       "pathIndex": -1,
+      "unsafeUrl": '',
       "url": ''
     },
     "mat2": {
@@ -67,6 +69,7 @@ export class DetailCharactersComponent implements OnInit {
       "qte": '',
       "pathName": '',
       "pathIndex": -1,
+      "unsafeUrl": '',
       "url": ''
     },
     "mat3": {
@@ -74,16 +77,15 @@ export class DetailCharactersComponent implements OnInit {
       "qte": '',
       "pathName": '',
       "pathIndex": -1,
+      "unsafeUrl": '',
       "url": ''
     }
   }
 
   choicedRankFromToMatList: Mat[] = []
   NBchoicedRankFromToMatList: number[] = []
-  // currentRoute: string
 
   constructor(private route: ActivatedRoute, private characServ: CharactersService, private router: Router, private sanitizer: DomSanitizer) {
-
     this.characServ.GetImagePath().subscribe((data: any) => {
       this.imagePath = data
     })
@@ -91,15 +93,11 @@ export class DetailCharactersComponent implements OnInit {
   }
 
   ngOnInit(): void {
-
     this.characServ.GetCharacList().subscribe((data: string[]) => {
       this.characList = data
       this.route.params.subscribe((data: Params) => {
         this.routeParams = data
-
         this.toutFaire()
-
-
       })
     })
 
@@ -138,6 +136,7 @@ export class DetailCharactersComponent implements OnInit {
     const regPostrophe = new RegExp("'", 'gi')
     for (let i = 0; i <= 5; i++) {
       let materials = [this.elevation[i].mat1, this.elevation[i].mat2, this.elevation[i].mat3, this.elevation[i].mat4]
+
       for (let i = 0; i <= materials.length - 1; i++) {
         let name = (<string>materials[i].name).replace(regEspace, '-')
         name = name.replace(regPostrophe, '-')
@@ -145,16 +144,15 @@ export class DetailCharactersComponent implements OnInit {
 
         if (name !== 'none') {
           let item = this.oukilai(name)
-          console.log(item.name);
-
           if (item.name !== 'none') {
 
             materials[i].pathName = item.name
             materials[i].pathIndex = item.index
             this.characServ.GetImage(materials[i].pathName + '/' + name).subscribe((response: any) => {
               let UnsafeUrl = window.URL.createObjectURL(response)
-              let url = this.sanitizer.bypassSecurityTrustUrl(UnsafeUrl);
-              materials[i].url = url
+              materials[i].unsafeUrl = UnsafeUrl
+
+
             })
           }
         }
@@ -199,46 +197,43 @@ export class DetailCharactersComponent implements OnInit {
 
 
   wichRank(r: string, option: string = 'one') {
-    let rank = Number(r)
-
-    if (isNaN(rank) || rank < 0) {
-      if (option === 'from') {
-        this.selectedOptionFrom = -1 // cas ou NaN
-
-      } else if (option === 'to') {
-        this.selectedOptionTo = -1 // cas ou NaN
-
-      } else {
-        this.selectedOption = -1 // cas ou NaN
-      }
-
-      return
+    switch (option) {
+      case 'one': if (this.selectedOption === r) { return }; break;
+      case 'from': if (this.selectedOptionFrom === r) { return }; break;
+      case 'to': if (this.selectedOptionTo === r) { return }; break;
     }
-    rank = rank - 1
+
+
     let tempRank: Elevation | undefined
     let tempRankMat: Mat[]
-
-
-    if (rank === -1) {
+    if (r === '-1') {
       tempRank = undefined
       tempRankMat = []
     } else {
-      this.nbMat = []
-      tempRank = this.elevation[rank]
-      tempRankMat = [tempRank.mat1, tempRank.mat2, tempRank.mat3, tempRank.mat4]
-      let y = 0
-      for (let i = 0; i <= 3; i++) {
+      if (option === 'one') {
+        this.nbMat = []
+      }
 
+      tempRank = JSON.parse(JSON.stringify(this.elevation[Number(r) - 1]));
+      tempRankMat = [(<Elevation>tempRank).mat1, (<Elevation>tempRank).mat2, (<Elevation>tempRank).mat3, (<Elevation>tempRank).mat4]
+      let y = 0
+
+      for (let i = 0; i <= 3; i++) {
         if (tempRankMat[i].name === 'none') {
           tempRankMat.splice(i, 1)
         } else {
-          this.nbMat.push(y)
+          //s*mùlf,mldf
+          tempRankMat[i].url = this.sanitizer.bypassSecurityTrustUrl(tempRankMat[i].unsafeUrl);
+          if (option === 'one') {
+            this.nbMat.push(y)
+          }
           y++
 
         }
       }
 
     }
+
     if (option === 'one') {
       this.choicedRank = tempRank
       this.choicedRankMat = tempRankMat
@@ -270,19 +265,35 @@ export class DetailCharactersComponent implements OnInit {
 
   calculFromTo() {
     this.NBchoicedRankFromToMatList = []
+    this.empty()
+    this.choicedRankFromToMatList = []
+
+    let matList: Mat[] = []
     let from = Number(this.choicedRankFrom?.rank)
     let to = Number(this.choicedRankTo?.rank)
-    let matList: Mat[] = []
+
     this.choicedRankFromToObject.cost = '0'
+    let pouet: Elevation[] = JSON.parse(JSON.stringify(this.elevation));
     for (let i = 0; i <= to - from; i++) {
-      let tempRankMat = [this.elevation[i].mat1, this.elevation[i].mat2, this.elevation[i].mat3, this.elevation[i].mat4]
+      let tempRankMat: Mat[] = []
+
+
+      tempRankMat = [pouet[i].mat1, pouet[i].mat2, pouet[i].mat3, pouet[i].mat4]
+
+
       for (let y = 0; y < 4; y++) {
+
         let materials = tempRankMat[y]
         if (materials.name !== 'none') {
           let index = matList.map((e) => { return e.name }).indexOf(materials.name)
+
+          //if don't exist
           if (index === -1) {
+            materials.url = this.sanitizer.bypassSecurityTrustUrl(materials.unsafeUrl);
             matList.push(materials)
-          } else {
+          }
+          // if exist
+          else {
             matList[index].qte = String(Number(matList[index].qte) + Number(materials.qte))
           }
         }
@@ -292,10 +303,55 @@ export class DetailCharactersComponent implements OnInit {
     for (let i = 0; i <= matList.length - 1; i++) {
       this.NBchoicedRankFromToMatList.push(i)
     }
+
+    //sort per name
     this.choicedRankFromToMatList = matList.sort((a, b) => (a.name > b.name) ? 1 : ((b.name > a.name) ? -1 : 0));
 
-
+    //finish
     this.choicedRankFromToObject.rank = 'done'
 
   }
+
+
+  empty() {
+    this.choicedRankFromToObject = {
+      "rank": '',
+      "lvl": '',
+      "cost": '',
+      "mat1": {
+        "name": '',
+        "qte": '',
+        "pathName": '',
+        "pathIndex": -1,
+        "unsafeUrl": '',
+        "url": ''
+      },
+      "mat4": {
+        "name": '',
+        "qte": '',
+        "pathName": '',
+        "pathIndex": -1,
+        "unsafeUrl": '',
+        "url": ''
+      },
+      "mat2": {
+        "name": '',
+        "qte": '',
+        "pathName": '',
+        "pathIndex": -1,
+        "unsafeUrl": '',
+        "url": ''
+      },
+      "mat3": {
+        "name": '',
+        "qte": '',
+        "pathName": '',
+        "pathIndex": -1,
+        "unsafeUrl": '',
+        "url": ''
+      }
+    }
+  }
 }
+
+

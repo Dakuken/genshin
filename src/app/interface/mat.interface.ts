@@ -5,5 +5,6 @@ export interface Mat {
   "qte": string,
   "pathName": string,
   "pathIndex": number,
+  "unsafeUrl": string,
   "url": SafeUrl
 }

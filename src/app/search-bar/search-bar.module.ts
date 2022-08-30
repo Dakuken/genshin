@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { NbCardModule, NbInputModule, NbListModule } from '@nebular/theme';
 import { SearchBarComponent } from './search-bar.component';
+import { FormsModule } from '@angular/forms';
 
 
 
@@ -11,7 +12,8 @@ import { SearchBarComponent } from './search-bar.component';
     CommonModule,
     NbListModule,
     NbCardModule,
-    NbInputModule
+    NbInputModule,
+    FormsModule
   ],
   exports: [SearchBarComponent]
 })

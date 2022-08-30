@@ -22,7 +22,7 @@
             <p *ngIf="choicedRank !== undefined"> MORAS REQUIRED: {{morasForm(choicedRank.cost)}}</p>
         </div>
 
-        <div class="elevation1" *ngIf="choicedRank !== undefined && choicedRank !== null && selectedOption !== -1">
+        <div class="elevation1" *ngIf="choicedRank !== undefined && choicedRank !== null && selectedOption !== '-1'">
 
             <nb-card accent="info" *ngFor="let i of nbMat" class="item">
                 <nb-card-header>
@@ -62,17 +62,19 @@
                 <nb-option *ngFor=" let elev of elevation" [value]="elev.rank" (selectionChange)="wichRank(elev.rank ,'from')">
                     Rank : {{elev.rank}}
                 </nb-option>
-
             </nb-select>
-            <nb-select placeholder="Select a rank" [(selected)]="selectedOptionTo" (selectionChange)="wichRank('-1', 'to')">
-                <nb-option [value]="-1">
+
+
+            <nb-select placeholder="Select a rank" [(selected)]="selectedOptionTo" >
+                <nb-option [value]="-1" (selectionChange)="wichRank('-1', 'to')">
                     none
                 </nb-option>
                 <nb-option *ngFor=" let elev of elevation" [value]="elev.rank" (selectionChange)="wichRank(elev.rank,'to')">
                     Rank : {{elev.rank}}
                 </nb-option>
-
             </nb-select>
+
+
             <p *ngIf="choicedRankFromToObject.rank !== ''"> MORAS REQUIRED: {{morasForm(this.choicedRankFromToObject.cost)}}</p>
         </div>
 

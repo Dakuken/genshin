@@ -11,6 +11,7 @@ import { CharactersService } from '../service/characters.service';
 export class SearchBarComponent implements OnInit {
   @ViewChild('searchBox') searchElement?: ElementRef;
   searchFocus = false;
+  searchFocusInput = false
 
   searchTerms: string = ''
 
@@ -19,31 +20,47 @@ export class SearchBarComponent implements OnInit {
   wichPerso: string = ''
 
   allCharac: string[] = []
+  input = ''
 
   constructor(private charac: CharactersService, private router: Router) {
     this.getAllCarac()
+
+
   }
 
   ngOnInit(): void {
+
   }
 
-  onBlur(): void {
+  onBlur(str: string = 'base'): void {
+    if (str !== 'base') {
+      this.searchFocusInput = false
+      return
+    }
     this.searchFocus = false
   }
 
-  onFocus(): void {
+  onFocus(str: string = 'base'): void {
+    if (str !== 'base') {
+      this.searchFocusInput = true
+      return
+    }
     this.searchFocus = true
   }
 
   getAllCarac() {
     return this.charac.GetCharacList().subscribe((data: {}) => {
       this.allCharac = <string[]>data
-
+      this.charachters = this.allCharac
+      console.log(this.charachters);
     })
   }
 
-  search(term: string) {
+  search(term: string, base: boolean = false) {
     this.charachters = []
+    if (base === true) {
+      this.charachters = this.allCharac
+    }
     this.searchTerms = term.trim()
     if (this.searchTerms === '') {
       return
@@ -58,6 +75,7 @@ export class SearchBarComponent implements OnInit {
         return false;
       }
     });
+
   }
 
 
@@ -69,8 +87,13 @@ export class SearchBarComponent implements OnInit {
   }
 
   goToDetail(str: string) {
+
     const link = ['/characters', str]
     this.router.navigate(link)
     this.searchFocus = false
+    this.searchFocusInput = false;
+    this.charachters = [];
+    (<ElementRef>this.searchElement).nativeElement.value = ''
+
   }
 }
