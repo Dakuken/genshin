@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ɵɵclassMapInterpolate1 } from '@angular/core';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { CharactersService } from '../service/characters.service';
@@ -62,7 +62,7 @@ export class DetailCharactersComponent implements OnInit {
       "pathName": '',
       "pathIndex": -1,
       "unsafeUrl": '',
-      "url": ''
+      "url": '',
     },
     "mat2": {
       "name": '',
@@ -80,6 +80,16 @@ export class DetailCharactersComponent implements OnInit {
       "unsafeUrl": '',
       "url": ''
     }
+  }
+
+  matVierge = {
+    "name": '',
+    "qte": '',
+    "pathName": '',
+    "pathIndex": '',
+    "unsafeUrl": '',
+    "url": '',
+    "previous": ''
   }
 
   choicedRankFromToMatList: Mat[] = []
@@ -114,6 +124,85 @@ export class DetailCharactersComponent implements OnInit {
     }
     this.oneCarac()
     this.getElevation()
+
+  }
+
+  construcItem() {
+
+    // let elev: Elevation = this.elevation[3]
+    // let matElev: Mat[] = [elev.mat1, elev.mat2, elev.mat3, elev.mat4]
+    // // console.log(this.elevation[3]);
+    // // let material = elev.mat1
+    // // let str = this.prepareName(material.name).toLowerCase()
+    // // console.log(str);
+
+    // // matElev.forEach(material => {
+    // //   console.log(material);
+
+    // //   let str = this.prepareName(material.name).toLowerCase()
+    // //   console.log(str);
+
+    // //   let match = this.pouet(str, material)
+
+    // // });
+
+    for (let i = 0; i <= this.elevation.length - 1; i++) {
+      let elev: Elevation = this.elevation[i]
+      let matElev: Mat[] = [elev.mat1, elev.mat2, elev.mat3, elev.mat4]
+      matElev.forEach(material => {
+        let str = this.prepareName(material.name).toLowerCase()
+        this.pouet(str, material)
+
+      });
+
+    }
+    console.log(this.elevation);
+  }
+
+  prepareName(str: string): string {
+    let newStr = str.split(' ')
+    return newStr[newStr.length - 1]
+  }
+
+  pouet(str: string, mat: Mat) {
+    let prede = this.hasPrede(str)
+    if (prede === ' ') {
+      console.log('RETTURN');
+      return ''
+    }
+    let stre = mat.name.split(' ')
+    stre[stre.length - 1] = prede
+    let name = stre.join(' ')
+
+    if (prede !== ' ') {
+      let pouet = this.oukilai(name.split(' ').join('-'))
+
+      let newItem: Mat = {
+        "name": name,
+        "qte": String(Number(mat.qte) * 3),
+        "pathName": pouet.name,
+        "pathIndex": pouet.index,
+        "unsafeUrl": '',
+        "url": '',
+      }
+
+      this.getOneImg(newItem)
+      console.log(newItem, 'newItem');
+      mat.previous = newItem
+      let str = this.prepareName(newItem.name).toLowerCase()
+      this.pouet(str, newItem)
+    }
+    return
+  }
+  hasPrede(str: string): string {
+    switch (str) {
+      case 'sliver': return ' '; break;
+      case 'fragment': return 'Sliver'; break;
+      case 'chunk': return 'Fragment'; break;
+      case 'gemstone': return 'Chunk'; break;
+    }
+
+    return ' '
   }
 
   oneCarac() {
@@ -128,6 +217,7 @@ export class DetailCharactersComponent implements OnInit {
       this.elevation = data.items
       this.getImg()
       this.wichRank(String(-1))
+      this.construcItem()
     })
   }
 
@@ -141,6 +231,7 @@ export class DetailCharactersComponent implements OnInit {
         let name = (<string>materials[i].name).replace(regEspace, '-')
         name = name.replace(regPostrophe, '-')
         name = name.toLowerCase()
+
 
         if (name !== 'none') {
           let item = this.oukilai(name)
@@ -158,6 +249,19 @@ export class DetailCharactersComponent implements OnInit {
         }
       }
     }
+  }
+
+  getOneImg(mat: Mat) {
+    const regEspace = new RegExp(' ', 'gi')
+    const regPostrophe = new RegExp("'", 'gi')
+    let name = (mat.name).replace(regEspace, '-')
+    name = name.replace(regPostrophe, '-')
+    name = name.toLowerCase()
+    this.characServ.GetImage(mat.pathName + '/' + name).subscribe((response: any) => {
+      let UnsafeUrl = window.URL.createObjectURL(response)
+      mat.unsafeUrl = UnsafeUrl
+      mat.url = this.sanitizer.bypassSecurityTrustUrl(mat.unsafeUrl);
+    })
   }
 
 
@@ -192,6 +296,8 @@ export class DetailCharactersComponent implements OnInit {
       case 8: return "weapon-ascension"; break;
       case 9: return "weapon-experience"; break;
       default: return 'none'; break;
+
+
     }
   }
 
@@ -258,6 +364,8 @@ export class DetailCharactersComponent implements OnInit {
       this.choicedRankFromToMatList = []
     }
   }
+
+
 
   morasForm(num: any) {
     return `${num}`.replace(/\B(?=(\d{3})+(?!\d))/g, ' '); // copyright pierre bregeard

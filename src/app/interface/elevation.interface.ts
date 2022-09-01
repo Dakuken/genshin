@@ -1,4 +1,5 @@
 import { SafeUrl } from "@angular/platform-browser"
+import { Mat } from "./mat.interface"
 
 export interface Elevation {
   "rank": string
@@ -10,7 +11,8 @@ export interface Elevation {
     "pathName": string,
     "pathIndex": number,
     "unsafeUrl": string,
-    "url": SafeUrl
+    "url": SafeUrl,
+    "previous"?: Mat
   },
   "mat4": {
     "name": string,
@@ -18,7 +20,8 @@ export interface Elevation {
     "pathName": string,
     "pathIndex": number,
     "unsafeUrl": string,
-    "url": SafeUrl
+    "url": SafeUrl,
+    "previous"?: Mat
   },
   "mat2": {
     "name": string,
@@ -26,7 +29,8 @@ export interface Elevation {
     "pathName": string,
     "pathIndex": number,
     "unsafeUrl": string,
-    "url": SafeUrl
+    "url": SafeUrl,
+    "previous"?: Mat
   },
   "mat3": {
     "name": string,
@@ -34,6 +38,7 @@ export interface Elevation {
     "pathName": string,
     "pathIndex": number,
     "unsafeUrl": string,
-    "url": SafeUrl
+    "url": SafeUrl,
+    "previous"?: Mat
   }
 }
