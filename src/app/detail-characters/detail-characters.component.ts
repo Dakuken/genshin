@@ -54,7 +54,8 @@ export class DetailCharactersComponent implements OnInit {
       "pathName": '',
       "pathIndex": -1,
       "unsafeUrl": '',
-      "url": ''
+      "url": '',
+      "nbPrevious": 0
     },
     "mat4": {
       "name": '',
@@ -63,6 +64,7 @@ export class DetailCharactersComponent implements OnInit {
       "pathIndex": -1,
       "unsafeUrl": '',
       "url": '',
+      "nbPrevious": 0
     },
     "mat2": {
       "name": '',
@@ -70,7 +72,8 @@ export class DetailCharactersComponent implements OnInit {
       "pathName": '',
       "pathIndex": -1,
       "unsafeUrl": '',
-      "url": ''
+      "url": '',
+      "nbPrevious": 0
     },
     "mat3": {
       "name": '',
@@ -78,7 +81,8 @@ export class DetailCharactersComponent implements OnInit {
       "pathName": '',
       "pathIndex": -1,
       "unsafeUrl": '',
-      "url": ''
+      "url": '',
+      "nbPrevious": 0
     }
   }
 
@@ -129,29 +133,12 @@ export class DetailCharactersComponent implements OnInit {
 
   construcItem() {
 
-    // let elev: Elevation = this.elevation[3]
-    // let matElev: Mat[] = [elev.mat1, elev.mat2, elev.mat3, elev.mat4]
-    // // console.log(this.elevation[3]);
-    // // let material = elev.mat1
-    // // let str = this.prepareName(material.name).toLowerCase()
-    // // console.log(str);
-
-    // // matElev.forEach(material => {
-    // //   console.log(material);
-
-    // //   let str = this.prepareName(material.name).toLowerCase()
-    // //   console.log(str);
-
-    // //   let match = this.pouet(str, material)
-
-    // // });
-
     for (let i = 0; i <= this.elevation.length - 1; i++) {
       let elev: Elevation = this.elevation[i]
       let matElev: Mat[] = [elev.mat1, elev.mat2, elev.mat3, elev.mat4]
       matElev.forEach(material => {
         let str = this.prepareName(material.name).toLowerCase()
-        this.pouet(str, material)
+        this.pouet(str, material, material)
 
       });
 
@@ -164,10 +151,14 @@ export class DetailCharactersComponent implements OnInit {
     return newStr[newStr.length - 1]
   }
 
-  pouet(str: string, mat: Mat) {
+  pouet(str: string, mat: Mat, matOrigine: Mat) {
+    if (matOrigine.nbPrevious) {
+      matOrigine.nbPrevious += 1;
+    } else {
+      matOrigine.nbPrevious = 0
+    }
     let prede = this.hasPrede(str)
     if (prede === ' ') {
-      console.log('RETTURN');
       return ''
     }
     let stre = mat.name.split(' ')
@@ -187,10 +178,9 @@ export class DetailCharactersComponent implements OnInit {
       }
 
       this.getOneImg(newItem)
-      console.log(newItem, 'newItem');
       mat.previous = newItem
       let str = this.prepareName(newItem.name).toLowerCase()
-      this.pouet(str, newItem)
+      this.pouet(str, newItem, mat)
     }
     return
   }
