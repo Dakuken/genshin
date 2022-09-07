@@ -142,6 +142,20 @@ export class DetailCharactersComponent implements OnInit {
 
       });
 
+
+      matElev.forEach(material => {
+        let i = material.nbPrevious
+        let tab: number[] = []
+        if (i === undefined) {
+          tab = []
+        } else {
+          for (let j = 1; j <= i; j++) {
+            tab.push(j)
+          }
+
+        }
+        material.tabPrevious = tab
+      });
     }
     console.log(this.elevation);
   }
@@ -152,7 +166,7 @@ export class DetailCharactersComponent implements OnInit {
   }
 
   pouet(str: string, mat: Mat, matOrigine: Mat) {
-    if (matOrigine.nbPrevious) {
+    if (matOrigine.nbPrevious !== undefined) {
       matOrigine.nbPrevious += 1;
     } else {
       matOrigine.nbPrevious = 0
@@ -180,7 +194,7 @@ export class DetailCharactersComponent implements OnInit {
       this.getOneImg(newItem)
       mat.previous = newItem
       let str = this.prepareName(newItem.name).toLowerCase()
-      this.pouet(str, newItem, mat)
+      this.pouet(str, newItem, matOrigine)
     }
     return
   }
@@ -318,7 +332,6 @@ export class DetailCharactersComponent implements OnInit {
         if (tempRankMat[i].name === 'none') {
           tempRankMat.splice(i, 1)
         } else {
-          //s*mùlf,mldf
           tempRankMat[i].url = this.sanitizer.bypassSecurityTrustUrl(tempRankMat[i].unsafeUrl);
           if (option === 'one') {
             this.nbMat.push(y)

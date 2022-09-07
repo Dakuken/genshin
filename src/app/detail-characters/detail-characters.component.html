@@ -15,7 +15,7 @@
           <nb-option [value]="-1" (selectionChange)="wichRank('-1')">
             none
           </nb-option>
-          <nb-option *ngFor=" let elev of elevation" [value]="elev.rank" (selectionChange)="wichRank(elev.rank)">
+          <nb-option *ngFor="let elev of elevation" [value]="elev.rank" (selectionChange)="wichRank(elev.rank)">
             Rank : {{elev.rank}}
           </nb-option>
 
@@ -47,7 +47,7 @@
 
 
 
-        <div>
+        <div *ngFor="let i of choicedRankMat[0].tabPrevious">
           <p>{{choicedRankMat[0].previous?.name}}</p>
         </div>
 

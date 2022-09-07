@@ -8,5 +8,6 @@ export interface Mat {
   "unsafeUrl": string,
   "url": SafeUrl,
   "previous"?: Mat,
-  "nbPrevious"?: number
+  "nbPrevious"?: number,
+  "tabPrevious"?: number[]
 }
