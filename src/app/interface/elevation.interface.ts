@@ -12,9 +12,7 @@ export interface Elevation {
     "pathIndex": number,
     "unsafeUrl": string,
     "url": SafeUrl,
-    "previous"?: Mat,
-    "nbPrevious"?: number,
-    "tabPrevious"?: number[]
+    "previous": Mat[],
   },
   "mat4": {
     "name": string,
@@ -23,9 +21,7 @@ export interface Elevation {
     "pathIndex": number,
     "unsafeUrl": string,
     "url": SafeUrl,
-    "previous"?: Mat,
-    "nbPrevious"?: number,
-    "tabPrevious"?: number[]
+    "previous": Mat[],
   },
   "mat2": {
     "name": string,
@@ -34,9 +30,7 @@ export interface Elevation {
     "pathIndex": number,
     "unsafeUrl": string,
     "url": SafeUrl,
-    "previous"?: Mat,
-    "nbPrevious"?: number,
-    "tabPrevious"?: number[]
+    "previous": Mat[],
   },
   "mat3": {
     "name": string,
@@ -45,8 +39,6 @@ export interface Elevation {
     "pathIndex": number,
     "unsafeUrl": string,
     "url": SafeUrl,
-    "previous"?: Mat,
-    "nbPrevious"?: number,
-    "tabPrevious"?: number[]
+    "previous": Mat[],
   }
 }

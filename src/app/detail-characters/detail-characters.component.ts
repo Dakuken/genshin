@@ -55,7 +55,7 @@ export class DetailCharactersComponent implements OnInit {
       "pathIndex": -1,
       "unsafeUrl": '',
       "url": '',
-      "nbPrevious": 0
+      "previous": []
     },
     "mat4": {
       "name": '',
@@ -64,7 +64,7 @@ export class DetailCharactersComponent implements OnInit {
       "pathIndex": -1,
       "unsafeUrl": '',
       "url": '',
-      "nbPrevious": 0
+      "previous": []
     },
     "mat2": {
       "name": '',
@@ -73,7 +73,7 @@ export class DetailCharactersComponent implements OnInit {
       "pathIndex": -1,
       "unsafeUrl": '',
       "url": '',
-      "nbPrevious": 0
+      "previous": []
     },
     "mat3": {
       "name": '',
@@ -82,7 +82,7 @@ export class DetailCharactersComponent implements OnInit {
       "pathIndex": -1,
       "unsafeUrl": '',
       "url": '',
-      "nbPrevious": 0
+      "previous": []
     }
   }
 
@@ -95,6 +95,9 @@ export class DetailCharactersComponent implements OnInit {
     "url": '',
     "previous": ''
   }
+
+  common: any
+  commonTab: string[] = []
 
   choicedRankFromToMatList: Mat[] = []
   NBchoicedRankFromToMatList: number[] = []
@@ -127,6 +130,7 @@ export class DetailCharactersComponent implements OnInit {
       this.character = persoId.charAt(0).toUpperCase() + persoId.slice(1);
     }
     this.oneCarac()
+    this.prepareCommonAscension()
     this.getElevation()
 
   }
@@ -136,28 +140,17 @@ export class DetailCharactersComponent implements OnInit {
     for (let i = 0; i <= this.elevation.length - 1; i++) {
       let elev: Elevation = this.elevation[i]
       let matElev: Mat[] = [elev.mat1, elev.mat2, elev.mat3, elev.mat4]
-      matElev.forEach(material => {
-        let str = this.prepareName(material.name).toLowerCase()
-        this.pouet(str, material, material)
-
-      });
-
-
-      matElev.forEach(material => {
-        let i = material.nbPrevious
-        let tab: number[] = []
-        if (i === undefined) {
-          tab = []
-        } else {
-          for (let j = 1; j <= i; j++) {
-            tab.push(j)
-          }
-
+      matElev.forEach((material, index) => {
+        if (index === 0) {
+          let str = this.prepareName(material.name).toLowerCase()
+          this.characterAscensionConvert(str, material, material)
+        } else if (index === 2) {
+          this.commonAscensionConvert(material)
         }
-        material.tabPrevious = tab
       });
     }
     console.log(this.elevation);
+
   }
 
   prepareName(str: string): string {
@@ -165,12 +158,7 @@ export class DetailCharactersComponent implements OnInit {
     return newStr[newStr.length - 1]
   }
 
-  pouet(str: string, mat: Mat, matOrigine: Mat) {
-    if (matOrigine.nbPrevious !== undefined) {
-      matOrigine.nbPrevious += 1;
-    } else {
-      matOrigine.nbPrevious = 0
-    }
+  characterAscensionConvert(str: string, mat: Mat, matOrigine: Mat) {
     let prede = this.hasPrede(str)
     if (prede === ' ') {
       return ''
@@ -189,12 +177,15 @@ export class DetailCharactersComponent implements OnInit {
         "pathIndex": pouet.index,
         "unsafeUrl": '',
         "url": '',
+        "previous": []
       }
-
+      if (matOrigine.previous === undefined) {
+        matOrigine.previous = []
+      }
       this.getOneImg(newItem)
-      mat.previous = newItem
+      matOrigine.previous?.push(newItem)
       let str = this.prepareName(newItem.name).toLowerCase()
-      this.pouet(str, newItem, matOrigine)
+      this.characterAscensionConvert(str, newItem, matOrigine)
     }
     return
   }
@@ -208,6 +199,46 @@ export class DetailCharactersComponent implements OnInit {
 
     return ' '
   }
+  commonAscensionConvert(material: Mat) {
+    this.commonTab.forEach(key => {
+      (<string[]>this.common[key].characters).forEach(name => {
+        if (name === this.character?.toLowerCase()) {
+          console.log();
+          (this.common[key].items).forEach((object: { "id": string, "name": string, "rarity": number }, index: number) => {
+            let rar = -1;
+            if (object.id === material.name.split(' ').join('-').toLowerCase() && object.rarity !== 1) {
+              rar = object.rarity
+            }
+
+            if (rar !== -1) {
+              let qte = Number(material.qte)
+              for (let i = 0; i < rar - 1; i++) {
+                let baseMat = this.common[key].items[i]
+                let pouet = this.oukilai(baseMat.name.split(' ').join('-'))
+                let newItem: Mat = {
+                  "name": baseMat.name,
+                  "qte": (i === 0) ? String(qte * 9) : String(qte * 3),
+                  "pathName": pouet.name,
+                  "pathIndex": pouet.index,
+                  "unsafeUrl": '',
+                  "url": '',
+                  "previous": []
+                }
+                if (material.previous === undefined) {
+                  material.previous = []
+                }
+                this.getOneImg(newItem)
+                material.previous.push(newItem)
+                console.log(newItem);
+
+              }
+            }
+          });
+        }
+      })
+    });
+  }
+
 
   oneCarac() {
     return this.characServ.GetOneCarac(<string>this.character).subscribe((data: Character) => {
@@ -271,6 +302,7 @@ export class DetailCharactersComponent implements OnInit {
 
   oukilai(name: string): { name: string, index: number } {
     name = name.toLowerCase()
+
     const skifo = [this.imagePath?.boss_material, this.imagePath?.character_ascension, this.imagePath?.character_experience,
     this.imagePath?.common_ascension, this.imagePath?.cooking_ingredients, this.imagePath?.local_specialties,
     this.imagePath?.talent_book, this.imagePath?.talent_boss, this.imagePath?.weapon_ascension,
@@ -279,8 +311,8 @@ export class DetailCharactersComponent implements OnInit {
     for (let i = 0; i <= skifo.length - 1; i++) {
       let index: number = <number>skifo[i]?.map((e: any) => e).indexOf(name)
       if (index !== -1) {
-        let name = this.caseImagePath(i)
-        return { name, index }
+        let name2 = this.caseImagePath(i)
+        return { name: name2, index }
       }
     }
     return { name: 'none', index: -1 }
@@ -303,6 +335,21 @@ export class DetailCharactersComponent implements OnInit {
 
 
     }
+  }
+
+  prepareCommonAscension() {
+    this.characServ.GetCommonAscension().subscribe((data: Object) => {
+      this.common = data
+      this.commonTab = Object.keys(this.common)
+      //? to remove unused weapons items
+      this.commonTab.forEach(item => {
+        if (this.common[item].weapons !== undefined) {
+          delete this.common[item]
+        }
+      });
+      this.commonTab = Object.keys(this.common)
+    })
+
   }
 
 
@@ -435,7 +482,8 @@ export class DetailCharactersComponent implements OnInit {
         "pathName": '',
         "pathIndex": -1,
         "unsafeUrl": '',
-        "url": ''
+        "url": '',
+        "previous": []
       },
       "mat4": {
         "name": '',
@@ -443,7 +491,8 @@ export class DetailCharactersComponent implements OnInit {
         "pathName": '',
         "pathIndex": -1,
         "unsafeUrl": '',
-        "url": ''
+        "url": '',
+        "previous": []
       },
       "mat2": {
         "name": '',
@@ -451,7 +500,8 @@ export class DetailCharactersComponent implements OnInit {
         "pathName": '',
         "pathIndex": -1,
         "unsafeUrl": '',
-        "url": ''
+        "url": '',
+        "previous": []
       },
       "mat3": {
         "name": '',
@@ -459,7 +509,8 @@ export class DetailCharactersComponent implements OnInit {
         "pathName": '',
         "pathIndex": -1,
         "unsafeUrl": '',
-        "url": ''
+        "url": '',
+        "previous": []
       }
     }
   }

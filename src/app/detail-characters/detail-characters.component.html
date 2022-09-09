@@ -34,6 +34,8 @@
             </div>
           </nb-card-header>
           <nb-card-body>
+
+
             <label [for]="choicedRankMat[i].name">
               <div class="counter">
                 <div class="styledCounter">
@@ -42,14 +44,14 @@
                 </div>
               </div>
             </label>
+            <div *ngFor="let mat of choicedRankMat[i].previous">
+              <p>{{mat.name}}</p>
+              <p>{{mat.qte}}</p>
+            </div>
           </nb-card-body>
         </nb-card>
 
 
-
-        <div *ngFor="let i of choicedRankMat[0].tabPrevious">
-          <p>{{choicedRankMat[0].previous?.name}}</p>
-        </div>
 
       </div>
 
