@@ -149,7 +149,6 @@ export class DetailCharactersComponent implements OnInit {
         }
       });
     }
-    console.log(this.elevation);
 
   }
 
@@ -200,12 +199,13 @@ export class DetailCharactersComponent implements OnInit {
     return ' '
   }
   commonAscensionConvert(material: Mat) {
+
     this.commonTab.forEach(key => {
       (<string[]>this.common[key].characters).forEach(name => {
         if (name === this.character?.toLowerCase()) {
-          console.log();
           (this.common[key].items).forEach((object: { "id": string, "name": string, "rarity": number }, index: number) => {
             let rar = -1;
+
             if (object.id === material.name.split(' ').join('-').toLowerCase() && object.rarity !== 1) {
               rar = object.rarity
             }
@@ -229,7 +229,6 @@ export class DetailCharactersComponent implements OnInit {
                 }
                 this.getOneImg(newItem)
                 material.previous.push(newItem)
-                console.log(newItem);
 
               }
             }
@@ -266,7 +265,6 @@ export class DetailCharactersComponent implements OnInit {
         let name = (<string>materials[i].name).replace(regEspace, '-')
         name = name.replace(regPostrophe, '-')
         name = name.toLowerCase()
-
 
         if (name !== 'none') {
           let item = this.oukilai(name)
@@ -307,10 +305,11 @@ export class DetailCharactersComponent implements OnInit {
     this.imagePath?.common_ascension, this.imagePath?.cooking_ingredients, this.imagePath?.local_specialties,
     this.imagePath?.talent_book, this.imagePath?.talent_boss, this.imagePath?.weapon_ascension,
     this.imagePath?.weapon_experience]
-
     for (let i = 0; i <= skifo.length - 1; i++) {
       let index: number = <number>skifo[i]?.map((e: any) => e).indexOf(name)
+
       if (index !== -1) {
+
         let name2 = this.caseImagePath(i)
         return { name: name2, index }
       }
@@ -348,6 +347,7 @@ export class DetailCharactersComponent implements OnInit {
         }
       });
       this.commonTab = Object.keys(this.common)
+      console.table(this.commonTab)
     })
 
   }

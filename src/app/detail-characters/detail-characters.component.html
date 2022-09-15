@@ -26,33 +26,43 @@
 
       <div class="elevation1" *ngIf="choicedRank !== undefined && choicedRank !== null && selectedOption !== '-1'">
 
-        <nb-card accent="info" *ngFor="let i of nbMat" class="item">
-          <nb-card-header>
-            <div class="itemRankHeader">
-              <img [src]="choicedRankMat[i].url" class="imageItem">
-              <p>{{choicedRankMat[i].name}}</p>
-            </div>
-          </nb-card-header>
-          <nb-card-body>
+        <div *ngFor="let i of nbMat" class="item">
 
 
-            <label [for]="choicedRankMat[i].name">
-              <div class="counter">
-                <div class="styledCounter">
-                  <input [id]='choicedRankMat[i].name' type="number" nbInput placeholder="0"><!-- [max]="choicedRankMat[i].qte" -->
-                  <p>/ {{choicedRankMat[i].qte}}</p>
-                </div>
-              </div>
-            </label>
+          <div class="item-previous">
             <div *ngFor="let mat of choicedRankMat[i].previous">
               <p>{{mat.name}}</p>
               <p>{{mat.qte}}</p>
+              <p>{{mat.url}}</p>
             </div>
-          </nb-card-body>
-        </nb-card>
+          </div>
 
 
 
+          <div>
+            <nb-card accent="info">
+              <nb-card-header>
+                <div class="itemRankHeader">
+                  <img [src]="choicedRankMat[i].url" class="imageItem">
+                  <p>{{choicedRankMat[i].name}}</p>
+                </div>
+              </nb-card-header>
+              <nb-card-body>
+                <label [for]="choicedRankMat[i].name">
+                  <div class="counter">
+                    <div class="styledCounter">
+                      <input [id]='choicedRankMat[i].name' type="number" nbInput placeholder="0"><!-- [max]="choicedRankMat[i].qte" -->
+                      <p>/ {{choicedRankMat[i].qte}}</p>
+                    </div>
+                  </div>
+                </label>
+
+              </nb-card-body>
+            </nb-card>
+          </div>
+
+
+        </div>
       </div>
 
     </nb-card-body>
