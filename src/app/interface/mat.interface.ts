@@ -6,6 +6,6 @@ export interface Mat {
   "pathName": string,
   "pathIndex": number,
   "unsafeUrl": string,
-  "url": SafeUrl,
+  "url": any,
   "previous": Mat[],
 }

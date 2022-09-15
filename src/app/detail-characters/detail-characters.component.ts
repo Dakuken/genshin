@@ -6,16 +6,68 @@ import { Mat } from '../interface/mat.interface';
 import { Elevation } from '../interface/elevation.interface';
 import { Character } from '../interface/character.interface';
 import { imageRef } from '../interface/image-ref.interface';
+import {
+  trigger,
+  state,
+  style,
+  animate,
+  transition,
+  query,
+  animateChild,
+  group,
+} from '@angular/animations';
 
 @Component({
   selector: 'app-detail-characters',
   templateUrl: './detail-characters.component.html',
-  styleUrls: ['./detail-characters.component.scss']
+  styleUrls: ['./detail-characters.component.scss'],
+  animations: [
+
+    trigger('openClose', [
+      state('open', style({
+      })
+      ),
+      state('closed', style({
+        height: '300px',
+      })),
+      transition('open => closed', [
+        group([query('@child', animateChild()),
+        animate('0.2s ease-out'),]),
+
+      ]),
+
+      transition('closed => open', [
+        group([query('@child', animateChild()),
+        animate('0.2s ease-out'),]),
+      ]),
+
+    ]),
+    trigger('child', [
+      transition(':enter', [
+        style({ opacity: 0 }),
+        animate('0.2s', style({ opacity: 1 }),)
+      ]),
+      transition(':leave', [
+        animate('0.2s', style({ opacity: 0 }),)
+      ]),
+    ]),
+  ],
 })
+
 export class DetailCharactersComponent implements OnInit {
+
   selectedOption: string = '-1' //let undefined to start
   selectedOptionFrom: string = '-1'
   selectedOptionTo: string = '-1'
+
+
+  isOpen = false;
+
+  toggle() {
+    this.isOpen = !this.isOpen;
+  }
+
+  convertFocus: boolean[] = [false, false, false, false];
 
   nbMat: number[] = []
 
@@ -181,7 +233,11 @@ export class DetailCharactersComponent implements OnInit {
       if (matOrigine.previous === undefined) {
         matOrigine.previous = []
       }
+
+
       this.getOneImg(newItem)
+
+
       matOrigine.previous?.push(newItem)
       let str = this.prepareName(newItem.name).toLowerCase()
       this.characterAscensionConvert(str, newItem, matOrigine)
@@ -275,8 +331,6 @@ export class DetailCharactersComponent implements OnInit {
             this.characServ.GetImage(materials[i].pathName + '/' + name).subscribe((response: any) => {
               let UnsafeUrl = window.URL.createObjectURL(response)
               materials[i].unsafeUrl = UnsafeUrl
-
-
             })
           }
         }
@@ -293,7 +347,7 @@ export class DetailCharactersComponent implements OnInit {
     this.characServ.GetImage(mat.pathName + '/' + name).subscribe((response: any) => {
       let UnsafeUrl = window.URL.createObjectURL(response)
       mat.unsafeUrl = UnsafeUrl
-      mat.url = this.sanitizer.bypassSecurityTrustUrl(mat.unsafeUrl);
+      // mat.url = this.sanitizer.bypassSecurityTrustUrl(mat.unsafeUrl);
     })
   }
 
@@ -380,6 +434,11 @@ export class DetailCharactersComponent implements OnInit {
           tempRankMat.splice(i, 1)
         } else {
           tempRankMat[i].url = this.sanitizer.bypassSecurityTrustUrl(tempRankMat[i].unsafeUrl);
+          if (tempRankMat[i].previous !== undefined) {
+            tempRankMat[i].previous.forEach(prevent => {
+              prevent.url = this.sanitizer.bypassSecurityTrustUrl(prevent.unsafeUrl);
+            });
+          }
           if (option === 'one') {
             this.nbMat.push(y)
           }
@@ -400,6 +459,7 @@ export class DetailCharactersComponent implements OnInit {
       this.choicedRankTo = tempRank
       this.choicedRankMatTo = tempRankMat
     }
+
     if (this.choicedRankFrom !== undefined && this.choicedRankTo !== undefined) {
       if (this.choicedRankFrom.rank <= this.choicedRankTo.rank) {
         this.calculFromTo()
@@ -423,7 +483,6 @@ export class DetailCharactersComponent implements OnInit {
 
   calculFromTo() {
     this.NBchoicedRankFromToMatList = []
-    this.empty()
     this.choicedRankFromToMatList = []
 
     let matList: Mat[] = []
@@ -470,47 +529,12 @@ export class DetailCharactersComponent implements OnInit {
 
   }
 
+  onFocus(nb: number, mat: Mat) {
+    if (mat.previous !== undefined) {
+      if (nb === 0 || nb === 2) {
 
-  empty() {
-    this.choicedRankFromToObject = {
-      "rank": '',
-      "lvl": '',
-      "cost": '',
-      "mat1": {
-        "name": '',
-        "qte": '',
-        "pathName": '',
-        "pathIndex": -1,
-        "unsafeUrl": '',
-        "url": '',
-        "previous": []
-      },
-      "mat4": {
-        "name": '',
-        "qte": '',
-        "pathName": '',
-        "pathIndex": -1,
-        "unsafeUrl": '',
-        "url": '',
-        "previous": []
-      },
-      "mat2": {
-        "name": '',
-        "qte": '',
-        "pathName": '',
-        "pathIndex": -1,
-        "unsafeUrl": '',
-        "url": '',
-        "previous": []
-      },
-      "mat3": {
-        "name": '',
-        "qte": '',
-        "pathName": '',
-        "pathIndex": -1,
-        "unsafeUrl": '',
-        "url": '',
-        "previous": []
+        this.convertFocus[nb] = !this.convertFocus[nb]
+        console.log(this.convertFocus[nb]);
       }
     }
   }

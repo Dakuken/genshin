@@ -25,38 +25,44 @@
       </div>
 
       <div class="elevation1" *ngIf="choicedRank !== undefined && choicedRank !== null && selectedOption !== '-1'">
-
-        <div *ngFor="let i of nbMat" class="item">
-
-
-          <div class="item-previous">
-            <div *ngFor="let mat of choicedRankMat[i].previous">
-              <p>{{mat.name}}</p>
-              <p>{{mat.qte}}</p>
-              <p>{{mat.url}}</p>
-            </div>
-          </div>
-
-
-
-          <div>
+        <!-- -->
+        <div *ngFor="let i of nbMat" class="item" (mouseenter)="onFocus(i,choicedRankMat[i])" (mouseleave)="onFocus(i,choicedRankMat[i])">
+          <div [@openClose]="convertFocus[i]? 'open' : 'closed'">
+            <!--   -->
             <nb-card accent="info">
-              <nb-card-header>
-                <div class="itemRankHeader">
-                  <img [src]="choicedRankMat[i].url" class="imageItem">
+              <nb-card-body>
+                <div class="item-rank-header">
+                  <img [src]="choicedRankMat[i].url" class="item-image">
                   <p>{{choicedRankMat[i].name}}</p>
                 </div>
-              </nb-card-header>
-              <nb-card-body>
                 <label [for]="choicedRankMat[i].name">
-                  <div class="counter">
-                    <div class="styledCounter">
-                      <input [id]='choicedRankMat[i].name' type="number" nbInput placeholder="0"><!-- [max]="choicedRankMat[i].qte" -->
-                      <p>/ {{choicedRankMat[i].qte}}</p>
+                  <div class="over">
+
+                    <div class=" item-counter">
+                      <div class="item-counter_styled">
+                        <input [id]='choicedRankMat[i].name' type="number" nbInput placeholder="0"><!-- [max]="choicedRankMat[i].qte" -->
+                        <p>/ {{choicedRankMat[i].qte}}</p>
+                      </div>
                     </div>
+
+                    <div *ngIf="convertFocus[i]" [@child] class="machin">
+                      <div *ngFor="let mat of choicedRankMat[i].previous">
+
+                        <div class="item-rank-header">
+                          <img [src]="mat.url" class="item-image-little">
+                          <p>{{mat.name}}</p>
+                        </div>
+                        <div class="item-counter">
+                          <div class="item-counter_styled">
+                            <input type="number" nbInput placeholder="0">
+                            <p>/ {{mat.qte}}</p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
                   </div>
                 </label>
-
               </nb-card-body>
             </nb-card>
           </div>
@@ -67,7 +73,6 @@
 
     </nb-card-body>
   </nb-card>
-
 
   <nb-card accent="info">
     <nb-card-header class="noPad">
@@ -103,15 +108,15 @@
 
         <nb-card accent="info" *ngFor="let i of NBchoicedRankFromToMatList" class="item">
           <nb-card-header>
-            <div class="itemRankHeader">
-              <img [src]="choicedRankFromToMatList[i].url" class="imageItem">
+            <div class="item-rank-header">
+              <img [src]="choicedRankFromToMatList[i].url" class="item-image">
               <p>{{choicedRankFromToMatList[i].name}}</p>
             </div>
           </nb-card-header>
           <nb-card-body>
             <label [for]="choicedRankFromToMatList[i].name">
-              <div class="counter">
-                <div class="styledCounter">
+              <div class="item-counter">
+                <div class="item-counter_styled">
                   <input [id]='choicedRankFromToMatList[i].name' type="number" nbInput placeholder="0"><!-- [max]="choicedRankMat[i].qte"  -->
                   <p>/ {{choicedRankFromToMatList[i].qte}}</p>
                 </div>
