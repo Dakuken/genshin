@@ -39,7 +39,7 @@
                   <div class="over">
                     <div class=" item-counter">
                       <div class="item-counter_styled">
-                        <input [value]="choicedRankMat[i].qteUser" [id]='choicedRankMat[i].name' type="text" nbInput placeholder="0" (change)="handler($event, i)">
+                        <input [value]="choicedRankMat[i].qteUser" [id]='choicedRankMat[i].name' type="number" nbInput placeholder="0" (keyup)="handler($event, i)">
                         <p>/ {{choicedRankMat[i].qte}}</p>
                       </div>
                     </div>
@@ -53,7 +53,7 @@
                         </div>
                         <div class="item-counter">
                           <div class="item-counter_styled">
-                            <input type="number" nbInput placeholder="0" [name]="mat.name">
+                            <input type="number" nbInput placeholder="0" [value]="mat.qteUser" [id]='mat.name' (keyup)="handler2($event, mat)">
                             <p>/ {{mat.qte}}</p>
                           </div>
                         </div>

@@ -95,7 +95,7 @@ export class DetailCharactersComponent implements OnInit {
   choicedRankTo?: Elevation
   choicedRankMatTo: Mat[] = []
 
-  inputMainValue = '0'
+  inputMainValue = ' '
 
   choicedRankFromTo = false
   choicedRankFromToObject: Elevation = {
@@ -105,7 +105,7 @@ export class DetailCharactersComponent implements OnInit {
     "mat1": {
       "name": '',
       "qte": '',
-      "qteUser": '0',
+      "qteUser": ' ',
       "pathName": '',
       "pathIndex": -1,
       "unsafeUrl": '',
@@ -115,7 +115,7 @@ export class DetailCharactersComponent implements OnInit {
     "mat4": {
       "name": '',
       "qte": '',
-      "qteUser": '0',
+      "qteUser": ' ',
       "pathName": '',
       "pathIndex": -1,
       "unsafeUrl": '',
@@ -125,7 +125,7 @@ export class DetailCharactersComponent implements OnInit {
     "mat2": {
       "name": '',
       "qte": '',
-      "qteUser": '0',
+      "qteUser": ' ',
       "pathName": '',
       "pathIndex": -1,
       "unsafeUrl": '',
@@ -135,7 +135,7 @@ export class DetailCharactersComponent implements OnInit {
     "mat3": {
       "name": '',
       "qte": '',
-      "qteUser": '0',
+      "qteUser": ' ',
       "pathName": '',
       "pathIndex": -1,
       "unsafeUrl": '',
@@ -203,7 +203,7 @@ export class DetailCharactersComponent implements OnInit {
       let elev: Elevation = this.elevation[i]
       let matElev: Mat[] = [elev.mat1, elev.mat2, elev.mat3, elev.mat4]
       matElev.forEach((material, index) => {
-        material.qteUser = '0'
+        material.qteUser = ' '
         if (index === 0) {
           let str = this.prepareName(material.name).toLowerCase()
           this.characterAscensionConvert(str, material, material)
@@ -235,7 +235,7 @@ export class DetailCharactersComponent implements OnInit {
       let newItem: Mat = {
         "name": name,
         "qte": String(Number(mat.qte) * 3),
-        "qteUser": '0',
+        "qteUser": ' ',
         "pathName": pouet.name,
         "pathIndex": pouet.index,
         "unsafeUrl": '',
@@ -286,7 +286,7 @@ export class DetailCharactersComponent implements OnInit {
                 let newItem: Mat = {
                   "name": baseMat.name,
                   "qte": (i === 0) ? String(qte * 9) : String(qte * 3),
-                  "qteUser": '0',
+                  "qteUser": ' ',
                   "pathName": pouet.name,
                   "pathIndex": pouet.index,
                   "unsafeUrl": '',
@@ -564,7 +564,7 @@ export class DetailCharactersComponent implements OnInit {
 
   qte(mat: Mat, nb: number | null) {
     if (nb === null) {
-      mat.qteUser = '0'
+      mat.qteUser = ' '
       return
     }
     mat.qteUser = String(nb)
@@ -573,7 +573,10 @@ export class DetailCharactersComponent implements OnInit {
 
   handler(e: Event, i: number) {
     this.choicedRankMat[i].qteUser = (<HTMLInputElement>e.target).value
+  }
 
+  handler2(e: Event, mat: Mat) {
+    mat.qteUser = (<HTMLInputElement>e.target).value
   }
 }
 
