@@ -203,7 +203,6 @@ export class DetailCharactersComponent implements OnInit {
     this.commonTab.forEach(key => {
       (<string[]>this.common[key].characters).forEach(name => {
         if (name === this.character?.toLowerCase()) {
-          console.log();
           (this.common[key].items).forEach((object: { "id": string, "name": string, "rarity": number }, index: number) => {
             let rar = -1;
             if (object.id === material.name.split(' ').join('-').toLowerCase() && object.rarity !== 1) {
@@ -215,6 +214,8 @@ export class DetailCharactersComponent implements OnInit {
               for (let i = 0; i < rar - 1; i++) {
                 let baseMat = this.common[key].items[i]
                 let pouet = this.oukilai(baseMat.name.split(' ').join('-'))
+                // console.log(`%c${pouet.name}`, 'color : red');
+
                 let newItem: Mat = {
                   "name": baseMat.name,
                   "qte": (i === 0) ? String(qte * 9) : String(qte * 3),

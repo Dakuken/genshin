@@ -18,8 +18,8 @@
           <nb-option *ngFor="let elev of elevation" [value]="elev.rank" (selectionChange)="wichRank(elev.rank)">
             Rank : {{elev.rank}}
           </nb-option>
-
         </nb-select>
+
         <p *ngIf="choicedRank !== undefined"> LEVEL REQUIRED : {{choicedRank.lvl}}</p>
         <p *ngIf="choicedRank !== undefined"> MORAS REQUIRED: {{morasForm(choicedRank.cost)}}</p>
       </div>
