@@ -575,8 +575,22 @@ export class DetailCharactersComponent implements OnInit {
     this.choicedRankMat[i].qteUser = (<HTMLInputElement>e.target).value
   }
 
-  handler2(e: Event, mat: Mat) {
+  handler2(e: Event, mat: Mat, matorigine: Mat) {
+    console.log(mat);
+    console.log(matorigine);
+    console.log(matorigine.previous[0]);
+    console.log(mat === matorigine.previous[0]);
+    let index = matorigine.previous.indexOf(mat)
+    console.log(index);
+    this.conversion(matorigine)
+
+
     mat.qteUser = (<HTMLInputElement>e.target).value
+  }
+
+  conversion(mat: Mat) {
+    //? prevous.length au moins 1
+
   }
 }
 
