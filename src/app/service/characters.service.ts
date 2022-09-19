@@ -2,8 +2,8 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
-// const endpoint = 'https://fleet-gamma-360406.ew.r.appspot.com/';
-const endpoint = 'http://localhost:8080/';
+const endpoint = 'https://api-genshin1.ey.r.appspot.com/';
+// const endpoint = 'http://localhost:8080/';
 const token = 'my JWT';
 const headers = new HttpHeaders({
   'Content-Type': 'file',
