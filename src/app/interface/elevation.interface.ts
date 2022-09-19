@@ -8,6 +8,7 @@ export interface Elevation {
   "mat1": {
     "name": string,
     "qte": string,
+    "qteUser": string,
     "pathName": string,
     "pathIndex": number,
     "unsafeUrl": string,
@@ -17,6 +18,7 @@ export interface Elevation {
   "mat4": {
     "name": string,
     "qte": string,
+    "qteUser": string,
     "pathName": string,
     "pathIndex": number,
     "unsafeUrl": string,
@@ -26,6 +28,7 @@ export interface Elevation {
   "mat2": {
     "name": string,
     "qte": string,
+    "qteUser": string,
     "pathName": string,
     "pathIndex": number,
     "unsafeUrl": string,
@@ -35,6 +38,7 @@ export interface Elevation {
   "mat3": {
     "name": string,
     "qte": string,
+    "qteUser": string,
     "pathName": string,
     "pathIndex": number,
     "unsafeUrl": string,
