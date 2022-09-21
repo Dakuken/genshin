@@ -266,8 +266,8 @@ export class DetailCharactersComponent implements OnInit {
 
     return ' '
   }
-  commonAscensionConvert(material: Mat) {
 
+  commonAscensionConvert(material: Mat) {
     this.commonTab.forEach(key => {
       (<string[]>this.common[key].characters).forEach(name => {
         if (name === this.character?.toLowerCase()) {
@@ -284,10 +284,19 @@ export class DetailCharactersComponent implements OnInit {
                 let baseMat = this.common[key].items[i]
                 let pouet = this.oukilai(baseMat.name.split(' ').join('-'))
                 // console.log(`%c${pouet.name}`, 'color : red');
-
+                let qteConver = 0
+                if (rar === 2) {
+                  qteConver = qte * 3
+                } else {
+                  if (i === 0) {
+                    qteConver = qte * 9
+                  } else {
+                    qteConver = qte * 3
+                  }
+                }
                 let newItem: Mat = {
                   "name": baseMat.name,
-                  "qte": (i === 0) ? String(qte * 9) : String(qte * 3),
+                  "qte": String(qteConver),
                   "qteUser": ' ',
                   "pathName": pouet.name,
                   "pathIndex": pouet.index,
@@ -300,7 +309,6 @@ export class DetailCharactersComponent implements OnInit {
                 }
                 this.getOneImg(newItem)
                 material.previous.push(newItem)
-
               }
             }
           });
