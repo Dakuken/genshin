@@ -31,7 +31,7 @@ export class CharactersService {
     return this.http.get(endpoint + `elevation/${str}`)
   }
 
-  GetImage(str: string): Observable<any> {
+  getImage(str: string): Observable<any> {
     return this.http.get(endpoint + `materials/${str}`, { responseType: 'blob' })
   }
 

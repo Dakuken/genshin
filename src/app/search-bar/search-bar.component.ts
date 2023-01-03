@@ -52,7 +52,6 @@ export class SearchBarComponent implements OnInit {
     return this.charac.GetCharacList().subscribe((data: {}) => {
       this.allCharac = <string[]>data
       this.charachters = this.allCharac
-      console.log(this.charachters);
     })
   }
 

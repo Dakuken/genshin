@@ -1,21 +1,14 @@
-import { Component, OnInit, ɵɵclassMapInterpolate1 } from '@angular/core';
-import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
-import { ActivatedRoute, Params, Router } from '@angular/router';
-import { CharactersService } from '../service/characters.service';
-import { Mat } from '../interface/mat.interface';
-import { Elevation } from '../interface/elevation.interface';
-import { Character } from '../interface/character.interface';
-import { imageRef } from '../interface/image-ref.interface';
-import {
-  trigger,
-  state,
-  style,
-  animate,
-  transition,
-  query,
-  animateChild,
-  group,
-} from '@angular/animations';
+import {Component, OnInit} from '@angular/core';
+import {DomSanitizer} from '@angular/platform-browser';
+import {ActivatedRoute, Router} from '@angular/router';
+import {CharactersService} from '../service/characters.service';
+import {Mat} from '../interface/mat.interface';
+import {Elevation} from '../interface/elevation.interface';
+import {Character} from '../interface/character.interface';
+import {imageRef} from '../interface/image-ref.interface';
+import {animate, animateChild, group, query, state, style, transition, trigger,} from '@angular/animations';
+import {ElevationClass} from "../class/elevation.class";
+import {MatClass} from "../class/mat.class";
 
 @Component({
   selector: 'app-detail-characters',
@@ -24,31 +17,30 @@ import {
   animations: [
 
     trigger('openClose', [
-      state('open', style({
-      })
+      state('open', style({})
       ),
       state('closed', style({
         height: '300px',
       })),
       transition('open => closed', [
         group([query('@child', animateChild()),
-        animate('0.2s ease-out'),]),
+          animate('0.2s ease-out'),]),
 
       ]),
 
       transition('closed => open', [
         group([query('@child', animateChild()),
-        animate('0.2s ease-out'),]),
+          animate('0.2s ease-out'),]),
       ]),
 
     ]),
     trigger('child', [
       transition(':enter', [
-        style({ opacity: 0 }),
-        animate('0.2s', style({ opacity: 1 }),)
+        style({opacity: 0}),
+        animate('0.2s', style({opacity: 1}),)
       ]),
       transition(':leave', [
-        animate('0.2s', style({ opacity: 0 }),)
+        animate('0.2s', style({opacity: 0}),)
       ]),
     ]),
   ],
@@ -60,31 +52,19 @@ export class DetailCharactersComponent implements OnInit {
   selectedOptionFrom: string = '-1'
   selectedOptionTo: string = '-1'
 
-
-  isOpen = false;
-
-  toggle() {
-    this.isOpen = !this.isOpen;
-  }
-
   convertFocus: boolean[] = [false, false, false, false];
 
   nbMat: number[] = []
 
   elevation: Elevation[] = []
 
-  img: { name: string, url: SafeUrl }[] = []
 
   character: string | undefined
 
   detail?: Character // define OnInit
 
-  routeParams: Params //define OnInit
 
   imagePath?: imageRef  //OnInit
-
-  imagePlaceName: string[] = []
-  characList: string[] = []
 
   choicedRank?: Elevation
   choicedRankMat: Mat[] = []
@@ -96,63 +76,7 @@ export class DetailCharactersComponent implements OnInit {
   choicedRankMatTo: Mat[] = []
 
   inputMainValue = ' '
-
-  choicedRankFromTo = false
-  choicedRankFromToObject: Elevation = {
-    "rank": '',
-    "lvl": '',
-    "cost": '',
-    "mat1": {
-      "name": '',
-      "qte": '',
-      "qteUser": ' ',
-      "pathName": '',
-      "pathIndex": -1,
-      "unsafeUrl": '',
-      "url": '',
-      "previous": []
-    },
-    "mat4": {
-      "name": '',
-      "qte": '',
-      "qteUser": ' ',
-      "pathName": '',
-      "pathIndex": -1,
-      "unsafeUrl": '',
-      "url": '',
-      "previous": []
-    },
-    "mat2": {
-      "name": '',
-      "qte": '',
-      "qteUser": ' ',
-      "pathName": '',
-      "pathIndex": -1,
-      "unsafeUrl": '',
-      "url": '',
-      "previous": []
-    },
-    "mat3": {
-      "name": '',
-      "qte": '',
-      "qteUser": ' ',
-      "pathName": '',
-      "pathIndex": -1,
-      "unsafeUrl": '',
-      "url": '',
-      "previous": []
-    }
-  }
-
-  matVierge = {
-    "name": '',
-    "qte": '',
-    "pathName": '',
-    "pathIndex": '',
-    "unsafeUrl": '',
-    "url": '',
-    "previous": ''
-  }
+  choicedRankFromToObject: Elevation = new ElevationClass()
 
   common: any
   commonTab: string[] = []
@@ -164,36 +88,41 @@ export class DetailCharactersComponent implements OnInit {
     this.characServ.GetImagePath().subscribe((data: any) => {
       this.imagePath = data
     })
-    this.routeParams = this.route.params
   }
 
-  ngOnInit(): void {
-    this.characServ.GetCharacList().subscribe((data: string[]) => {
-      this.characList = data
-      this.route.params.subscribe((data: Params) => {
-        this.routeParams = data
-        this.toutFaire()
-
-      })
-
-    })
-
-  }
-
-  toutFaire() {
+  async ngOnInit() {
     const persoId: string | null = this.route.snapshot.paramMap.get('id')
-    if (this.characList.indexOf(<string>persoId) === -1) {
-      this.router.navigate(['home'])
-      return
-    }
+    let isGood = false
+    await this.goodRoute(<string>persoId).then(data =>
+      isGood = data
+    )
     if (persoId) {
       this.character = persoId.charAt(0).toUpperCase() + persoId.slice(1);
     }
-    this.oneCarac()
-    this.prepareCommonAscension()
+    if (isGood) {
+      await this.toutFaire()
+    }
+  }
+
+  goodRoute(persoId: string): Promise<boolean> {
+    let index = -1
+    return new Promise<boolean>((res) => {
+      this.characServ.GetCharacList().subscribe((data: string[]) => {
+        index = data.indexOf(<string>persoId)
+        if (index === -1) {
+          this.router.navigate(['home']).then(r => console.log(r))
+          res(false)
+        }
+        res(true)
+      })
+    })
+  }
+
+
+  async toutFaire() {
+    await this.oneCarac()
+    await this.getAscensionItem()
     this.getElevation()
-
-
 
   }
 
@@ -230,18 +159,14 @@ export class DetailCharactersComponent implements OnInit {
     let name = stre.join(' ')
 
     if (prede !== ' ') {
-      let pouet = this.oukilai(name.split(' ').join('-'))
+      let pouet = this.searchImage(name.split(' ').join('-'))
 
-      let newItem: Mat = {
-        "name": name,
-        "qte": String(Number(mat.qte) * 3),
-        "qteUser": ' ',
-        "pathName": pouet.name,
-        "pathIndex": pouet.index,
-        "unsafeUrl": '',
-        "url": '',
-        "previous": []
-      }
+
+      let newItem = new MatClass()
+      newItem.name = name
+      newItem.qte = String(Number(mat.qte) * 3)
+      newItem.pathName = pouet.name
+      newItem.pathIndex = pouet.index
       if (matOrigine.previous === undefined) {
         matOrigine.previous = []
       }
@@ -256,14 +181,18 @@ export class DetailCharactersComponent implements OnInit {
     }
     return
   }
+
   hasPrede(str: string): string {
     switch (str) {
-      case 'sliver': return ' '; break;
-      case 'fragment': return 'Sliver'; break;
-      case 'chunk': return 'Fragment'; break;
-      case 'gemstone': return 'Chunk'; break;
+      case 'sliver':
+        return ' ';
+      case 'fragment':
+        return 'Sliver';
+      case 'chunk':
+        return 'Fragment';
+      case 'gemstone':
+        return 'Chunk';
     }
-
     return ' '
   }
 
@@ -271,7 +200,7 @@ export class DetailCharactersComponent implements OnInit {
     this.commonTab.forEach(key => {
       (<string[]>this.common[key].characters).forEach(name => {
         if (name === this.character?.toLowerCase()) {
-          (this.common[key].items).forEach((object: { "id": string, "name": string, "rarity": number }, index: number) => {
+          (this.common[key].items).forEach((object: { "id": string, "name": string, "rarity": number }) => {
             let rar = -1;
 
             if (object.id === material.name.split(' ').join('-').toLowerCase() && object.rarity !== 1) {
@@ -282,7 +211,7 @@ export class DetailCharactersComponent implements OnInit {
               let qte = Number(material.qte)
               for (let i = 0; i < rar - 1; i++) {
                 let baseMat = this.common[key].items[i]
-                let pouet = this.oukilai(baseMat.name.split(' ').join('-'))
+                let pouet = this.searchImage(baseMat.name.split(' ').join('-'))
                 // console.log(`%c${pouet.name}`, 'color : red');
                 let qteConver = 0
                 if (rar === 2) {
@@ -294,16 +223,11 @@ export class DetailCharactersComponent implements OnInit {
                     qteConver = qte * 3
                   }
                 }
-                let newItem: Mat = {
-                  "name": baseMat.name,
-                  "qte": String(qteConver),
-                  "qteUser": ' ',
-                  "pathName": pouet.name,
-                  "pathIndex": pouet.index,
-                  "unsafeUrl": '',
-                  "url": '',
-                  "previous": []
-                }
+                let newItem = new MatClass()
+                newItem.name = baseMat.name
+                newItem.qte = String(qteConver)
+                newItem.pathName = pouet.name
+                newItem.pathIndex = pouet.index
                 if (material.previous === undefined) {
                   material.previous = []
                 }
@@ -319,10 +243,12 @@ export class DetailCharactersComponent implements OnInit {
 
 
   oneCarac() {
-    return this.characServ.GetOneCarac(<string>this.character).subscribe((data: Character) => {
-      this.detail = data
+    return new Promise((res) => {
+      this.characServ.GetOneCarac(<string>this.character).subscribe((data: Character) => {
+        this.detail = data
+        res(true)
+      })
     })
-
   }
 
   getElevation() {
@@ -342,20 +268,15 @@ export class DetailCharactersComponent implements OnInit {
     for (let i = 0; i <= 5; i++) {
       let materials = [this.elevation[i].mat1, this.elevation[i].mat2, this.elevation[i].mat3, this.elevation[i].mat4]
 
-      for (let i = 0; i <= materials.length - 1; i++) {
-        let name = (<string>materials[i].name).replace(regEspace, '-')
-        name = name.replace(regPostrophe, '-')
-        name = name.toLowerCase()
-
+      for (let y = 0; y <= materials.length - 1; y++) {
+        let name = (materials[y].name).replace(regEspace, '-').replace(regPostrophe, '-')
         if (name !== 'none') {
-          let item = this.oukilai(name)
+          let item = this.searchImage(name)
           if (item.name !== 'none') {
-
-            materials[i].pathName = item.name
-            materials[i].pathIndex = item.index
-            this.characServ.GetImage(materials[i].pathName + '/' + name).subscribe((response: any) => {
-              let UnsafeUrl = window.URL.createObjectURL(response)
-              materials[i].unsafeUrl = UnsafeUrl
+            materials[y].pathName = item.name
+            materials[y].pathIndex = item.index
+            this.characServ.getImage(materials[y].pathName + '/' + name).subscribe((response: any) => {
+              materials[y].unsafeUrl = window.URL.createObjectURL(response)
             })
           }
         }
@@ -369,93 +290,101 @@ export class DetailCharactersComponent implements OnInit {
     let name = (mat.name).replace(regEspace, '-')
     name = name.replace(regPostrophe, '-')
     name = name.toLowerCase()
-    this.characServ.GetImage(mat.pathName + '/' + name).subscribe((response: any) => {
-      let UnsafeUrl = window.URL.createObjectURL(response)
-      mat.unsafeUrl = UnsafeUrl
+    this.characServ.getImage(mat.pathName + '/' + name).subscribe((response: any) => {
+      mat.unsafeUrl = window.URL.createObjectURL(response)
     })
   }
 
 
-  oukilai(name: string): { name: string, index: number } {
+  searchImage(name: string): { name: string, index: number } {
     name = name.toLowerCase()
 
     const skifo = [this.imagePath?.boss_material, this.imagePath?.character_ascension, this.imagePath?.character_experience,
-    this.imagePath?.common_ascension, this.imagePath?.cooking_ingredients, this.imagePath?.local_specialties,
-    this.imagePath?.talent_book, this.imagePath?.talent_boss, this.imagePath?.weapon_ascension,
-    this.imagePath?.weapon_experience]
+      this.imagePath?.common_ascension, this.imagePath?.cooking_ingredients, this.imagePath?.local_specialties,
+      this.imagePath?.talent_book, this.imagePath?.talent_boss, this.imagePath?.weapon_ascension,
+      this.imagePath?.weapon_experience]
     for (let i = 0; i <= skifo.length - 1; i++) {
       let index: number = <number>skifo[i]?.map((e: any) => e).indexOf(name)
 
       if (index !== -1) {
 
         let name2 = this.caseImagePath(i)
-        return { name: name2, index }
+        return {name: name2, index}
       }
     }
-    return { name: 'none', index: -1 }
+    return {name: 'none', index: -1}
 
   }
 
   caseImagePath(nb: number): string {
-    switch (nb) {
-      case 0: return "boss-material"; break;
-      case 1: return "character-ascension"; break;
-      case 2: return "character-experience"; break;
-      case 3: return "common-ascension"; break;
-      case 4: return "cooking-ingredients"; break;
-      case 5: return "local-specialties"; break;
-      case 6: return "talent-book"; break;
-      case 7: return "talent-boss"; break;
-      case 8: return "weapon-ascension"; break;
-      case 9: return "weapon-experience"; break;
-      default: return 'none'; break;
-
-
+    const categories: any = {
+      0: 'boss-material',
+      1: 'character-ascension',
+      2: 'character-experience',
+      3: 'common-ascension',
+      4: 'cooking-ingredients',
+      5: 'local-specialties',
+      6: 'talent-book',
+      7: 'talent-boss',
+      8: 'weapon-ascension',
+      9: 'weapon-experience'
     }
+    return categories[nb] ? categories[nb] : 'none'
   }
 
-  prepareCommonAscension() {
-    this.characServ.GetCommonAscension().subscribe((data: Object) => {
-      this.common = data
-      this.commonTab = Object.keys(this.common)
-      //? to remove unused weapons items
-      this.commonTab.forEach(item => {
-        if (this.common[item].weapons !== undefined) {
-          delete this.common[item]
-        }
-      });
-      this.commonTab = Object.keys(this.common)
-      console.table(this.commonTab)
-    })
 
+  getAscensionItem() {
+    return new Promise((res) => {
+      this.characServ.GetCommonAscension().subscribe((data: Object) => {
+        this.common = data
+        this.commonTab = Object.keys(this.common)
+        //? to remove unused weapons items
+        this.commonTab.forEach(item => {
+          if (this.common[item].weapons !== undefined) {
+            delete this.common[item]
+          }
+        });
+        this.commonTab = Object.keys(this.common)
+        res(true)
+      })
+    })
   }
 
 
   wichRank(r: string, option: string = 'one') {
     switch (option) {
-      case 'one': if (this.selectedOption === r) { return }; break;
-      case 'from': if (this.selectedOptionFrom === r) { return }; break;
-      case 'to': if (this.selectedOptionTo === r) { return }; break;
+      case 'one':
+        if (this.selectedOption === r) {
+          return
+        }
+
+        break;
+      case 'from':
+        if (this.selectedOptionFrom === r) {
+          return
+        }
+
+        break;
+      case 'to':
+        if (this.selectedOptionTo === r) {
+          return
+        }
+
+        break;
     }
 
     let tempRank: Elevation | undefined
-    let tempRankMat: Mat[]
-    if (r === '-1') {
-      tempRank = undefined
-      tempRankMat = []
-    } else {
-      if (option === 'one') {
-        this.nbMat = []
-      }
+    let tempRankMat: Mat[] = []
+    if (option === 'one') {
+      this.nbMat = []
 
       tempRank = this.elevation[Number(r) - 1];
-      tempRankMat = [(<Elevation>this.elevation[Number(r) - 1]).mat1, (<Elevation>this.elevation[Number(r) - 1]).mat2, (<Elevation>this.elevation[Number(r) - 1]).mat3, (<Elevation>this.elevation[Number(r) - 1]).mat4]
-      console.log(tempRankMat, 'tempRankMat');
-
-      console.log(tempRank, 'tempRank');
-      console.log(this.elevation, 'elevation');
-
-
+      tempRankMat = [
+        tempRank.mat1,
+        tempRank.mat2,
+        tempRank.mat3,
+        tempRank.mat4
+      ]
 
       let y = 0
 
@@ -469,19 +398,14 @@ export class DetailCharactersComponent implements OnInit {
               prevent.url = this.sanitizer.bypassSecurityTrustUrl(prevent.unsafeUrl);
             });
           }
-          if (option === 'one') {
-            this.nbMat.push(y)
-          }
+
+          this.nbMat.push(y)
+
           y++
 
         }
       }
-
     }
-    // tempRankMat[0].qteUser = "10000"
-    console.log(tempRank, 'tempRank');
-
-
     if (option === 'one') {
       this.choicedRank = tempRank
       this.choicedRankMat = tempRankMat
@@ -511,7 +435,6 @@ export class DetailCharactersComponent implements OnInit {
   }
 
 
-
   morasForm(num: any) {
     return `${num}`.replace(/\B(?=(\d{3})+(?!\d))/g, ' '); // copyright pierre bregeard
   }
@@ -537,9 +460,10 @@ export class DetailCharactersComponent implements OnInit {
 
         let materials = tempRankMat[y]
         if (materials.name !== 'none') {
-          let index = matList.map((e) => { return e.name }).indexOf(materials.name)
+          let index = matList.map((e) => {
+            return e.name
+          }).indexOf(materials.name)
 
-          //if don't exist
           if (index === -1) {
             materials.url = this.sanitizer.bypassSecurityTrustUrl(materials.unsafeUrl);
             matList.push(materials)
@@ -572,15 +496,6 @@ export class DetailCharactersComponent implements OnInit {
     }
   }
 
-  qte(mat: Mat, nb: number | null) {
-    if (nb === null) {
-      mat.qteUser = ' '
-      return
-    }
-    mat.qteUser = String(nb)
-
-  }
-
   handler(e: Event, i: number) {
     this.choicedRankMat[i].qteUser = (<HTMLInputElement>e.target).value
   }
@@ -599,7 +514,8 @@ export class DetailCharactersComponent implements OnInit {
   }
 
   conversion(mat: Mat) {
-    //? prevous.length au moins 1
+    //? previous.length au moins 1
+    console.log(mat)
 
   }
 }
