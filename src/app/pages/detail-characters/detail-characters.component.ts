@@ -92,6 +92,7 @@ export class DetailCharactersComponent implements OnInit {
 
   async ngOnInit() {
     const persoId: string | null = this.route.snapshot.paramMap.get('id')
+
     let isGood = false
     await this.goodRoute(<string>persoId).then(data =>
       isGood = data

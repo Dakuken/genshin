@@ -1,6 +1,6 @@
 <nb-select placeholder="Select a rank" [(selected)]="rank">
   <nb-option [value]="-1" (selectionChange)="wichRank('-1')">
-    none
+    Aucun
   </nb-option>
   <nb-option *ngFor="let rank of elevationRanks" [value]="rank" (selectionChange)="wichRank(rank)">
     Rank : {{rank}}

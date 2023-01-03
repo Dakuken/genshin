@@ -1,8 +1,21 @@
-<p>{{character}}</p>
+<p class="mb-2">{{character}}</p>
 <nb-card accent="info">
-  <nb-card-header>
-
-<app-rank-selector-component [elevationRanks]="['pouet']"></app-rank-selector-component>
-
+  <nb-card-header class="flex items-center">
+    <app-rank-selector-component (choicedRank)="onChoicedRank($event)" [elevationRanks]="elevationRanks" class="mx-2"></app-rank-selector-component>
+    <p *ngIf="choicedRank !== undefined" class="mx-2"> LEVEL REQUIRED : {{'level'}}</p>
+    <p *ngIf="choicedRank !== undefined" class="mx-2"> MORAS REQUIRED: {{'cout'}}</p>
   </nb-card-header>
+
+  <nb-card-body>
+
+    <div *ngIf="elevation" class="flex flex-wrap">
+      <div *ngFor="let item of materials" class="item mx-4">
+        <!--      <div [@openClose]="convertFocus[i]? 'open' : 'closed'">-->
+        <div>
+          <app-item-card [material]="item"></app-item-card>
+        </div>
+      </div>
+    </div>
+  </nb-card-body>
+
 </nb-card>

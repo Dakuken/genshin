@@ -91,7 +91,6 @@ export class SearchBarComponent implements OnInit {
     this.router.navigate(link)
     this.searchFocus = false
     this.searchFocusInput = false;
-    this.charachters = [];
     (<ElementRef>this.searchElement).nativeElement.value = ''
 
   }
