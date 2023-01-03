@@ -1,14 +1,14 @@
 import {Component, OnInit} from '@angular/core';
 import {DomSanitizer} from '@angular/platform-browser';
 import {ActivatedRoute, Router} from '@angular/router';
-import {CharactersService} from '../service/characters.service';
-import {Mat} from '../interface/mat.interface';
-import {Elevation} from '../interface/elevation.interface';
-import {Character} from '../interface/character.interface';
-import {imageRef} from '../interface/image-ref.interface';
+import {CharactersService} from '../../service/characters.service';
+import {Mat} from '../../interface/mat.interface';
+import {Elevation} from '../../interface/elevation.interface';
+import {Character} from '../../interface/character.interface';
+import {imageRef} from '../../interface/image-ref.interface';
 import {animate, animateChild, group, query, state, style, transition, trigger,} from '@angular/animations';
-import {ElevationClass} from "../class/elevation.class";
-import {MatClass} from "../class/mat.class";
+import {ElevationClass} from "../../class/elevation.class";
+import {MatClass} from "../../class/mat.class";
 
 @Component({
   selector: 'app-detail-characters',
@@ -127,7 +127,6 @@ export class DetailCharactersComponent implements OnInit {
   }
 
   construcItem() {
-
     for (let i = 0; i <= this.elevation.length - 1; i++) {
       let elev: Elevation = this.elevation[i]
       let matElev: Mat[] = [elev.mat1, elev.mat2, elev.mat3, elev.mat4]
@@ -183,17 +182,14 @@ export class DetailCharactersComponent implements OnInit {
   }
 
   hasPrede(str: string): string {
-    switch (str) {
-      case 'sliver':
-        return ' ';
-      case 'fragment':
-        return 'Sliver';
-      case 'chunk':
-        return 'Fragment';
-      case 'gemstone':
-        return 'Chunk';
+    const previous: any = {
+      'sliver': '',
+      'fragment': 'Sliver',
+      'chunk': 'Fragment',
+      'gemstone': 'Chunk',
     }
-    return ' '
+
+    return previous[str] ? previous[str] : ' '
   }
 
   commonAscensionConvert(material: Mat) {
@@ -357,19 +353,18 @@ export class DetailCharactersComponent implements OnInit {
         if (this.selectedOption === r) {
           return
         }
-
         break;
+
       case 'from':
         if (this.selectedOptionFrom === r) {
           return
         }
-
         break;
+
       case 'to':
         if (this.selectedOptionTo === r) {
           return
         }
-
         break;
     }
 
@@ -496,28 +491,7 @@ export class DetailCharactersComponent implements OnInit {
     }
   }
 
-  handler(e: Event, i: number) {
-    this.choicedRankMat[i].qteUser = (<HTMLInputElement>e.target).value
-  }
 
-  handler2(e: Event, mat: Mat, matorigine: Mat) {
-    console.log(mat);
-    console.log(matorigine);
-    console.log(matorigine.previous[0]);
-    console.log(mat === matorigine.previous[0]);
-    let index = matorigine.previous.indexOf(mat)
-    console.log(index);
-    this.conversion(matorigine)
-
-
-    mat.qteUser = (<HTMLInputElement>e.target).value
-  }
-
-  conversion(mat: Mat) {
-    //? previous.length au moins 1
-    console.log(mat)
-
-  }
 }
 
 

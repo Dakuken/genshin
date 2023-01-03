@@ -1,6 +1,6 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
-import { CharactersService } from '../service/characters.service';
+import { CharactersService } from '../../service/characters.service';
 
 @Component({
   selector: 'app-search-bar',

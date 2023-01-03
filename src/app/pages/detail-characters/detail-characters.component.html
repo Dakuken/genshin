@@ -29,44 +29,8 @@
         <div *ngFor="let i of nbMat" class="item" (mouseenter)="onFocus(i,choicedRankMat[i])" (mouseleave)="onFocus(i,choicedRankMat[i])">
           <div [@openClose]="convertFocus[i]? 'open' : 'closed'">
             <!--   -->
-            <nb-card accent="info">
-              <nb-card-body>
-                <div class="item-rank-header">
-                  <img [src]="choicedRankMat[i].url" class="item-image">
-                  <p>{{choicedRankMat[i].name}}</p>
-                </div>
-                <label [for]="choicedRankMat[i].name">
-                  <div class="over">
-                    <div class=" item-counter">
-                      <div class="item-counter_styled">
-                        <input [value]="choicedRankMat[i].qteUser" [id]='choicedRankMat[i].name' type="number" nbInput placeholder="0" (keyup)="handler($event, i)">
-                        <p>/ {{choicedRankMat[i].qte}}</p>
-                      </div>
-                    </div>
-
-                    <div *ngIf="convertFocus[i]" [@child] class="machin">
-                      <div *ngFor="let mat of choicedRankMat[i].previous">
-
-                        <div class="item-rank-header">
-                          <img [src]="mat.url" class="item-image-little">
-                          <p>{{mat.name}}</p>
-                        </div>
-                        <div class="item-counter">
-                          <div class="item-counter_styled">
-                            <input type="number" nbInput placeholder="0" [value]="mat.qteUser" [id]='mat.name' (keyup)="handler2($event, mat,choicedRankMat[i])">
-                            <p> {{mat.qte}}</p>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-
-                  </div>
-                </label>
-              </nb-card-body>
-            </nb-card>
-          </div>
-
-
+          <app-one-rank [choicedRankMat]="choicedRankMat[i]" [convertFocus]="convertFocus[i]" [i]="i"></app-one-rank>
+          </div>=
         </div>
       </div>
 

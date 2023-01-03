@@ -4,15 +4,15 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { NbThemeModule, NbLayoutModule } from '@nebular/theme';
+import {NbThemeModule, NbLayoutModule, NbCardModule} from '@nebular/theme';
 import { NbEvaIconsModule } from '@nebular/eva-icons';
-import { HomeComponent } from './home/home.component';
 import { HttpClientModule } from '@angular/common/http';
 import { CharactersService } from './service/characters.service';
-import { HomeModule } from './home/home.module';
-import { HeaderComponent } from './header/header.component';
-import { SearchBarModule } from './search-bar/search-bar.module';
-import { FooterComponent } from './footer/footer.component';
+import { HeaderComponent } from './components/header/header.component';
+import { SearchBarModule } from './components/search-bar/search-bar.module';
+import { FooterComponent } from './components/footer/footer.component';
+import {oneRankComponent} from "./pages/detail-characters/one-rank/one-rank.component";
+import {CharactersModule} from "./pages/characters/characters.module";
 
 
 @NgModule({
@@ -20,20 +20,25 @@ import { FooterComponent } from './footer/footer.component';
     AppComponent,
     HeaderComponent,
     FooterComponent,
+    oneRankComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
     HttpClientModule,
+    SearchBarModule,
+    CharactersModule,
 
-    HomeModule,
-
-    NbThemeModule.forRoot({ name: 'cosmic' }),
+    NbThemeModule.forRoot({name: 'cosmic'}),
     NbLayoutModule,
     NbEvaIconsModule,
+    NbCardModule,
   ],
   providers: [CharactersService],
+  exports: [
+    oneRankComponent
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
