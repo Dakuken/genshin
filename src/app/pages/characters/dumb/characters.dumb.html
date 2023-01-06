@@ -1,18 +1,18 @@
-<p class="mb-2">{{character}}</p>
+<h1 class="mb-2">{{character | titlecase}}</h1>
 <nb-card accent="info">
   <nb-card-header class="flex items-center">
-    <app-rank-selector-component (choicedRank)="onChoicedRank($event)" [elevationRanks]="elevationRanks" class="mx-2" ></app-rank-selector-component>
-    <p *ngIf="choicedRank !== undefined" class="mx-2"> LEVEL REQUIRED : {{'level'}}</p>
-    <p *ngIf="choicedRank !== undefined" class="mx-2"> MORAS REQUIRED: {{'cout'}}</p>
+    <app-rank-selector-component (choicedRank)="onChoicedRank($event)" [elevationRanks]="elevationRanks" class="mx-2"></app-rank-selector-component>
+    <p *ngIf="elevation" class="mx-2"> LEVEL REQUIRED : {{elevation?.lvl ? elevation?.lvl : "lvl"}}</p>
+    <p *ngIf="elevation" class="mx-2"> MORAS REQUIRED: {{elevation?.cost ? elevation?.cost : "cost"}}</p>
   </nb-card-header>
 
   <nb-card-body>
 
-    <div *ngIf="elevation" class="flex flex-wrap">
-      <div *ngFor="let item of materials" class="item mx-4">
+    <div *ngIf="elevation" class="flex flex-col  sm:flex-row justify-around">
+      <div *ngFor="let item of materials" class="flex  mx-4 sm:w-1/4" >
         <!--      <div [@openClose]="convertFocus[i]? 'open' : 'closed'">-->
-        <div>
-          <app-item-card [material]="item"></app-item-card>
+        <div class="w-full">
+          <app-item-card class="w-full" [material]="item"></app-item-card>
         </div>
       </div>
     </div>

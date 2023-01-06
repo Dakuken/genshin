@@ -1,5 +1,10 @@
-<div class="flex" *ngIf="material.name !== 'none'">
-  <h1>{{material.name}}</h1>
-  <p>{{material.qte}}</p>
-  <img [src]="material.url" [alt]="'image de l`item : ' + material.name " />
-</div>
+<nb-card *ngIf="material.name !== 'none'" class=" drop-shadow-lg cursor-pointer w-full">
+  <nb-card-body class="flex flex-col justify-center items-center">
+    <img [alt]="'image de l`item : ' + material.name " [src]="material.url" class="h-52 select-none"/>
+    <h2>{{material.name}}</h2>
+    <div class="flex justify-center items-center userInput">
+      <input nbInput type="text" value="" placeholder="0" class="qteUser ">
+      <p class="text-lg"> / {{material.qte}}</p>
+    </div>
+  </nb-card-body>
+</nb-card>
