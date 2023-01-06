@@ -3,6 +3,9 @@ import {ActivatedRoute, NavigationEnd, Router} from "@angular/router";
 import {Elevation} from "../../../interface/elevation.interface";
 import {CharactersService} from "../../../service/characters.service";
 import {Mat} from "../../../interface/mat.interface";
+import {ItemsService} from "../../../service/items.service";
+import {imageRef} from "../../../interface/image-ref.interface";
+import {DomSanitizer} from "@angular/platform-browser";
 
 @Component({
   selector: 'app-characters-smart',
@@ -15,7 +18,10 @@ import {Mat} from "../../../interface/mat.interface";
         [elevation]="elevationSelected"
         [materials]="materials"
       ></app-characters-component>
-    </div>`
+
+    </div>
+    <!--      <button nbButton (click)="searchImage()">Pouet</button>-->
+  `
 })
 export class CharactersComponentSmart implements OnInit {
 
@@ -25,25 +31,27 @@ export class CharactersComponentSmart implements OnInit {
   elevationSelected: Elevation | undefined
   materials: Mat[] = []
 
-  constructor(private route: ActivatedRoute, private characterService: CharactersService, private router: Router) {
+  imagePath!: imageRef
+
+  constructor(private characterService: CharactersService, private itemsService: ItemsService, private router: Router, private route: ActivatedRoute, private sanitizer: DomSanitizer) {
     this.router.events.subscribe(ev => {
       if (ev instanceof NavigationEnd && ev.url) {
-        this.reset(<string>this.route.snapshot.paramMap.get('id'))
+        this.character = <string>this.route.snapshot.paramMap.get('id')
+        this.reset()
       }
+    })
+    this.itemsService.getImagePath().subscribe((data: imageRef) => {
+      this.imagePath = data
     })
   }
 
   ngOnInit(): void {
-    const persoId: string = <string>this.route.snapshot.paramMap.get('id')
-    this.character = persoId.charAt(0).toUpperCase() + persoId.slice(1)
-    this.getElevation()
   }
 
   getElevation() {
-    return this.characterService.GetElevation(<string>this.character).subscribe((data: { items: any }) => {
+    this.characterService.GetElevation(<string>this.character.toLowerCase()).subscribe((data: { items: any }) => {
       this.elevations = data.items
       this.elevationRanks = this.elevations.map(elevation => elevation.rank)
-      console.log(this.elevations)
     })
   }
 
@@ -56,13 +64,39 @@ export class CharactersComponentSmart implements OnInit {
         this.elevationSelected.mat3,
         this.elevationSelected.mat4,
       ]
+
+      this.materials.forEach(material => {
+        this.sanitizeMaterialImage(material)
+      })
+    } else {
+      this.materials = []
     }
   }
 
-  reset(name: string) {
-    this.character = name.charAt(0).toUpperCase() + name.slice(1)
+  sanitizeMaterialImage(material : Mat){
+    if (material.name !== 'none' && material.unsafeUrl === undefined) {
+      let [pathName, pathIndex] = this.itemsService.searchImage(material.name)
+      material.pathName = pathName
+      material.pathIndex = pathIndex
+      this.itemsService.getImage(material.pathName.replace('_', '-') + '/' + this.formatItemsName(material.name)).subscribe((response: any) => {
+        material.unsafeUrl = window.URL.createObjectURL(response)
+        material.url = this.sanitizer.bypassSecurityTrustUrl(material.unsafeUrl);
+      })
+    }
+  }
+
+  formatItemsName(name: string): string {
+    const regEspace = new RegExp(' ', 'gi')
+    const regPostrophe = new RegExp("'", 'gi')
+    name = name.toLowerCase()
+    name = name.replace(regEspace, '-').replace(regPostrophe, '-')
+    return name
+  }
+
+
+  // Reset se fait la premiere fois tout seul donc pas besoin dans le ngOnInit, vu qu'il est dans le contructor ducoup
+  reset() {
     this.elevations = []
-    this.elevationRanks = []
     this.elevationSelected = undefined
     this.materials = []
     this.getElevation()

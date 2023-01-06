@@ -1,7 +1,7 @@
 <p class="mb-2">{{character}}</p>
 <nb-card accent="info">
   <nb-card-header class="flex items-center">
-    <app-rank-selector-component (choicedRank)="onChoicedRank($event)" [elevationRanks]="elevationRanks" class="mx-2"></app-rank-selector-component>
+    <app-rank-selector-component (choicedRank)="onChoicedRank($event)" [elevationRanks]="elevationRanks" class="mx-2" ></app-rank-selector-component>
     <p *ngIf="choicedRank !== undefined" class="mx-2"> LEVEL REQUIRED : {{'level'}}</p>
     <p *ngIf="choicedRank !== undefined" class="mx-2"> MORAS REQUIRED: {{'cout'}}</p>
   </nb-card-header>

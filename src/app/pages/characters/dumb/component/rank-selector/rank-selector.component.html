@@ -1,8 +1,8 @@
-<nb-select placeholder="Select a rank" [(selected)]="rank">
-  <nb-option [value]="-1" (selectionChange)="wichRank('-1')">
+<nb-select placeholder="Select a rank" [selected]="rank" (selectedChange)="wichRank($event)">
+  <nb-option [value]="-1">
     Aucun
   </nb-option>
-  <nb-option *ngFor="let rank of elevationRanks" [value]="rank" (selectionChange)="wichRank(rank)">
+  <nb-option *ngFor="let rank of elevationRanks" [value]="rank">
     Rank : {{rank}}
   </nb-option>
 </nb-select>

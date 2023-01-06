@@ -14,6 +14,7 @@ import { FooterComponent } from './components/footer/footer.component';
 import {oneRankComponent} from "./pages/detail-characters/one-rank/one-rank.component";
 import {CharactersModule} from "./pages/characters/characters.module";
 import {DetailCharactersComponent} from "./pages/detail-characters/detail-characters.component";
+import {ItemsService} from "./service/items.service";
 
 
 @NgModule({
@@ -38,10 +39,7 @@ import {DetailCharactersComponent} from "./pages/detail-characters/detail-charac
     NbCardModule,
     NbSelectModule,
   ],
-  providers: [CharactersService],
-  exports: [
-    oneRankComponent
-  ],
+  providers: [CharactersService, ItemsService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -1,4 +1,5 @@
 <div class="flex" *ngIf="material.name !== 'none'">
   <h1>{{material.name}}</h1>
   <p>{{material.qte}}</p>
+  <img [src]="material.url" [alt]="'image de l`item : ' + material.name " />
 </div>

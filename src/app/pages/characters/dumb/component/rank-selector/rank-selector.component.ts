@@ -1,30 +1,34 @@
-import {Component, EventEmitter, Input, OnInit, Output, OnChanges, SimpleChanges} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {NavigationEnd, Router} from "@angular/router";
 
 @Component({
   selector: 'app-rank-selector-component',
   templateUrl: './rank-selector.component.html',
   styleUrls: ['./rank-selector.component.scss']
 })
-export class RankSelectorComponent implements OnInit, OnChanges {
+export class RankSelectorComponent implements OnInit {
 
-  @Input() elevationRanks : string[] = []
-  @Output() choicedRank : EventEmitter<string> = new EventEmitter<string>()
-  rank: string = '-1'
+  @Input() elevationRanks: string[] = []
 
-  constructor() {
+  @Output() choicedRank: EventEmitter<string> = new EventEmitter<string>()
+  rank!: string
+
+  constructor(private router: Router) {
+    this.router.events.subscribe(ev => {
+      if (ev instanceof NavigationEnd && ev.url) {
+        this.wichRank("-1")
+      }
+    })
   }
 
   ngOnInit(): void {
   }
 
-  ngOnChanges(changes: SimpleChanges) {
-    this.rank = '-1'
-  }
-
   wichRank(newRank: string) {
-    if(this.rank === newRank) return
+    if(newRank === this.rank) return
     this.rank = newRank
     this.choicedRank.emit(this.rank)
   }
+
 
 }

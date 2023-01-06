@@ -22,18 +22,6 @@ export class CharactersDumb implements OnInit {
   ngOnInit(): void {
   }
 
-  // ngOnChanges(changes: SimpleChanges) {
-  //   let obj : Elevation | undefined
-  //   try {
-  //     obj = (<any>changes).elevation.currentValue
-  //     console.log(obj)
-  //   } finally {
-  //     if(obj){
-  //
-  //     }
-  //   }
-  // }
-
   onChoicedRank(newChoicedRank: string) {
     this.choicedRank.emit(newChoicedRank);
   }

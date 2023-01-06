@@ -24,6 +24,7 @@ export class CharactersService {
   }
 
   GetOneCarac(str: string): Observable<any> {
+    console.log(endpoint + `characters/${str}`)
     return this.http.get(endpoint + `characters/${str}`)
   }
 
