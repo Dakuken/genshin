@@ -1,4 +1,4 @@
-import {MatClass} from "./mat.class";
+import {MatClass} from "./Mat.class";
 
 export class ElevationClass {
   rank = ''

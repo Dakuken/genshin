@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {Mat} from "../../../../../interface/mat.interface";
 
 @Component({
@@ -9,11 +9,15 @@ import {Mat} from "../../../../../interface/mat.interface";
 export class ItemCardComponent implements OnInit {
 
   @Input() material!: Mat
+  @Output() qteUser = new EventEmitter<string>()
   constructor() {
   }
 
   ngOnInit(): void {
   }
 
+  onChangeQteUser(value : string){
+    this.qteUser.emit('d f')
+  }
 
 }

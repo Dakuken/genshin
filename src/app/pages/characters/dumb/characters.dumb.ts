@@ -1,6 +1,7 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {Elevation} from "../../../interface/elevation.interface";
 import {Mat} from "../../../interface/mat.interface";
+import {ConverterClass} from "../../../model/Converter.class";
 
 @Component({
   selector: 'app-characters-component',
@@ -12,6 +13,7 @@ export class CharactersDumb implements OnInit {
   @Input() elevationRanks: string[] = []
   @Input() elevation: Elevation | undefined
   @Input() materials: Mat[] = []
+  @Input() converter: ConverterClass = new ConverterClass()
 
   @Output() choicedRank: EventEmitter<string> = new EventEmitter<string>()
 
@@ -24,6 +26,10 @@ export class CharactersDumb implements OnInit {
 
   onChoicedRank(newChoicedRank: string) {
     this.choicedRank.emit(newChoicedRank);
+  }
+
+  qteUserwesh(str : string){
+    console.log("wte fspok f")
   }
 
 }

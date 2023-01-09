@@ -4,7 +4,7 @@ export interface Mat {
   "qteUser": string,
   "pathName": string,
   "pathIndex": number,
-  "unsafeUrl": string,
+  "unsafeUrl": string | undefined,
   "url": any,
   "previous": Mat[],
 }

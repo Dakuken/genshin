@@ -1,1 +1,16 @@
-<p>Work</p>
+<nb-card>
+  <nb-card-body>
+    <div class="flex w-full">
+      <div *ngFor="let item of converter.mat1" class="sm:w-1/4 mx-2">
+        <app-item-card [material]="item"></app-item-card>
+      </div>
+    </div>
+    <div class="flex w-full">
+      <div *ngFor="let item of converter.mat2" class="sm:w-1/4 mx-2">
+        <div>
+        <app-item-card [material]="item" (qteUser)="qteUserwesh($event)"></app-item-card>
+        </div>
+      </div>
+    </div>
+  </nb-card-body>
+</nb-card>

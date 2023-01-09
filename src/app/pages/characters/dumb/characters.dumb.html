@@ -12,10 +12,12 @@
       <div *ngFor="let item of materials" class="flex  mx-4 sm:w-1/4" >
         <!--      <div [@openClose]="convertFocus[i]? 'open' : 'closed'">-->
         <div class="w-full">
-          <app-item-card class="w-full" [material]="item"></app-item-card>
+          <app-item-card class="w-full" [material]="item" (qteUser)="qteUserwesh($event)"></app-item-card>
         </div>
       </div>
     </div>
   </nb-card-body>
 
 </nb-card>
+
+<app-converter-component [converter]="converter"></app-converter-component>

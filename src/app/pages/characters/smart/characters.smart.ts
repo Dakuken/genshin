@@ -6,6 +6,10 @@ import {Mat} from "../../../interface/mat.interface";
 import {ItemsService} from "../../../service/items.service";
 import {imageRef} from "../../../interface/image-ref.interface";
 import {DomSanitizer} from "@angular/platform-browser";
+import {ConverterClass} from "../../../model/Converter.class";
+import Ascencion from "../../../model/Ascencion/Common/CommonAscencion";
+import CharacterAscension from "../../../model/Ascencion/Characters/CharacterAscension";
+import {MatClass} from "../../../model/Mat.class";
 
 @Component({
   selector: 'app-characters-smart',
@@ -17,6 +21,7 @@ import {DomSanitizer} from "@angular/platform-browser";
         [elevationRanks]="elevationRanks"
         [elevation]="elevationSelected"
         [materials]="materials"
+        [converter]="conversion"
       ></app-characters-component>
 
     </div>
@@ -30,8 +35,10 @@ export class CharactersComponentSmart implements OnInit {
   elevationRanks: string[] = []
   elevationSelected: Elevation | undefined
   materials: Mat[] = []
-
   imagePath!: imageRef
+  conversion: ConverterClass = new ConverterClass()
+  commonAscencionInfo!: Ascencion
+  characterAscencionInfo: CharacterAscension = new CharacterAscension()
 
   constructor(private characterService: CharactersService, private itemsService: ItemsService, private router: Router, private route: ActivatedRoute, private sanitizer: DomSanitizer) {
     this.router.events.subscribe(ev => {
@@ -68,12 +75,13 @@ export class CharactersComponentSmart implements OnInit {
       this.materials.forEach(material => {
         this.sanitizeMaterialImage(material)
       })
+      this.necessaryConversion(this.materials)
     } else {
       this.materials = []
     }
   }
 
-  sanitizeMaterialImage(material : Mat){
+  sanitizeMaterialImage(material: Mat) {
     if (material.name !== 'none' && material.unsafeUrl === undefined) {
       let [pathName, pathIndex] = this.itemsService.searchImage(material.name)
       material.pathName = pathName
@@ -93,12 +101,77 @@ export class CharactersComponentSmart implements OnInit {
     return name
   }
 
+  necessaryConversion(mat: Mat[]) {
+    let mat1: Mat[] = []
+    let mat2: Mat[] = []
+    mat1 = this.charactersPrevious(mat[0])
+    mat2 = this.commonPrevious(mat[2])
+    this.conversion.mat1 = mat1
+    this.conversion.mat2 = mat2
+    console.log(this.conversion)
+  }
+
+  charactersPrevious(material: Mat): Mat[] {
+    let tempName = material.name.split(' ')
+    let matName = tempName.splice(0, tempName.length - 1).join('-').toLowerCase()
+    let materialLevel = tempName[tempName.length - 1].toLowerCase()
+    let i = this.characterAscencionInfo.material.indexOf(materialLevel)
+    let materialsName = [...this.characterAscencionInfo.material].splice(0, i)
+    let materials: Mat[] = []
+    materialsName.forEach(material => {
+      let mat = new MatClass()
+      mat.name = `${matName}-${material}`
+      this.sanitizeMaterialImage(mat)
+      materials.push(mat)
+    })
+    if (i === 0) {
+      return []
+    }
+    //obliger pouer pas avoir la meme ref
+    let temps = Object.assign({},material)
+    temps.qte = ""
+    //besoin pour sécurité
+    this.sanitizeMaterialImage(temps)
+    materials.push(temps)
+
+    return materials
+  }
+
+  commonPrevious(material: Mat): Mat[] {
+    let commonAscencionInfoProperties = [this.commonAscencionInfo.handguard, this.commonAscencionInfo.nectar, this.commonAscencionInfo.slime,
+      this.commonAscencionInfo.spectral, this.commonAscencionInfo["fatui-insignias"], this.commonAscencionInfo["hilichurl-arrowheads"],
+      this.commonAscencionInfo["hilichurl-masks"], this.commonAscencionInfo["samachurl-scrolls"], this.commonAscencionInfo["treasure-hoarder-insignias"]]
+    let isFinish = false
+    let materials: Mat[] = []
+    for (let i = 0; i < commonAscencionInfoProperties.length; i++) {
+      let ascenscionInfo = commonAscencionInfoProperties[i]
+      for (let j = 0; j < ascenscionInfo.items.length; j++) {
+        let item = ascenscionInfo.items[j]
+        if (material.name === item.name) {
+          for (let k = 0; k < j; k++) {
+            let mat = new MatClass()
+            mat.name = ascenscionInfo.items[k].name
+            this.sanitizeMaterialImage(mat)
+            materials.push(mat)
+          }
+          isFinish = true
+        }
+        if (isFinish) break
+      }
+      if (isFinish) break
+    }
+    return materials
+  }
+
 
   // Reset se fait la premiere fois tout seul donc pas besoin dans le ngOnInit, vu qu'il est dans le contructor ducoup
-  reset() {
+  async reset() {
     this.elevations = []
     this.elevationSelected = undefined
     this.materials = []
+    this.conversion = new ConverterClass()
+    this.commonAscencionInfo = await this.characterService.getCommonAscension()
     this.getElevation()
+
   }
 }

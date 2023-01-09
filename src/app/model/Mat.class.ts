@@ -4,7 +4,7 @@ export class MatClass {
   qteUser = ''
   pathName = ''
   pathIndex = -1
-  unsafeUrl = ''
+  unsafeUrl : string | undefined
   url: any
   previous: MatClass[] = []
 }

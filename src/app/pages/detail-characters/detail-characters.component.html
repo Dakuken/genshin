@@ -1,94 +1,95 @@
-<app-search-bar></app-search-bar>
-<div id="monTruc">
+<!--<app-search-bar></app-search-bar>-->
+<!--<div id="monTruc">-->
 
-  <p>{{character}}</p>
-
-
-  <nb-card accent="info">
-    <nb-card-header class="noPad">
-      <p class="noPad title"> One Rank </p>
-    </nb-card-header>
-    <nb-card-body>
-      <div class="headerElevation">
-
-        <nb-select placeholder="Select a rank" [(selected)]="selectedOption">
-          <nb-option [value]="-1" (selectionChange)="wichRank('-1')">
-            none
-          </nb-option>
-          <nb-option *ngFor="let elev of elevation" [value]="elev.rank" (selectionChange)="wichRank(elev.rank)">
-            Rank : {{elev.rank}}
-          </nb-option>
-        </nb-select>
-
-        <p *ngIf="choicedRank !== undefined"> LEVEL REQUIRED : {{choicedRank.lvl}}</p>
-        <p *ngIf="choicedRank !== undefined"> MORAS REQUIRED: {{morasForm(choicedRank.cost)}}</p>
-      </div>
-
-      <div class="elevation1" *ngIf="choicedRank !== undefined && choicedRank !== null && selectedOption !== '-1'">
-        <!-- -->
-        <div *ngFor="let i of nbMat" class="item" (mouseenter)="onFocus(i,choicedRankMat[i])" (mouseleave)="onFocus(i,choicedRankMat[i])">
-          <div [@openClose]="convertFocus[i]? 'open' : 'closed'">
-            <!--   -->
-          <app-one-rank [choicedRankMat]="choicedRankMat[i]" [convertFocus]="convertFocus[i]" [i]="i"></app-one-rank>
-          </div>=
-        </div>
-      </div>
-
-    </nb-card-body>
-  </nb-card>
-
-  <nb-card accent="info">
-    <nb-card-header class="noPad">
-      <p class="noPad title"> From to </p>
-    </nb-card-header>
-    <nb-card-body>
-      <div class="headerElevation">
-
-        <nb-select placeholder="Select a rank" [(selected)]="selectedOptionFrom">
-          <nb-option [value]="-1" (selectionChange)="wichRank('-1', 'from')">
-            none
-          </nb-option>
-          <nb-option *ngFor=" let elev of elevation" [value]="elev.rank" (selectionChange)="wichRank(elev.rank ,'from')">
-            Rank : {{elev.rank}}
-          </nb-option>
-        </nb-select>
+<!--  <p>{{character}}</p>-->
 
 
-        <nb-select placeholder="Select a rank" [(selected)]="selectedOptionTo">
-          <nb-option [value]="-1" (selectionChange)="wichRank('-1', 'to')">
-            none
-          </nb-option>
-          <nb-option *ngFor=" let elev of elevation" [value]="elev.rank" (selectionChange)="wichRank(elev.rank,'to')">
-            Rank : {{elev.rank}}
-          </nb-option>
-        </nb-select>
+<!--  <nb-card accent="info">-->
+<!--    <nb-card-header class="noPad">-->
+<!--      <p class="noPad title"> One Rank </p>-->
+<!--    </nb-card-header>-->
+<!--    <nb-card-body>-->
+<!--      <div class="headerElevation">-->
+
+<!--        <nb-select [(selected)]="selectedOption" placeholder="Select a rank">-->
+<!--          <nb-option (selectionChange)="wichRank('-1')" [value]="-1">-->
+<!--            none-->
+<!--          </nb-option>-->
+<!--          <nb-option (selectionChange)="wichRank(elev.rank)" *ngFor="let elev of elevation" [value]="elev.rank">-->
+<!--            Rank : {{elev.rank}}-->
+<!--          </nb-option>-->
+<!--        </nb-select>-->
+
+<!--        <p *ngIf="choicedRank !== undefined"> LEVEL REQUIRED : {{choicedRank.lvl}}</p>-->
+<!--        <p *ngIf="choicedRank !== undefined"> MORAS REQUIRED: {{morasForm(choicedRank.cost)}}</p>-->
+<!--      </div>-->
+
+<!--      <div *ngIf="choicedRank !== undefined && choicedRank !== null && selectedOption !== '-1'" class="elevation1">-->
+<!--        &lt;!&ndash; &ndash;&gt;-->
+<!--        <div (mouseenter)="onFocus(i,choicedRankMat[i])" (mouseleave)="onFocus(i,choicedRankMat[i])" *ngFor="let i of nbMat" class="item">-->
+<!--          <div [@openClose]="convertFocus[i]? 'open' : 'closed'">-->
+<!--            &lt;!&ndash;   &ndash;&gt;-->
+<!--            <app-one-rank [choicedRankMat]="choicedRankMat[i]" [convertFocus]="convertFocus[i]" [i]="i"></app-one-rank>-->
+<!--          </div>-->
+<!--          =-->
+<!--        </div>-->
+<!--      </div>-->
+
+<!--    </nb-card-body>-->
+<!--  </nb-card>-->
+
+<!--  <nb-card accent="info">-->
+<!--    <nb-card-header class="noPad">-->
+<!--      <p class="noPad title"> From to </p>-->
+<!--    </nb-card-header>-->
+<!--    <nb-card-body>-->
+<!--      <div class="headerElevation">-->
+
+<!--        <nb-select [(selected)]="selectedOptionFrom" placeholder="Select a rank">-->
+<!--          <nb-option (selectionChange)="wichRank('-1', 'from')" [value]="-1">-->
+<!--            none-->
+<!--          </nb-option>-->
+<!--          <nb-option (selectionChange)="wichRank(elev.rank ,'from')" *ngFor=" let elev of elevation" [value]="elev.rank">-->
+<!--            Rank : {{elev.rank}}-->
+<!--          </nb-option>-->
+<!--        </nb-select>-->
 
 
-        <p *ngIf="choicedRankFromToObject.rank !== ''"> MORAS REQUIRED: {{morasForm(this.choicedRankFromToObject.cost)}}</p>
-      </div>
+<!--        <nb-select [(selected)]="selectedOptionTo" placeholder="Select a rank">-->
+<!--          <nb-option (selectionChange)="wichRank('-1', 'to')" [value]="-1">-->
+<!--            none-->
+<!--          </nb-option>-->
+<!--          <nb-option (selectionChange)="wichRank(elev.rank,'to')" *ngFor=" let elev of elevation" [value]="elev.rank">-->
+<!--            Rank : {{elev.rank}}-->
+<!--          </nb-option>-->
+<!--        </nb-select>-->
 
-      <div class="elevation1" *ngIf="choicedRankFromToObject.rank !== ''">
 
-        <nb-card accent="info" *ngFor="let i of NBchoicedRankFromToMatList" class="item">
-          <nb-card-header>
-            <div class="item-rank-header">
-              <img [src]="choicedRankFromToMatList[i].url" class="item-image">
-              <p>{{choicedRankFromToMatList[i].name}}</p>
-            </div>
-          </nb-card-header>
-          <nb-card-body>
-            <label [for]="choicedRankFromToMatList[i].name">
-              <div class="item-counter">
-                <div class="item-counter_styled">
-                  <input [id]='choicedRankFromToMatList[i].name' type="number" nbInput placeholder="0"><!-- [max]="choicedRankMat[i].qte"  -->
-                  <p>/ {{choicedRankFromToMatList[i].qte}}</p>
-                </div>
-              </div>
-            </label>
-          </nb-card-body>
-        </nb-card>
-      </div>
+<!--        <p *ngIf="choicedRankFromToObject.rank !== ''"> MORAS REQUIRED: {{morasForm(this.choicedRankFromToObject.cost)}}</p>-->
+<!--      </div>-->
 
-    </nb-card-body>
-  </nb-card>
-</div>
+<!--      <div *ngIf="choicedRankFromToObject.rank !== ''" class="elevation1">-->
+
+<!--        <nb-card *ngFor="let i of NBchoicedRankFromToMatList" accent="info" class="item">-->
+<!--          <nb-card-header>-->
+<!--            <div class="item-rank-header">-->
+<!--              <img [src]="choicedRankFromToMatList[i]!.url" class="item-image">-->
+<!--              <p>{{choicedRankFromToMatList[i].name}}</p>-->
+<!--            </div>-->
+<!--          </nb-card-header>-->
+<!--          <nb-card-body>-->
+<!--            <label [for]="choicedRankFromToMatList[i].name">-->
+<!--              <div class="item-counter">-->
+<!--                <div class="item-counter_styled">-->
+<!--                  <input [id]='choicedRankFromToMatList[i].name' nbInput placeholder="0" type="number">&lt;!&ndash; [max]="choicedRankMat[i].qte"  &ndash;&gt;-->
+<!--                  <p>/ {{choicedRankFromToMatList[i].qte}}</p>-->
+<!--                </div>-->
+<!--              </div>-->
+<!--            </label>-->
+<!--          </nb-card-body>-->
+<!--        </nb-card>-->
+<!--      </div>-->
+
+<!--    </nb-card-body>-->
+<!--  </nb-card>-->
+<!--</div>-->
