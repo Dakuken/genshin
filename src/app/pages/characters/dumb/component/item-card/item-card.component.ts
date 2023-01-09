@@ -17,7 +17,7 @@ export class ItemCardComponent implements OnInit {
   }
 
   onChangeQteUser(value : string){
-    this.qteUser.emit('d f')
+    this.qteUser.emit(value)
   }
 
 }

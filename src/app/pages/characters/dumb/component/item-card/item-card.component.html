@@ -3,7 +3,7 @@
     <img [alt]="'image de l`item : ' + material.name " [src]="material.url" class="h-52 select-none"/>
     <h2>{{material.name}}</h2>
     <div class="flex justify-center items-center userInput">
-      <input #qte nbInput type="number" value="" placeholder="0" class="qteUser " (keyup)="onChangeQteUser(qte.value)">
+      <input #qte nbInput type="number" value="" placeholder="0" class="qteUser " (change)="onChangeQteUser(qte.value)" (keyup)="onChangeQteUser(qte.value)">
       <p class="text-lg"> / {{material.qte}}</p>
     </div>
   </nb-card-body>

@@ -9,10 +9,10 @@
   <nb-card-body>
 
     <div *ngIf="elevation" class="flex flex-col  sm:flex-row justify-around">
-      <div *ngFor="let item of materials" class="flex  mx-4 sm:w-1/4" >
+      <div *ngFor="let item of materials; let i = index" class="flex  mx-4 sm:w-1/4" >
         <!--      <div [@openClose]="convertFocus[i]? 'open' : 'closed'">-->
         <div class="w-full">
-          <app-item-card class="w-full" [material]="item" (qteUser)="qteUserwesh($event)"></app-item-card>
+          <app-item-card class="w-full" [material]="item" (click)="onClickConverter(i)"></app-item-card>
         </div>
       </div>
     </div>
@@ -20,4 +20,4 @@
 
 </nb-card>
 
-<app-converter-component [converter]="converter"></app-converter-component>
+<app-converter-component [converter]="converter" [showAscencion]="showAscension" [showCharacter]="showCharacter"></app-converter-component>

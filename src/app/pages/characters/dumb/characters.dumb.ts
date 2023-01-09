@@ -17,6 +17,8 @@ export class CharactersDumb implements OnInit {
 
   @Output() choicedRank: EventEmitter<string> = new EventEmitter<string>()
 
+  showAscension = false
+  showCharacter = false
 
   constructor() {
   }
@@ -28,8 +30,12 @@ export class CharactersDumb implements OnInit {
     this.choicedRank.emit(newChoicedRank);
   }
 
-  qteUserwesh(str : string){
-    console.log("wte fspok f")
+  onClickConverter(index : number) {
+    if (index === 0) {
+      this.showCharacter = !this.showCharacter
+    } else if (index === 2){
+      this.showAscension = !this.showAscension
+    }
   }
 
 }

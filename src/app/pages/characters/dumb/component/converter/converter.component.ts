@@ -1,6 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {Mat} from "../../../../../interface/mat.interface";
 import {ConverterClass} from "../../../../../model/Converter.class";
+import {Mat} from "../../../../../interface/mat.interface";
 
 @Component({
   selector: 'app-converter-component',
@@ -9,15 +9,17 @@ import {ConverterClass} from "../../../../../model/Converter.class";
 })
 export class ConverterComponent implements OnInit {
   @Input() converter: ConverterClass = new ConverterClass()
+  @Input() showCharacter : boolean = false
+  @Input() showAscencion : boolean = false
+
 
   constructor() {
-    console.log('qp sdk,dsp kf,')
   }
 
   ngOnInit(): void {
   }
 
-  qteUserwesh(str: string) {
-    console.log('rg dgf');
+  qteUserwesh(str: string, item : Mat) {
+      item.qte = str
   }
 }
