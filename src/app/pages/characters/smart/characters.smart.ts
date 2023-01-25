@@ -108,7 +108,6 @@ export class CharactersComponentSmart implements OnInit {
     mat2 = this.commonPrevious(mat[2])
     this.conversion.mat1 = mat1
     this.conversion.mat2 = mat2
-    console.log(this.conversion)
   }
 
   charactersPrevious(material: Mat): Mat[] {
@@ -128,7 +127,7 @@ export class CharactersComponentSmart implements OnInit {
       return []
     }
     //obliger pouer pas avoir la meme ref
-    let temps = Object.assign({},material)
+    let temps = Object.assign({}, material)
     temps.qte = ""
     //besoin pour sécurité
     this.sanitizeMaterialImage(temps)
@@ -147,10 +146,10 @@ export class CharactersComponentSmart implements OnInit {
       let ascenscionInfo = commonAscencionInfoProperties[i]
       for (let j = 0; j < ascenscionInfo.items.length; j++) {
         let item = ascenscionInfo.items[j]
-        if (material.name === item.name) {
-          for (let k = 0; k < j; k++) {
+        if (material.name === item.name && j !== 0) {
+          for (let k = 0; k < j + 1; k++) {
             let mat = new MatClass()
-            mat.name = ascenscionInfo.items[k].name
+            mat.name = ascenscionInfo.items[k].name.replace('-', ' ')
             this.sanitizeMaterialImage(mat)
             materials.push(mat)
           }

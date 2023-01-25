@@ -1,15 +1,22 @@
-<nb-card>
+<nb-card *ngIf="(showCharacter && converter.mat1.length !== 0 )|| (showAscencion && converter.mat2.length !== 0)" accent="info">
+  <nb-card-header>
+    Converter
+  </nb-card-header>
   <nb-card-body>
-    <div class="flex w-full" *ngIf="showCharacter" >
-      <div *ngFor="let item of converter.mat1" class="sm:w-1/4 mx-2">
-        <app-item-card [material]="item" (qteUser)="qteUserwesh($event, item)"></app-item-card>
+    <div *ngIf="showCharacter && converter.mat1.length !== 0" class="flex w-full">
+      <div *ngFor="let item of converter.mat1; let i = index" class="w-full sm:w-1/4 mx-2">
+        <div>
+          <app-item-card (qteUser)="onChangeQteUser($event, i, true)" [material]="item" class="w-full" [isLastConverter]="i === converter.mat1.length-1" [isConverter]="true"></app-item-card>
+        </div>
+        <nb-icon *ngIf="i !== 0" class="relative text-xl items-center bottom-52 right-12 w-20 h-12" icon="arrow-forward-outline" status="basic"></nb-icon>
       </div>
     </div>
-    <div class="flex w-full" *ngIf="showAscencion">
-      <div *ngFor="let item of converter.mat2" class="sm:w-1/4 mx-2">
+    <div *ngIf="showAscencion && converter.mat2.length !== 0" class="flex w-full">
+      <div *ngFor="let item of converter.mat2; let i = index" class="w-full sm:w-1/4 mx-2">
         <div>
-        <app-item-card [material]="item" (qteUser)="qteUserwesh($event,item)"></app-item-card>
+          <app-item-card (qteUser)="onChangeQteUser($event,i, false)" [material]="item" class="w-full" [isLastConverter]="i === converter.mat2.length-1"  [isConverter]="true"></app-item-card>
         </div>
+        <nb-icon *ngIf="i !== 0" class="relative text-xl items-center bottom-52 right-8 w-12 h-12" icon="arrow-forward-outline" status="basic"></nb-icon>
       </div>
     </div>
   </nb-card-body>

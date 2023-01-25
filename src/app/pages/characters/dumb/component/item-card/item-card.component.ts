@@ -9,6 +9,9 @@ import {Mat} from "../../../../../interface/mat.interface";
 export class ItemCardComponent implements OnInit {
 
   @Input() material!: Mat
+
+  @Input() isLastConverter = false
+  @Input() isConverter = false
   @Output() qteUser = new EventEmitter<string>()
   constructor() {
   }
@@ -18,6 +21,21 @@ export class ItemCardComponent implements OnInit {
 
   onChangeQteUser(value : string){
     this.qteUser.emit(value)
+  }
+
+  converterDisplay() : string{
+    if(!this.material.qte && this.isLastConverter) {
+      return "0"
+    }
+    if(!this.material.qte){
+      return " "
+    }
+
+    if(this.isLastConverter){
+      return this.material.qte
+    }
+
+    return `+ ${this.material.qte}`
   }
 
 }

@@ -3,7 +3,7 @@
     <div id="laliste">
         <nb-list *ngIf="charachters.length !== 0 && (searchFocus || searchFocusInput) ">
             <nb-list-item *ngFor="let charac of charachters " (click)="goToDetail(charac)">
-                {{charac}}
+                {{charac | titlecase}}
             </nb-list-item>
         </nb-list>
     </div>

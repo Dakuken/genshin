@@ -1,10 +1,16 @@
-<nb-card *ngIf="material.name !== 'none'" class=" drop-shadow-lg cursor-pointer w-full">
-  <nb-card-body class="flex flex-col justify-center items-center">
+<nb-card *ngIf="material.name !== 'none'" class=" drop-shadow-lg cursor-pointer w-full " style="min-height: 320px;">
+  <nb-card-body class="flex flex-col justify-center items-center sm:p-2 p-1">
     <img [alt]="'image de l`item : ' + material.name " [src]="material.url" class="h-52 select-none"/>
-    <h2>{{material.name}}</h2>
-    <div class="flex justify-center items-center userInput">
-      <input #qte nbInput type="number" value="" placeholder="0" class="qteUser " (change)="onChangeQteUser(qte.value)" (keyup)="onChangeQteUser(qte.value)">
-      <p class="text-lg"> / {{material.qte}}</p>
+    <h2>{{material.name | titlecase}}</h2>
+    <div *ngIf="!isConverter" class="flex justify-center items-center userInput">
+      <input #qte (change)="onChangeQteUser(qte.value)" (keyup)="onChangeQteUser(qte.value)" class="qteUser " nbInput placeholder="0" type="number" value="">
+      <p class="text-lg"> {{material.qte ? "/ " + material.qte : ""   }}</p>
     </div>
+
+    <div *ngIf="isConverter" class="flex flex-row justify-center items-center">
+      <input #qte (change)="onChangeQteUser(qte.value)" (keyup)="onChangeQteUser(qte.value)" *ngIf="!isLastConverter" [value]="material.qteUser" class="w-1/4" nbInput placeholder="0" type="number">
+      <p class="text-lg p-1">{{converterDisplay()}}</p>
+    </div>
+
   </nb-card-body>
 </nb-card>

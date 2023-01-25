@@ -11,9 +11,7 @@ import { CharactersService } from './service/characters.service';
 import { HeaderComponent } from './components/header/header.component';
 import { SearchBarModule } from './components/search-bar/search-bar.module';
 import { FooterComponent } from './components/footer/footer.component';
-// import {oneRankComponent} from "./pages/detail-characters/one-rank/one-rank.component";
 import {CharactersModule} from "./pages/characters/characters.module";
-// import {DetailCharactersComponent} from "./pages/detail-characters/detail-characters.component";
 import {ItemsService} from "./service/items.service";
 
 
@@ -22,7 +20,6 @@ import {ItemsService} from "./service/items.service";
     AppComponent,
     HeaderComponent,
     FooterComponent,
-    // oneRankComponent,
   ],
   imports: [
     BrowserModule,

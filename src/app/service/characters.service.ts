@@ -3,8 +3,8 @@ import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import CommonAscencion from "../model/Ascencion/Common/CommonAscencion";
 
-// const endpoint = 'https://api-genshin1.ey.r.appspot.com/';
-const endpoint = 'http://localhost:8080/';
+const endpoint = 'https://api-genshin.justinburnel.repl.co/';
+// const endpoint = 'http://localhost:8080/';
 const token = 'my JWT';
 const headers = new HttpHeaders({
   'Content-Type': 'file',
@@ -60,7 +60,7 @@ export class CharactersService {
   }
 
   searchCharcList(term: string): Observable<any[]> {
-    return this.http.get<any[]>(`http://localhost:5000/characters/?name=${term}`)
+    return this.http.get<any[]>(`${endpoint}characters/?name=${term}`)
   }
 
   errorHandl(error: any) {
