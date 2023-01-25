@@ -22,6 +22,7 @@ import {MatClass} from "../../../model/Mat.class";
         [elevation]="elevationSelected"
         [materials]="materials"
         [converter]="conversion"
+        [portrait]="portrait"
       ></app-characters-component>
 
     </div>
@@ -40,15 +41,27 @@ export class CharactersComponentSmart implements OnInit {
   commonAscencionInfo!: Ascencion
   characterAscencionInfo: CharacterAscension = new CharacterAscension()
 
+  portrait: any;
+
   constructor(private characterService: CharactersService, private itemsService: ItemsService, private router: Router, private route: ActivatedRoute, private sanitizer: DomSanitizer) {
     this.router.events.subscribe(ev => {
       if (ev instanceof NavigationEnd && ev.url) {
         this.character = <string>this.route.snapshot.paramMap.get('id')
         this.reset()
+        console.log(this.character)
+        this.getPortrait()
       }
     })
     this.itemsService.getImagePath().subscribe((data: imageRef) => {
       this.imagePath = data
+    })
+
+  }
+
+  async getPortrait() {
+    this.characterService.getPortrait(this.character).subscribe(data => {
+      let unsafeUrl = window.URL.createObjectURL(data)
+      this.portrait = this.sanitizer.bypassSecurityTrustUrl(unsafeUrl);
     })
   }
 

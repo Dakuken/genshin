@@ -63,6 +63,12 @@ export class CharactersService {
     return this.http.get<any[]>(`${endpoint}characters/?name=${term}`)
   }
 
+  getPortrait(name : string ){
+    return this.http.get(`${endpoint}characters/${name}/portrait`,{responseType: 'blob'})
+  }
+
+
+
   errorHandl(error: any) {
     console.log(error);
 

@@ -1,22 +1,23 @@
-<h1 class="mb-2">{{character | titlecase}}</h1>
-<nb-card accent="info">
+<h1 class="mb-2 text-xl">{{character | titlecase}}</h1>
+<nb-card accent="info" class="shadowMe">
   <nb-card-header class="flex items-center">
     <app-rank-selector-component (choicedRank)="onChoicedRank($event)" [elevationRanks]="elevationRanks" class="mx-2"></app-rank-selector-component>
     <p *ngIf="elevation" class="mx-2"> LEVEL REQUIRED : {{elevation?.lvl ? elevation?.lvl : "lvl"}}</p>
     <p *ngIf="elevation" class="mx-2"> MORAS REQUIRED: {{elevation?.cost ? elevation?.cost : "cost"}}</p>
   </nb-card-header>
 
-  <nb-card-body>
 
-    <div *ngIf="elevation" class="flex flex-col  sm:flex-row justify-around">
-      <div *ngFor="let item of materials; let i = index" class="flex  mx-4 sm:w-1/4" >
+  <nb-card-body class="relative z-10">
+    <div *ngIf="elevation" class="flex flex-col  sm:flex-row justify-around ">
+      <div *ngFor="let item of materials; let i = index" class="flex  mx-4 sm:w-1/4">
         <!--      <div [@openClose]="convertFocus[i]? 'open' : 'closed'">-->
-        <div class="w-full">
-          <app-item-card class="w-full" [material]="item" (click)="onClickConverter(i)"></app-item-card>
+        <div class="w-full ">
+          <app-item-card (click)="onClickConverter(i)" [material]="item" class="w-full"></app-item-card>
         </div>
       </div>
     </div>
   </nb-card-body>
+  <img [src]="portrait" class="right-0 top-20 w-96 aspect-auto myImage">
 
 </nb-card>
 

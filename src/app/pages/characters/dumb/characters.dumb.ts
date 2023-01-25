@@ -14,6 +14,7 @@ export class CharactersDumb implements OnInit {
   @Input() elevation: Elevation | undefined
   @Input() materials: Mat[] = []
   @Input() converter: ConverterClass = new ConverterClass()
+  @Input() portrait : any
 
   @Output() choicedRank: EventEmitter<string> = new EventEmitter<string>()
 
