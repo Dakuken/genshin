@@ -152,7 +152,8 @@ export class CharactersComponentSmart implements OnInit {
   commonPrevious(material: Mat): Mat[] {
     let commonAscencionInfoProperties = [this.commonAscencionInfo.handguard, this.commonAscencionInfo.nectar, this.commonAscencionInfo.slime,
       this.commonAscencionInfo.spectral, this.commonAscencionInfo["fatui-insignias"], this.commonAscencionInfo["hilichurl-arrowheads"],
-      this.commonAscencionInfo["hilichurl-masks"], this.commonAscencionInfo["samachurl-scrolls"], this.commonAscencionInfo["treasure-hoarder-insignias"]]
+      this.commonAscencionInfo["hilichurl-masks"], this.commonAscencionInfo["samachurl-scrolls"], this.commonAscencionInfo["treasure-hoarder-insignias"],
+      this.commonAscencionInfo["fungal-spore-powder"], this.commonAscencionInfo["red-cloth"]]
     let isFinish = false
     let materials: Mat[] = []
     for (let i = 0; i < commonAscencionInfoProperties.length; i++) {
@@ -183,6 +184,7 @@ export class CharactersComponentSmart implements OnInit {
     this.materials = []
     this.conversion = new ConverterClass()
     this.commonAscencionInfo = await this.characterService.getCommonAscension()
+    console.log(this.commonAscencionInfo)
     this.getElevation()
 
   }

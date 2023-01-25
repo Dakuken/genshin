@@ -10,6 +10,9 @@ export default interface CommonAscencion {
   "treasure-hoarder-insignias": CommonAscencionMat
   "fatui-insignias": CommonAscencionMat
   "nectar": CommonAscencionMat
+
+  "red-cloth" : CommonAscencionMat
+  "fungal-spore-powder" : CommonAscencionMat
 }
 
 
