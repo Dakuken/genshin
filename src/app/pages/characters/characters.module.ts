@@ -7,6 +7,7 @@ import {RankSelectorComponent} from "./dumb/component/rank-selector/rank-selecto
 import {ItemCardComponent} from "./dumb/component/item-card/item-card.component";
 import {FormsModule} from "@angular/forms";
 import {ConverterComponent} from "./dumb/component/converter/converter.component";
+import {LoaderModule} from "../../components/loader/loader.module";
 
 @NgModule({
   declarations: [CharactersComponentSmart, CharactersDumb, RankSelectorComponent, ItemCardComponent,ConverterComponent],
@@ -18,6 +19,7 @@ import {ConverterComponent} from "./dumb/component/converter/converter.component
         NbButtonModule,
         NbInputModule,
         NbIconModule,
+        LoaderModule
     ],
   exports: [CharactersComponentSmart]
 })

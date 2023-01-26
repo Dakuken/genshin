@@ -29,6 +29,7 @@ import {ItemsService} from "./service/items.service";
     SearchBarModule,
     CharactersModule,
 
+
     NbThemeModule.forRoot({name: 'cosmic'}),
     NbLayoutModule,
     NbEvaIconsModule,

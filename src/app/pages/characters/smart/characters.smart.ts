@@ -188,4 +188,6 @@ export class CharactersComponentSmart implements OnInit {
     this.getElevation()
 
   }
+
+
 }

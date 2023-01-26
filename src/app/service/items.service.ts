@@ -3,8 +3,8 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import {imageRef} from "../interface/image-ref.interface";
 
-const endpoint = 'https://api-genshin.justinburnel.repl.co/';
-// const endpoint = 'http://localhost:8080/';
+// const endpoint = 'https://api-genshin.justinburnel.repl.co/';
+const endpoint = 'http://localhost:8080/';
 const token = 'my JWT';
 const headers = new HttpHeaders({
   'Content-Type': 'file',

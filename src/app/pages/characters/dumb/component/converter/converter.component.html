@@ -1,23 +1,21 @@
-<nb-card *ngIf="(showCharacter && converter.mat1.length !== 0 )|| (showAscencion && converter.mat2.length !== 0)" accent="info">
-  <nb-card-header>
-    Converter
-  </nb-card-header>
-  <nb-card-body>
-    <div *ngIf="showCharacter && converter.mat1.length !== 0" class="flex w-full">
-      <div *ngFor="let item of converter.mat1; let i = index" class="w-full sm:w-1/4 mx-2">
-        <div>
-          <app-item-card (qteUser)="onChangeQteUser($event, i, true)" [material]="item" class="w-full" [isLastConverter]="i === converter.mat1.length-1" [isConverter]="true"></app-item-card>
-        </div>
-        <nb-icon *ngIf="i !== 0" class="relative text-xl items-center bottom-52 right-12 w-20 h-12" icon="arrow-forward-outline" status="basic"></nb-icon>
+<div *ngIf="(showCharacter && converter.mat1.length !== 0 )|| (showAscencion && converter.mat2.length !== 0)" class="ml-1 mb-8">
+  <h1 class="text-xl">Converter</h1>
+
+  <div *ngIf="showCharacter && converter.mat1.length !== 0" class="flex flex-col sm:flex-row">
+    <div *ngFor="let item of converter.mat1; let i = index" class="flex mr-4">
+      <div class="maxW">
+        <app-item-card (qteUser)="onChangeQteUser($event, i, true)" [isConverter]="true" [isLastConverter]="i === converter.mat1.length-1" [material]="item" class="maxW"></app-item-card>
+        <nb-icon *ngIf="i !== 0" class="relative items-center right-14 w-20 h-20 bottom-56 opacity-60" icon="arrow-forward-outline" status="basic"></nb-icon>
       </div>
     </div>
-    <div *ngIf="showAscencion && converter.mat2.length !== 0" class="flex w-full">
-      <div *ngFor="let item of converter.mat2; let i = index" class="w-full sm:w-1/4 mx-2">
-        <div>
-          <app-item-card (qteUser)="onChangeQteUser($event,i, false)" [material]="item" class="w-full" [isLastConverter]="i === converter.mat2.length-1"  [isConverter]="true"></app-item-card>
-        </div>
-        <nb-icon *ngIf="i !== 0" class="relative text-xl items-center bottom-52 right-8 w-12 h-12" icon="arrow-forward-outline" status="basic"></nb-icon>
+  </div>
+
+  <div *ngIf="showAscencion && converter.mat2.length !== 0" class="flex flex-col sm:flex-row">
+    <div *ngFor="let item of converter.mat2; let i = index" class="flex mr-4">
+      <div>
+        <app-item-card (qteUser)="onChangeQteUser($event,i, false)" [isConverter]="true" [isLastConverter]="i === converter.mat2.length-1" [material]="item" class="maxW"></app-item-card>
+        <nb-icon *ngIf="i !== 0" class="relative items-center right-14 w-20 h-20 bottom-56 opacity-60" icon="arrow-forward-outline" status="basic"></nb-icon>
       </div>
     </div>
-  </nb-card-body>
-</nb-card>
+  </div>
+</div>
