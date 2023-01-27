@@ -35,6 +35,7 @@ export class CharactersDumb implements OnInit {
   }
 
   ngOnInit(): void {
+    console.log(this.portrait)
   }
 
   onChoicedRank(newChoicedRank: string) {
@@ -59,6 +60,15 @@ export class CharactersDumb implements OnInit {
       return ''
     }
     return 'hover:opacity-80 cursor-pointer'
+  }
+
+  myportrait(){
+    if(!this.portrait){
+      return
+    }
+
+      return this.portrait;
+
   }
 
   // parallax(e: any) {

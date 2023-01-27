@@ -64,7 +64,7 @@ export class CharactersService {
   }
 
   getPortrait(name : string ){
-    return this.http.get(`${endpoint}characters/${name}/portrait`,{responseType: 'blob'})
+    return this.http.get(`${endpoint}characters/${name}/card`,{responseType: 'blob'})
   }
 
 

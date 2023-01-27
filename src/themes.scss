@@ -3,6 +3,26 @@
 @use '@nebular/theme/styles/themes/cosmic';
 
 $nb-themes: nb-register-theme((
+  background-basic-color-1 : color-basic-900,
+  background-basic-color-2: color-basic-900, // bar et tout
+  background-basic-color-3: color-basic-1000, // fond
+  background-basic-color-4: color-basic-20,
+
+  color-basic-100: white,
+  color-basic-200: #DEB76C,
+  color-basic-300: #e8f5fa,
+  color-basic-400: #d6e6f2,
+  color-basic-500: #c7dbeb,
+  color-basic-600: #FFFFFF, // input
+  color-basic-700: #4f969e,
+  color-basic-800: #336a77,
+  color-basic-900: #28636D,
+  color-basic-1000: #2F4858,
+  border-basic-color-4 : #5F966E,
+  //color-basic-1100: #28636D,
+
+
+
   // add your variables here like:
   // color-primary-100: #f2f6ff,
   // color-primary-200: #d9e4ff,

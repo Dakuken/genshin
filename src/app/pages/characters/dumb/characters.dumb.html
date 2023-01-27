@@ -22,18 +22,18 @@
     <app-converter-component [converter]="converter" [showAscencion]="showAscension" [showCharacter]="showCharacter"></app-converter-component>
   </div>
 
-  <div class="w-1/2 flex items-center justify-center">
-    <div>
-      <img alt="image de {{character}}" class=" myImage2" src="http://localhost:8080/characters/albedo/contour">
-      <div [ngClass]="!portrait ? '' : 'top-44' " class="card2">
-        <img [src]="portrait" alt="image de {{character}}" class=" myImage">
-      </div>
+  <div class="w-1/2 flex justify-start pl-16">
+    <div class="card2">
+      <div class="myImage" [style.background-image]="'url(' +'http://localhost:8080/characters/'+character+'/card'+ ')'"></div>
+        <img src="http://localhost:8080/characters/albedo/contour" alt="image de {{character}}" class=" myImage2">
     </div>
 
-    <div *ngIf="!portrait" [@fade] class="flex items-center justify-center">
-      <div class="card"></div>
-      <div class="black"></div>
-    </div>
+<!--    <img [src]="portrait" alt="image de {{character}}" class=" myImage2">-->
+
+    <!--    <div *ngIf="!portrait" [@fade] class="flex items-center justify-center">-->
+    <!--      <div class="card"></div>-->
+    <!--      <div class="black"></div>-->
+    <!--    </div>-->
   </div>
 
 
