@@ -31,34 +31,43 @@
 }
 
 nb-card {
-
   box-sizing: content-box;
   border-width: 1px;
   border-style: solid;
   border-image-slice: 1;
 }
 
-.geo{
+.anemo{
+  background-image: linear-gradient(to bottom, #6eb89f, #8ecab5, #aedbcc, #cdede2, #edfff9);
+  border-image: linear-gradient(to bottom, #6eb89f, #8ecab5, #aedbcc, #edfff9, #cdede2);
+}
+
+.geo {
   background-image: linear-gradient(to bottom, #deb76c, #e7c88c, #efd8ac, #f7e9cc, #fff9ed);
-  border-image: linear-gradient(to bottom, #deb76c, #e7c88c, #efd8ac, #fff9ed, #f7e9cc );
+  border-image: linear-gradient(to bottom, #deb76c, #e7c88c, #efd8ac, #fff9ed, #f7e9cc);
 }
 
-.dendro{
+.electro {
+  background-image: linear-gradient(to bottom, #5e3e96, #8369b1, #a995cb, #cfc3e5, #f7f3ff);
+  border-image: linear-gradient(to bottom, #5e3e96, #8369b1, #a995cb, #f7f3ff, #cfc3e5);
+}
+
+.dendro {
   background-image: linear-gradient(to bottom, #8faa65, #7cc3a2, #8dd4d7, #bfe2f5, #edf1ff);
-  border-image: linear-gradient(to bottom, #8faa65, #7cc3a2, #8dd4d7, #edf1ff, #bfe2f5 );
+  border-image: linear-gradient(to bottom, #8faa65, #7cc3a2, #8dd4d7, #edf1ff, #bfe2f5);
 }
 
-.cryo{
+.cryo {
   background-image: linear-gradient(to bottom, #67b1ce, #8bc3da, #acd5e6, #acd5e6, #cde8f2, #edfaff);
-  border-image: linear-gradient(to bottom, #67b1ce, #8bc3da, #acd5e6, #cde8f2,#acd5e6);
+  border-image: linear-gradient(to bottom, #67b1ce, #8bc3da, #acd5e6, #cde8f2, #acd5e6);
 }
 
-.pyro{
+.pyro {
   background-image: linear-gradient(to bottom, #cb0300, #e55445, #f7897f, #ffbbb8, #ffeded);
-  border-image: linear-gradient(to bottom, #cb0300, #e55445, #f7897f, #ffeded, #ffbbb8 );
+  border-image: linear-gradient(to bottom, #cb0300, #e55445, #f7897f, #ffeded, #ffbbb8);
 }
 
-.hydro{
+.hydro {
   background-image: linear-gradient(to bottom, #2389da, #70a1e4, #9fbaed, #c8d5f6, #edf1ff);
-  border-image: linear-gradient(to bottom, #67b1ce, #8bc3da, #acd5e6, #acd5e6,#cde8f2);
+  border-image: linear-gradient(to bottom, #67b1ce, #8bc3da, #acd5e6, #acd5e6, #cde8f2);
 }

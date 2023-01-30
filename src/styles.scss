@@ -27,30 +27,40 @@ input[type=number] {
 }
 
 .myShadow {
-  box-shadow: -1px 2px 20px 0px rgba(0,0,0,0.46);
+  box-shadow: -1px 2px 20px 0px rgba(0, 0, 0, 0.46);
 }
 
-body{
+body {
+  background-image: linear-gradient(to right top, #f3fffd, #f3fffd, #f3fffd, #f3fffd, #f3fffd, #e7f9f6, #dcf3ee, #d0ede7, #b7e0d6, #9ed3c4, #86c5b2, #6eb89f);
+
+}
+
+.anemo{
+  background-image: linear-gradient(to right top, #f3fffd, #f3fffd, #f3fffd, #f3fffd, #f3fffd, #e7f9f6, #dcf3ee, #d0ede7, #b7e0d6, #9ed3c4, #86c5b2, #6eb89f);
+}
+
+.electro {
+  background-image: linear-gradient(to right top, #f7f3ff, #f7f3ff, #f7f3ff, #f7f3ff, #f7f3ff, #e9e3f6, #dcd3ee, #cfc3e5, #b2a0d2, #967fbe, #7a5eaa, #5e3e96);
+}
+
+.geo {
   background-image: linear-gradient(to right top, #ffffff, #ffffff, #ffffff, #ffffff, #ffffff, #fbf8ff, #fbf0fd, #fde8f8, #ffd5e2, #ffc4be, #feba93, #deb76c);
 }
 
-.geo{
-  background-image: linear-gradient(to right top, #ffffff, #ffffff, #ffffff, #ffffff, #ffffff, #fbf8ff, #fbf0fd, #fde8f8, #ffd5e2, #ffc4be, #feba93, #deb76c);
-}
-
-.dendro{
+.dendro {
   background-image: linear-gradient(to right top, #ffffff, #ffffff, #ffffff, #ffffff, #ffffff, #f5f7fd, #e8effb, #d8e9f8, #addde9, #88d0c9, #7fc099, #8faa65);
 }
 
-.cryo{
+.cryo {
   background-image: linear-gradient(to right top, #ffffff, #ffffff, #ffffff, #ffffff, #ffffff, #f7f6fa, #eeeef6, #e4e6f2, #ccd5e8, #b0c5de, #92b5d3, #6fa7c6); // Blue
 }
 
-.hydro{
+.hydro {
   background-image: linear-gradient(to right top, #ffffff, #ffffff, #ffffff, #ffffff, #ffffff, #f4f3fc, #e9e8f8, #ddddf5, #bfc6ee, #9bb0e8, #6f9ce1, #2389da);
 }
 
-.pyro{
+.pyro {
   background-image: linear-gradient(to right top, #ffffff, #ffffff, #ffffff, #ffffff, #ffffff, #f4effd, #eedef7, #ecccef, #f0a0cf, #f36f9b, #e93c58, #cb0300);
 }
+
 /* You can add global styles to this file, and also import other style files */
