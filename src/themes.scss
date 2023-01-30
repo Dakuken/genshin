@@ -3,35 +3,288 @@
 @use '@nebular/theme/styles/themes/cosmic';
 
 $nb-themes: nb-register-theme((
-  background-basic-color-1 : color-basic-900,
-  background-basic-color-2: color-basic-900, // bar et tout
+  //! Header,
+  header-background-color:color-basic-200,
+  header-shadow : none,
+  //! Footer
+  footer-background-color:color-basic-200,
+  footer-text-color : #000000,
+  //! Option
+  option-selected-hover-background-color:color-basic-800,
+  option-selected-background-color:color-basic-800,
+  //! Background
+  background-basic-color-1 : color-basic-800,
+  background-basic-color-2: color-basic-800, // bar et tout
   background-basic-color-3: color-basic-1000, // fond
-  background-basic-color-4: color-basic-20,
+  background-basic-color-4: color-basic-200,
+  card-background-color : color-basic-800,
+  //! Input
+  input-basic-border-color : color-basic-900,
+  input-basic-hover-background-color : color-basic-800,
+  //! Border
+  border-basic-color-4 :color-basic-900,
+  //! Color
+  color-primary-default :color-basic-800,
+  color-basic-100: #000000,
+  color-basic-200: #DEB76C,
+  color-basic-300: #e8f5fa,
+  color-basic-400: #d6e6f2,
+  color-basic-500: #c7dbeb,
+  color-basic-600: #000000, // input font !!! a ne pas changer (fin tu peux mettre en noir)
+  //color-basic-700: #357E74,
+  color-basic-800: #FFFFFF, // input aussi
+  color-basic-900: rgba(255, 255, 255, 0),
+  //color-basic-1000: #358BA6,
+  color-basic-1000:  rgba(0,0,0,0),
+), cosmic, cosmic);
 
+
+$nb-themes: nb-register-theme((
+  //! Header,
+  header-background-color:color-basic-200,
+  //! Footer
+  footer-background-color:color-basic-200,
+  footer-text-color : #000000 ,
+  //! Option
+  option-selected-hover-background-color:color-basic-800,
+  option-selected-background-color:color-basic-800,
+  //! Background
+  background-basic-color-1 : color-basic-800,
+  background-basic-color-2: color-basic-800, // bar et tout
+  background-basic-color-3: color-basic-1000, // fond
+  background-basic-color-4: color-basic-200,
+  card-background-color : color-basic-800,
+  //! Input
+  input-basic-border-color : color-basic-900,
+  input-basic-hover-background-color : color-basic-800,
+  //! Border
+  border-basic-color-4 :color-basic-900,
+  //! Color
+  color-primary-default :color-basic-800,
   color-basic-100: white,
   color-basic-200: #DEB76C,
   color-basic-300: #e8f5fa,
   color-basic-400: #d6e6f2,
   color-basic-500: #c7dbeb,
-  color-basic-600: #FFFFFF, // input
-  color-basic-700: #4f969e,
-  color-basic-800: #336a77,
-  color-basic-900: #28636D,
-  color-basic-1000: #2F4858,
-  border-basic-color-4 : #5F966E,
-  //color-basic-1100: #28636D,
+  color-basic-600: #FFFFFF, // input font !!! a ne pas changer (fin tu peux mettre en noir)
+  //color-basic-700: #357E74,
+  color-basic-800: #B7242A, // input aussi
+  color-basic-900: #A82257,
+  //color-basic-1000: #730004,
+    color-basic-1000:  rgba(0,0,0,0),
+), pyro, cosmic);
+
+$nb-themes: nb-register-theme((
+  //! Header,
+  header-background-color:color-basic-200,
+  header-shadow : none,
+  //! Footer
+  footer-background-color:color-basic-200,
+  footer-text-color : #000000 ,
+
+  //! Option
+  option-selected-hover-background-color:color-basic-800,
+  option-selected-background-color:color-basic-800,
+  //! Background
+  background-basic-color-1 : color-basic-800,
+  background-basic-color-2: color-basic-800, // bar et tout
+  background-basic-color-3: color-basic-1000, // fond
+  background-basic-color-4: color-basic-200,
+  card-background-color : color-basic-800,
+  //! Input
+  input-basic-border-color : color-basic-900,
+  input-basic-hover-background-color : color-basic-800,
+  //! Border
+  border-basic-color-4 :color-basic-900,
+  //! Color
+  color-primary-default :color-basic-800,
+  color-basic-100: color-basic-100,
+  color-basic-200: #DEB76C,
+  color-basic-300: #e8f5fa,
+  color-basic-400: #d6e6f2,
+  color-basic-500: #c7dbeb,
+  color-basic-600: #000000, // input font !!! a ne pas changer (fin tu peux mettre en noir)
+  //color-basic-700: #357E74,
+  color-basic-800: #FFFFFF, // input aussi
+  color-basic-900: rgba(255, 255, 255, 0),
+  //color-basic-1000: #358BA6,
+    color-basic-1000:  rgba(0,0,0,0),
+), hydro, cosmic);
+
+$nb-themes: nb-register-theme((
+  //! Header,
+  header-background-color:color-basic-200,
+  //! Footer
+  footer-background-color:color-basic-200,
+  footer-text-color : #000000 ,
+  //! Option
+  option-selected-hover-background-color:color-basic-800,
+  option-selected-background-color:color-basic-800,
+  //! Background
+  background-basic-color-1 : color-basic-800,
+  background-basic-color-2: color-basic-800, // bar et tout
+  background-basic-color-3: color-basic-1000, // fond
+  background-basic-color-4: color-basic-200,
+  card-background-color : color-basic-800,
+  //! Input
+  input-basic-border-color : color-basic-900,
+  input-basic-hover-background-color : color-basic-800,
+  //! Border
+  border-basic-color-4 :color-basic-900,
+  //! Color
+  color-primary-default :color-basic-800,
+  color-basic-100: #000000,
+  color-basic-200: #DEB76C,
+  color-basic-300: #e8f5fa,
+  color-basic-400: #d6e6f2,
+  color-basic-500: #c7dbeb,
+  color-basic-600: color-basic-100, // input font !!! a ne pas changer (fin tu peux mettre en noir)
+  //color-basic-700: #357E74,
+  color-basic-800: #72ccd4, // input aussi
+  color-basic-900: #6298B2,
+  //color-basic-1000: #6FA7B0,
+    color-basic-1000:  rgba(0,0,0,0),
+), anemo, cosmic);
+
+$nb-themes: nb-register-theme((
+  //! Header,
+  header-background-color:color-basic-200,
+  //! Footer
+  footer-background-color:color-basic-200,
+  footer-text-color : #000000 ,
+  //! Option
+  option-selected-hover-background-color:color-basic-800,
+  option-selected-background-color:color-basic-800,
+  //! Background
+  background-basic-color-1 : color-basic-800,
+  background-basic-color-2: color-basic-800, // bar et tout
+  background-basic-color-3: color-basic-1000, // fond
+  background-basic-color-4: color-basic-200,
+  card-background-color : color-basic-800,
+  //! Input
+  input-basic-border-color : color-basic-900,
+  input-basic-hover-background-color : color-basic-800,
+  //! Border
+  border-basic-color-4 :color-basic-900,
+  //! Color
+  color-primary-default :color-basic-800,
+  color-basic-100: #FFFFFF,
+  color-basic-200: #DEB76C,
+  color-basic-300: #e8f5fa,
+  color-basic-400: #d6e6f2,
+  color-basic-500: #c7dbeb,
+  color-basic-600: color-basic-100, // input font !!! a ne pas changer (fin tu peux mettre en noir)
+  //color-basic-700: #357E74,
+  color-basic-800: #604b94, // input aussi
+  color-basic-900: #a86bdb,
+  //color-basic-1000: #59467B,
+    color-basic-1000:  rgba(0,0,0,0),
+), electro, cosmic);
 
 
+$nb-themes: nb-register-theme((
+  //! Header,
+  header-background-color:color-basic-200,
+  //! Footer
+  footer-background-color:color-basic-200,
+  footer-text-color : #000000 ,
+  //! Option
+  option-selected-hover-background-color:color-basic-800,
+  option-selected-background-color:color-basic-800,
+  //! Background
+  background-basic-color-1 : color-basic-800,
+  background-basic-color-2: color-basic-800, // bar et tout
+  background-basic-color-3: color-basic-1000, // fond
+  background-basic-color-4: color-basic-200,
+  card-background-color : color-basic-800,
+  //! Input
+  input-basic-border-color : color-basic-900,
+  input-basic-hover-background-color : color-basic-800,
+  //! Border
+  border-basic-color-4 :color-basic-900,
+  //! Color
+  color-primary-default :color-basic-800,
+  color-basic-100: #FFFFFF,
+  color-basic-200: #DEB76C,
+  color-basic-300: #e8f5fa,
+  color-basic-400: #d6e6f2,
+  color-basic-500: #c7dbeb,
+  color-basic-600: color-basic-100, // input font !!! a ne pas changer (fin tu peux mettre en noir)
+  //color-basic-700: #357E74,
+  color-basic-800: #4F7B50, // input aussi
+  color-basic-900: #2F705C,
+  //color-basic-1000: #11481c,
+    color-basic-1000:  rgba(0,0,0,0),
+), dendro, cosmic);
 
-  // add your variables here like:
-  // color-primary-100: #f2f6ff,
-  // color-primary-200: #d9e4ff,
-  // color-primary-300: #a6c1ff,
-  // color-primary-400: #598bff,
-  // color-primary-500: #3366ff,
-  // color-primary-600: #274bdb,
-  // color-primary-700: #1a34b8,
-  // color-primary-800: #102694,
-  // color-primary-900: #091c7a,
+$nb-themes: nb-register-theme((
+  //! Header,
+  header-background-color:color-basic-200,
+  header-shadow : none,
+  //! Footer
+  footer-background-color:color-basic-200,
+  footer-text-color : #000000,
+  //! Option
+  option-selected-hover-background-color:color-basic-800,
+  option-selected-background-color:color-basic-800,
+  //! Background
+  background-basic-color-1 : color-basic-800,
+  background-basic-color-2: color-basic-800, // bar et tout
+  background-basic-color-3: color-basic-1000, // fond
+  background-basic-color-4: color-basic-200,
+  card-background-color : color-basic-800,
+  //! Input
+  input-basic-border-color : color-basic-900,
+  input-basic-hover-background-color : color-basic-800,
+  //! Border
+  border-basic-color-4 :color-basic-900,
+  //! Color
+  color-primary-default :color-basic-800,
+  color-basic-100: #000000,
+  color-basic-200: #DEB76C,
+  color-basic-300: #e8f5fa,
+  color-basic-400: #d6e6f2,
+  color-basic-500: #c7dbeb,
+  color-basic-600: #000000, // input font !!! a ne pas changer (fin tu peux mettre en noir)
+  //color-basic-700: #357E74,
+  color-basic-800: #FFFFFF, // input aussi
+  color-basic-900: rgba(255, 255, 255, 0),
+  //color-basic-1000: #358BA6,
+  color-basic-1000:  rgba(0,0,0,0),
+), cryo, cosmic);
 
-), cosmic, cosmic);
+
+$nb-themes: nb-register-theme((
+  //! Header,
+  header-background-color:color-basic-200,
+  //! Footer
+  footer-background-color:color-basic-200,
+  footer-text-color : #000000,
+  //! Option
+  option-selected-hover-background-color:color-basic-800,
+  option-selected-background-color:color-basic-800,
+  //! Background
+  background-basic-color-1 : color-basic-800,
+  background-basic-color-2: color-basic-800, // bar et tout
+  background-basic-color-3: color-basic-1000, // fond
+  background-basic-color-4: color-basic-200,
+  card-background-color : color-basic-800,
+  //! Input
+  input-basic-border-color : color-basic-900,
+  input-basic-hover-background-color : color-basic-800,
+  //! Border
+  border-basic-color-4 :color-basic-900,
+  //! Color
+  color-primary-default :color-basic-800,
+  color-basic-100: #FFFFFF,
+  color-basic-200: #DEB76C,
+  color-basic-300: #e8f5fa,
+  color-basic-400: #d6e6f2,
+  color-basic-500: #c7dbeb,
+  color-basic-600: color-basic-100, // input font !!! a ne pas changer (fin tu peux mettre en noir)
+  //color-basic-700: #357E74,
+  color-basic-800: #504538, // input aussi
+  color-basic-900: #361F00,
+  //color-basic-1000: #A07F51,
+    color-basic-1000:  rgba(0,0,0,0),
+), geo, cosmic);

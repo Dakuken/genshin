@@ -5,31 +5,60 @@
   width: 40px;
   font-size: 1.125rem;
   font-weight: normal;
-  padding: 0 0.2rem 0 0 ;
+  padding: 0 0.2rem 0 0;
   margin: 0;
   background: none;
-  border : none;
+  border: none;
   text-align: right;
   vertical-align: middle;
 }
 
-.qteUser:focus{
+.qteUser:focus {
   background: none;
 }
 
-.qteUser::placeholder{
+.qteUser::placeholder {
   font-size: 1.125rem;
   font-weight: normal;
-  color : #FFFFFF;
+  color: nb-theme(color-basic-100);
   vertical-align: middle;
 }
 
-.userInput{
-  background-color: nb-theme(color-basic-900);
-  padding : 0.5rem 1rem  0.5rem 0.2rem;
+.userInput {
+  background-color: nb-theme(color-basic-800);
+  padding: 0.5rem 1rem 0.5rem 0.2rem;
   border-radius: 1.125rem;
 }
 
-.shadowMe{
-  box-shadow: 0px 5px 20px 0px rgb(0 0 0 / 32%);
+nb-card {
+
+  box-sizing: content-box;
+  border-width: 1px;
+  border-style: solid;
+  border-image-slice: 1;
+}
+
+.geo{
+  background-image: linear-gradient(to bottom, #deb76c, #e7c88c, #efd8ac, #f7e9cc, #fff9ed);
+  border-image: linear-gradient(to bottom, #deb76c, #e7c88c, #efd8ac, #fff9ed, #f7e9cc );
+}
+
+.dendro{
+  background-image: linear-gradient(to bottom, #8faa65, #7cc3a2, #8dd4d7, #bfe2f5, #edf1ff);
+  border-image: linear-gradient(to bottom, #8faa65, #7cc3a2, #8dd4d7, #edf1ff, #bfe2f5 );
+}
+
+.cryo{
+  background-image: linear-gradient(to bottom, #67b1ce, #8bc3da, #acd5e6, #acd5e6, #cde8f2, #edfaff);
+  border-image: linear-gradient(to bottom, #67b1ce, #8bc3da, #acd5e6, #cde8f2,#acd5e6);
+}
+
+.pyro{
+  background-image: linear-gradient(to bottom, #cb0300, #e55445, #f7897f, #ffbbb8, #ffeded);
+  border-image: linear-gradient(to bottom, #cb0300, #e55445, #f7897f, #ffeded, #ffbbb8 );
+}
+
+.hydro{
+  background-image: linear-gradient(to bottom, #2389da, #70a1e4, #9fbaed, #c8d5f6, #edf1ff);
+  border-image: linear-gradient(to bottom, #67b1ce, #8bc3da, #acd5e6, #acd5e6,#cde8f2);
 }

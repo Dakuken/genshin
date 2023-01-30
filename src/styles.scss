@@ -1,7 +1,4 @@
-
-
 @use 'themes' as *;
-
 
 @use '@nebular/theme/styles/globals' as *;
 
@@ -13,6 +10,7 @@
 
 html::-webkit-scrollbar {
   display: none;
+
 }
 
 @tailwind base;
@@ -28,4 +26,31 @@ input[type=number] {
   -moz-appearance: textfield;
 }
 
+.myShadow {
+  box-shadow: -1px 2px 20px 0px rgba(0,0,0,0.46);
+}
+
+body{
+  background-image: linear-gradient(to right top, #ffffff, #ffffff, #ffffff, #ffffff, #ffffff, #fbf8ff, #fbf0fd, #fde8f8, #ffd5e2, #ffc4be, #feba93, #deb76c);
+}
+
+.geo{
+  background-image: linear-gradient(to right top, #ffffff, #ffffff, #ffffff, #ffffff, #ffffff, #fbf8ff, #fbf0fd, #fde8f8, #ffd5e2, #ffc4be, #feba93, #deb76c);
+}
+
+.dendro{
+  background-image: linear-gradient(to right top, #ffffff, #ffffff, #ffffff, #ffffff, #ffffff, #f5f7fd, #e8effb, #d8e9f8, #addde9, #88d0c9, #7fc099, #8faa65);
+}
+
+.cryo{
+  background-image: linear-gradient(to right top, #ffffff, #ffffff, #ffffff, #ffffff, #ffffff, #f7f6fa, #eeeef6, #e4e6f2, #ccd5e8, #b0c5de, #92b5d3, #6fa7c6); // Blue
+}
+
+.hydro{
+  background-image: linear-gradient(to right top, #ffffff, #ffffff, #ffffff, #ffffff, #ffffff, #f4f3fc, #e9e8f8, #ddddf5, #bfc6ee, #9bb0e8, #6f9ce1, #2389da);
+}
+
+.pyro{
+  background-image: linear-gradient(to right top, #ffffff, #ffffff, #ffffff, #ffffff, #ffffff, #f4effd, #eedef7, #ecccef, #f0a0cf, #f36f9b, #e93c58, #cb0300);
+}
 /* You can add global styles to this file, and also import other style files */

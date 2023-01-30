@@ -34,6 +34,10 @@ export class CharactersDumb implements OnInit {
   constructor(private renderer: Renderer2) {
   }
 
+  onChangeMesCouilles(){
+
+    this.renderer.addClass(document.body, "hydro")
+  }
   ngOnInit(): void {
     console.log(this.portrait)
   }

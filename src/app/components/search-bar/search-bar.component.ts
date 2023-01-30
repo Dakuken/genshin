@@ -38,6 +38,7 @@ export class SearchBarComponent implements OnInit {
       return
     }
     this.searchFocus = false
+
   }
 
   onFocus(str: string = 'base'): void {
