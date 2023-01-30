@@ -1,9 +1,8 @@
 <!--<h1 class="mb-2 text-xl">{{character | titlecase}}</h1>-->
-<div class="flex flex-row">
-  <div class="w-1/2">
-
+<div class="flex flex-row justify-between">
+  <div class="2xl:w-1/2 w-3/4">
     <div class="flex flex-row items-center mb-2" data-value="-4">
-      <app-rank-selector-component  (choicedRank)="onChoicedRank($event)" [elevationRanks]="elevationRanks" class="myShadow"></app-rank-selector-component>
+      <app-rank-selector-component  (choicedRank)="onChoicedRank($event)" [elevationRanks]="elevationRanks" class="myShadow "></app-rank-selector-component>
       <p *ngIf="elevation" class="mx-2 text-lg"> Level : {{elevation?.lvl ? elevation?.lvl : "lvl"}}</p>
       <div *ngIf="elevation" class="flex flex-row items-center">
         <img alt="mora = money in genshin" class="w-8" src="./assets/mora.webp">
@@ -11,21 +10,19 @@
       </div>
     </div>
 
-    <div *ngIf="elevation" class="flex flex-col  sm:flex-row">
+    <div *ngIf="elevation" class="flex flex-col  sm:flex-row mt-8">
       <div *ngFor="let item of materials; let i = index" class="flex mr-4">
         <div class="w-full" style="max-height: 320px">
-          <app-item-card (click)="onClickConverter(i)" [material]="item" [ngClass]="hasConverter(i)" class="w-full "></app-item-card>
+          <app-item-card (click)="onClickConverter(i)" [material]="item" [ngClass]="hasConverter(i)" class="w-full " [theme]="theme"></app-item-card>
         </div>
       </div>
     </div>
 
-    <app-converter-component [converter]="converter" [showAscencion]="showAscension" [showCharacter]="showCharacter"></app-converter-component>
+    <app-converter-component [converter]="converter" [showAscencion]="showAscension" [showCharacter]="showCharacter"  [theme]="theme" ></app-converter-component>
   </div>
 
-  <div class="w-1/2 flex justify-start pl-16">
-    <div>
-      <img [src]="portrait" alt="image de {{character}}" class=" myImage2 aspect-auto rounded-md">
-    </div>
+  <div class="2xl:w-1/2 w-1/4 flex 2xl:justify-center  justify-end lg:pl-16 items-end">
+      <img [src]="portrait" alt="image de {{character}}" class=" myImage2 w-full 2xl:w-1/2 aspect-auto rounded-md">
   </div>
 
 </div>

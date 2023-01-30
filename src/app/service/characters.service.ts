@@ -63,10 +63,18 @@ export class CharactersService {
     return this.http.get<any[]>(`${endpoint}characters/?name=${term}`)
   }
 
-  getPortrait(name : string ){
-    return this.http.get(`${endpoint}characters/${name}/card`,{responseType: 'blob'})
+  getPortrait(name: string) {
+    return this.http.get(`${endpoint}characters/${name}/card`, {responseType: 'blob'})
   }
 
+  async getCharacterElement(name: string) : Promise<string>{
+    return new Promise((res) => {
+      this.http.get(`${endpoint}characters/${name}`).subscribe((data: any) => {
+        console.log(data)
+        res(data.vision  as string)
+      })
+    })
+  }
 
 
   errorHandl(error: any) {

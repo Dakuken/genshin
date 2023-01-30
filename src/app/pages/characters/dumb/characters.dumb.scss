@@ -1,13 +1,13 @@
 
-
 app-item-card {
   transition: 100ms ease;
 }
 
 .myImage2 {
-  width: 30rem;
-  object-fit: cover;
-
+  object-fit: contain;
+  //height: 80vh;
+  max-height: 75vh;
 }
+
 
 

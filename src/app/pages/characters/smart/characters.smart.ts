@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, Renderer2} from '@angular/core';
 import {ActivatedRoute, NavigationEnd, Router} from "@angular/router";
 import {Elevation} from "../../../interface/elevation.interface";
 import {CharactersService} from "../../../service/characters.service";
@@ -14,7 +14,7 @@ import {MatClass} from "../../../model/Mat.class";
 @Component({
   selector: 'app-characters-smart',
   template: `
-    <div class="mt-14">
+    <div class="mt-16">
       <app-characters-component
         (choicedRank)="onChoicedRank($event)"
         [character]="character"
@@ -23,6 +23,7 @@ import {MatClass} from "../../../model/Mat.class";
         [materials]="materials"
         [converter]="conversion"
         [portrait]="portrait"
+        [theme]="element"
       ></app-characters-component>
 
     </div>
@@ -40,10 +41,11 @@ export class CharactersComponentSmart implements OnInit {
   conversion: ConverterClass = new ConverterClass()
   commonAscencionInfo!: Ascencion
   characterAscencionInfo: CharacterAscension = new CharacterAscension()
+  element!: string
 
   portrait: any;
 
-  constructor(private characterService: CharactersService, private itemsService: ItemsService, private router: Router, private route: ActivatedRoute, private sanitizer: DomSanitizer) {
+  constructor(private characterService: CharactersService, private itemsService: ItemsService, private router: Router, private route: ActivatedRoute, private sanitizer: DomSanitizer, private renderer : Renderer2) {
     this.router.events.subscribe(ev => {
       if (ev instanceof NavigationEnd && ev.url) {
         this.character = <string>this.route.snapshot.paramMap.get('id')
@@ -179,14 +181,20 @@ export class CharactersComponentSmart implements OnInit {
 
   // Reset se fait la premiere fois tout seul donc pas besoin dans le ngOnInit, vu qu'il est dans le contructor ducoup
   async reset() {
+    await this.changeTheme()
     this.elevations = []
     this.elevationSelected = undefined
     this.materials = []
     this.conversion = new ConverterClass()
     this.commonAscencionInfo = await this.characterService.getCommonAscension()
-    console.log(this.commonAscencionInfo)
     this.getElevation()
+  }
 
+  async changeTheme(){
+    this.renderer.removeClass(document.body, this.element)
+    this.element = await this.characterService.getCharacterElement(this.character)
+    this.element = this.element.toLowerCase()
+    this.renderer.addClass(document.body, this.element)
   }
 
 

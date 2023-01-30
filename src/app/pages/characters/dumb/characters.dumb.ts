@@ -25,6 +25,7 @@ export class CharactersDumb implements OnInit {
   @Input() converter: ConverterClass = new ConverterClass()
   @Input() portrait: any
 
+  @Input() theme!: string;
 
   @Output() choicedRank: EventEmitter<string> = new EventEmitter<string>()
 
@@ -36,7 +37,6 @@ export class CharactersDumb implements OnInit {
 
   onChangeMesCouilles(){
 
-    this.renderer.addClass(document.body, "hydro")
   }
   ngOnInit(): void {
     console.log(this.portrait)

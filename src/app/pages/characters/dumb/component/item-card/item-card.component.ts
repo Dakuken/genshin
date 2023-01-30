@@ -13,6 +13,8 @@ export class ItemCardComponent implements OnInit {
   @Input() isLastConverter = false
   @Input() isConverter = false
   @Output() qteUser = new EventEmitter<string>()
+
+  @Input() theme!: string;
   constructor() {
   }
 

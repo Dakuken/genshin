@@ -11,6 +11,7 @@ export class ConverterComponent implements OnInit {
   @Input() converter: ConverterClass = new ConverterClass()
   @Input() showCharacter: boolean = false
   @Input() showAscencion: boolean = false
+  @Input() theme!: string
 
 
   constructor() {
