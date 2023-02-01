@@ -32,6 +32,7 @@ export class CharactersDumb implements OnInit {
   showAscension = false
   showCharacter = false
 
+  mobile = false
   constructor(private renderer: Renderer2) {
   }
 
@@ -39,7 +40,9 @@ export class CharactersDumb implements OnInit {
 
   }
   ngOnInit(): void {
-    console.log(this.portrait)
+    if (window.screen.width < 768) { // 768px portrait
+      this.mobile = true;
+    }
   }
 
   onChoicedRank(newChoicedRank: string) {

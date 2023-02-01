@@ -1,4 +1,4 @@
-<div id="searchBar" (mouseenter)="onFocus()" (mouseleave)="onBlur()" class="w-3/4 sm:w-1/4 z-50 myShadow">
+<div id="searchBar" (mouseenter)="onFocus()" (mouseleave)="onBlur()" class="w-3/4 md:w-1/4 z-50 myShadow">
     <input type="text" nbInput fullWidth fieldSize="medium" #searchBox (focus)="onFocus('input')" (blur)="onBlur('input')" (keyup)="search(searchBox.value)" placeholder="Search characters"  >
     <div id="laliste">
         <nb-list *ngIf="charachters.length !== 0 && (searchFocus || searchFocusInput) ">

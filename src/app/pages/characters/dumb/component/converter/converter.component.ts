@@ -13,6 +13,8 @@ export class ConverterComponent implements OnInit {
   @Input() showAscencion: boolean = false
   @Input() theme!: string
 
+  tab = [1,2,3,4]
+
 
   constructor() {
   }
