@@ -1,6 +1,6 @@
 <!--<h1 class="mb-2 text-xl">{{character | titlecase}}</h1>-->
 <div class="flex flex-row justify-between">
-  <div class="2xl:w-1/2 w-3/4">
+  <div class="g w-3/4">
     <div class="flex flex-row items-center mb-2" data-value="-4">
       <app-rank-selector-component  (choicedRank)="onChoicedRank($event)" [elevationRanks]="elevationRanks" class="myShadow "></app-rank-selector-component>
       <p *ngIf="elevation" class="mx-2 text-lg"> Level : {{elevation?.lvl ? elevation?.lvl : "lvl"}}</p>
