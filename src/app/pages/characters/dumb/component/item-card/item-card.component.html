@@ -3,7 +3,7 @@
 
     <img *ngIf="material.url" [alt]="'image de l`item : ' + material.name " [src]="material.url" class="h-1/2 select-none"/>
     <app-loader *ngIf="!material.url"></app-loader>
-    <h2 class="xl:text-base text-sm text-center h-12">{{material.name | titlecase}}</h2>
+    <h2 class="xl:text-base text-sm text-center h-16">{{material.name | titlecase}}</h2>
 
     <div *ngIf="!isConverter" class="flex justify-center items-center userInput">
       <input #qte (change)="onChangeQteUser(qte.value)" (keyup)="onChangeQteUser(qte.value)" class="qteUser " nbInput placeholder="0" type="number" value="">

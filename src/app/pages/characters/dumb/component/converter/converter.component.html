@@ -6,16 +6,16 @@
   <!--    </div>-->
   <!--  </div>-->
 
-  <div *ngIf="showCharacter && converter.mat1.length !== 0" class="flex flex-row mt-4 overflow-x-scroll" style=" min-height: 220px; max-height: 287px; height: 33vw;">
+  <div *ngIf="showCharacter && converter.mat1.length !== 0" class="flex flex-row overflow-x-auto" style=" min-height: 220px; max-height: 310px; height: 45vw;">
     <div *ngFor="let item of tab; let i = index" class="flex mr-4 flex-1" style="min-width: 100px;  max-width: 280px;">
-      <app-item-card (qteUser)="onChangeQteUser($event, i, true)" *ngIf="converter.mat1[i]" [isConverter]="true" [isLastConverter]="i === converter.mat1.length-1" [material]="converter.mat1[i]" [theme]="theme" class="w-full" style="height: 30vw; max-height: 270px; min-height: 200px"></app-item-card>
+      <app-item-card (qteUser)="onChangeQteUser($event, i, true)" *ngIf="converter.mat1[i]" [isConverter]="true" [isLastConverter]="i === converter.mat1.length-1" [material]="converter.mat1[i]" [theme]="theme" class="w-full" style="height: 42vw; max-height: 290px; min-height: 200px"></app-item-card>
       <div *ngIf="!converter.mat1[i]"></div>
     </div>
   </div>
 
-  <div *ngIf="showAscencion && converter.mat2.length !== 0" class="flex flex-row mt-4 overflow-x-scroll" style=" min-height: 220px; max-height: 287px; height: 33vw;">
+  <div *ngIf="showAscencion && converter.mat2.length !== 0" class="flex flex-row overflow-x-auto" style="  min-height: 220px; max-height: 310px; height: 45vw;">
     <div *ngFor="let item of tab; let i = index" class="flex mr-4 flex-1" style=" min-width: 100px;  max-width: 280px;">
-      <app-item-card (qteUser)="onChangeQteUser($event,i, false)" *ngIf="converter.mat2[i]" [isConverter]="true" [isLastConverter]="i === converter.mat2.length-1" [material]="converter.mat2[i]" [theme]="theme" class="w-full" style="height: 30vw; max-height: 270px; min-height: 200px"></app-item-card>
+      <app-item-card (qteUser)="onChangeQteUser($event,i, false)" *ngIf="converter.mat2[i]" [isConverter]="true" [isLastConverter]="i === converter.mat2.length-1" [material]="converter.mat2[i]" [theme]="theme" class="w-full" style="height: 42vw; max-height: 290px; min-height: 200px"></app-item-card>
       <div *ngIf="!converter.mat2[i]"></div>
     </div>
   </div>
