@@ -10,7 +10,6 @@ import {ConverterClass} from "../../../model/Converter.class";
 import Ascencion from "../../../model/Ascencion/Common/CommonAscencion";
 import CharacterAscension from "../../../model/Ascencion/Characters/CharacterAscension";
 import {MatClass} from "../../../model/Mat.class";
-import {getLocaleFirstDayOfWeek} from "@angular/common";
 
 @Component({
   selector: 'app-characters-smart',
@@ -46,14 +45,16 @@ export class CharactersComponentSmart implements OnInit, OnDestroy {
 
   portrait: any;
 
-  test : any
+  test: any
+
   constructor(private characterService: CharactersService, private itemsService: ItemsService, private router: Router, private route: ActivatedRoute, private sanitizer: DomSanitizer, private renderer: Renderer2) {
-    this.test =this.router.events.subscribe(ev => {
-      if (ev instanceof NavigationEnd && ev.url && ev.url.split('/')[1] === "characters" ) {
+    this.test = this.router.events.subscribe(async (ev) => {
+      if (ev instanceof NavigationEnd && ev.url && ev.url.split('/')[1] === "characters") {
         this.renderer.removeClass(document.body, this.element)
         this.character = <string>this.route.snapshot.paramMap.get('id')
-        this.reset()
-        this.getPortrait()
+        await this.reset()
+        await this.getPortrait()
+
       }
     })
     this.itemsService.getImagePath().subscribe((data: imageRef) => {
@@ -76,11 +77,14 @@ export class CharactersComponentSmart implements OnInit, OnDestroy {
     this.characterService.GetElevation(<string>this.character.toLowerCase()).subscribe((data: { items: any }) => {
       this.elevations = data.items
       this.elevationRanks = this.elevations.map(elevation => elevation.rank)
+      this.onChoicedRank("1")
     })
   }
 
   onChoicedRank(newChoicedRank: string) {
+  if(!this.elevations[Number(newChoicedRank) - 1]){return}
     if (newChoicedRank !== '-1') {
+
       this.elevationSelected = this.elevations[Number(newChoicedRank) - 1]
       this.materials = [
         this.elevationSelected.mat1,
@@ -184,12 +188,14 @@ export class CharactersComponentSmart implements OnInit, OnDestroy {
   // Reset se fait la premiere fois tout seul donc pas besoin dans le ngOnInit, vu qu'il est dans le contructor ducoup
   async reset() {
     await this.changeTheme()
+    this.portrait = ""
     this.elevations = []
     this.elevationSelected = undefined
     this.materials = []
     this.conversion = new ConverterClass()
     this.commonAscencionInfo = await this.characterService.getCommonAscension()
-    this.getElevation()
+    await this.getElevation()
+
   }
 
   async changeTheme() {
@@ -200,7 +206,7 @@ export class CharactersComponentSmart implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-   this.test.unsubscribe()
+    this.test.unsubscribe()
     this.renderer.removeClass(document.body, this.element)
 
   }

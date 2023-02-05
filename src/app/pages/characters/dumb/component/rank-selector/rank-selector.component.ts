@@ -16,7 +16,7 @@ export class RankSelectorComponent implements OnInit {
   constructor(private router: Router) {
     this.router.events.subscribe(ev => {
       if (ev instanceof NavigationEnd && ev.url) {
-        this.wichRank("-1")
+        this.wichRank("1")
       }
     })
   }

@@ -23,7 +23,8 @@
   </div>
 
   <div *ngIf="!mobile" class="w-1/4 flex 2xl:justify-center  justify-end  items-start">
-    <img [src]="portrait" alt="image de {{character}}" class=" myImage2 w-full aspect-auto rounded-md">
+    <img *ngIf="portrait" [src]="portrait" alt="image de {{character}}" class=" myImage2 w-full aspect-auto rounded-md">
+    <app-loader *ngIf="!portrait"></app-loader>
   </div>
 
 </div>

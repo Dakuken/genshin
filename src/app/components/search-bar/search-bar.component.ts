@@ -9,7 +9,6 @@ import { CharactersService } from '../../service/characters.service';
 })
 
 export class SearchBarComponent implements OnInit {
-  @ViewChild('searchBox') searchElement?: ElementRef;
   searchFocus = false;
   searchFocusInput = false
 
@@ -89,10 +88,9 @@ export class SearchBarComponent implements OnInit {
   goToDetail(str: string) {
 
     const link = ['/characters', str]
-    this.router.navigate(link)
     this.searchFocus = false
     this.searchFocusInput = false;
-    (<ElementRef>this.searchElement).nativeElement.value = ''
-
+    (<HTMLInputElement>document.querySelector("#searchBarInput")).value = ''
+    this.router.navigate(link)
   }
 }
