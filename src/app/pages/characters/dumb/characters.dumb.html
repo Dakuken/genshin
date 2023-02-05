@@ -13,7 +13,7 @@
       </div>
     </div>
 
-    <div *ngIf="elevation" class="flex flex-row mt-8 overflow-x-auto" style=" min-height: 220px; max-height: 310px; height: 45vw;">
+    <div *ngIf="elevation" class="flex flex-row mt-8 overflow-x-auto px-5 py-4" style=" min-height: 220px; max-height: 310px; height: 45vw;">
       <div *ngFor="let item of materials; let i = index" class="mr-4 w-1/4 flex" style="min-width: 100px;  max-width: 280px;">
         <app-item-card (click)="onClickConverter(i)" [material]="item" [ngClass]="hasConverter(i)" [theme]="theme" class="w-full" style="height: 42vw; max-height: 250px; min-height: 200px"></app-item-card>
       </div>

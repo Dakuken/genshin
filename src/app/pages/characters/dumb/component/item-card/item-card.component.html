@@ -1,5 +1,5 @@
 <nb-card *ngIf="material.name !== 'none'" [class]="'myShadow w-full h-30 ' + theme" style="height: 100%;">
-  <nb-card-body class="flex flex-col justify-center items-center md:p-2 p-1">
+  <nb-card-body class="flex flex-col justify-center items-center md:p-2 p-1 overflow-hidden">
 
     <img *ngIf="material.url" [alt]="'image de l`item : ' + material.name " [src]="material.url" class="h-1/2 select-none"/>
     <app-loader *ngIf="!material.url"></app-loader>
