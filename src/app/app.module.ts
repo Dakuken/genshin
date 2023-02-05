@@ -13,6 +13,7 @@ import {SearchBarModule} from './components/search-bar/search-bar.module';
 import {FooterComponent} from './components/footer/footer.component';
 import {CharactersModule} from "./pages/characters/characters.module";
 import {ItemsService} from "./service/items.service";
+import {HomeModule} from "./pages/home/home.module";
 
 
 @NgModule({
@@ -28,6 +29,7 @@ import {ItemsService} from "./service/items.service";
     HttpClientModule,
     SearchBarModule,
     CharactersModule,
+    HomeModule,
 
 
     NbThemeModule.forRoot({name: 'cosmic'}),

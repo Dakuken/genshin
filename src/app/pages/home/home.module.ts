@@ -2,15 +2,16 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HomeComponent } from './home.component';
 import { SearchBarModule } from '../../components/search-bar/search-bar.module';
-import { DetailCharactersModule } from '../detail-characters/detail-characters.module';
+import {CharactersCardComponent} from "./components/characters-card/characters-card.component";
+import {NbCardModule} from "@nebular/theme";
 
 
 @NgModule({
-  declarations: [HomeComponent],
+  declarations: [HomeComponent,CharactersCardComponent],
   imports: [
     CommonModule,
     SearchBarModule,
-    DetailCharactersModule
+    NbCardModule,
   ]
 })
 export class HomeModule { }

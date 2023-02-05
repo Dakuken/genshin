@@ -48,6 +48,9 @@ export class ItemsService {
     return imagePlace
   }
 
+  getElementsIcon(name: string) {
+    return this.http.get(`${endpoint}elements/${name}/icon-trans`, {responseType: 'blob'})
+  }
   formatItemsName(name: string): string {
     const regEspace = new RegExp(' ', 'gi')
     const regPostrophe = new RegExp("'", 'gi')

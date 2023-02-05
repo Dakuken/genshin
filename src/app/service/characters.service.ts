@@ -23,8 +23,12 @@ export class CharactersService {
 
 
   // GET
-  GetCharacList(): Observable<any> {
+  getCharacList(): Observable<any> {
     return this.http.get(endpoint + `characters`)
+  }
+
+  getCharacInfoHome(): Observable<any> {
+    return this.http.get(endpoint + `info`)
   }
 
   GetOneCarac(str: string): Observable<any> {
@@ -63,17 +67,26 @@ export class CharactersService {
     return this.http.get<any[]>(`${endpoint}characters/?name=${term}`)
   }
 
-  getPortrait(name: string) {
+  getCard(name: string) {
     return this.http.get(`${endpoint}characters/${name}/card`, {responseType: 'blob'})
   }
 
-  async getCharacterElement(name: string) : Promise<string>{
+  getPortrait(name: string) {
+    return this.http.get(`${endpoint}characters/${name}/icon-big`, {responseType: 'blob'})
+  }
+
+  async getCharacterElement(name: string): Promise<string> {
     return new Promise((res) => {
       this.http.get(`${endpoint}characters/${name}`).subscribe((data: any) => {
         console.log(data)
-        res(data.vision  as string)
+        res(data.vision as string)
       })
     })
+  }
+
+  getAllCharacWithElement()  {
+    return this.http.get(endpoint + `nations/characterinfo`)
+
   }
 
 

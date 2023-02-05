@@ -1,4 +1,4 @@
-import {Component, OnInit, Renderer2} from '@angular/core';
+import {Component, OnDestroy, OnInit, Renderer2} from '@angular/core';
 import {ActivatedRoute, NavigationEnd, Router} from "@angular/router";
 import {Elevation} from "../../../interface/elevation.interface";
 import {CharactersService} from "../../../service/characters.service";
@@ -10,6 +10,7 @@ import {ConverterClass} from "../../../model/Converter.class";
 import Ascencion from "../../../model/Ascencion/Common/CommonAscencion";
 import CharacterAscension from "../../../model/Ascencion/Characters/CharacterAscension";
 import {MatClass} from "../../../model/Mat.class";
+import {getLocaleFirstDayOfWeek} from "@angular/common";
 
 @Component({
   selector: 'app-characters-smart',
@@ -30,7 +31,7 @@ import {MatClass} from "../../../model/Mat.class";
     <!--      <button nbButton (click)="searchImage()">Pouet</button>-->
   `
 })
-export class CharactersComponentSmart implements OnInit {
+export class CharactersComponentSmart implements OnInit, OnDestroy {
 
   character: string = ""
   elevations: Elevation[] = []
@@ -45,12 +46,13 @@ export class CharactersComponentSmart implements OnInit {
 
   portrait: any;
 
-  constructor(private characterService: CharactersService, private itemsService: ItemsService, private router: Router, private route: ActivatedRoute, private sanitizer: DomSanitizer, private renderer : Renderer2) {
-    this.router.events.subscribe(ev => {
-      if (ev instanceof NavigationEnd && ev.url) {
+  test : any
+  constructor(private characterService: CharactersService, private itemsService: ItemsService, private router: Router, private route: ActivatedRoute, private sanitizer: DomSanitizer, private renderer: Renderer2) {
+    this.test =this.router.events.subscribe(ev => {
+      if (ev instanceof NavigationEnd && ev.url && ev.url.split('/')[1] === "characters" ) {
+        this.renderer.removeClass(document.body, this.element)
         this.character = <string>this.route.snapshot.paramMap.get('id')
         this.reset()
-        console.log(this.character)
         this.getPortrait()
       }
     })
@@ -61,7 +63,7 @@ export class CharactersComponentSmart implements OnInit {
   }
 
   async getPortrait() {
-    this.characterService.getPortrait(this.character).subscribe(data => {
+    this.characterService.getCard(this.character).subscribe(data => {
       let unsafeUrl = window.URL.createObjectURL(data)
       this.portrait = this.sanitizer.bypassSecurityTrustUrl(unsafeUrl);
     })
@@ -190,11 +192,17 @@ export class CharactersComponentSmart implements OnInit {
     this.getElevation()
   }
 
-  async changeTheme(){
+  async changeTheme() {
     this.renderer.removeClass(document.body, this.element)
     this.element = await this.characterService.getCharacterElement(this.character)
     this.element = this.element.toLowerCase()
     this.renderer.addClass(document.body, this.element)
+  }
+
+  ngOnDestroy() {
+   this.test.unsubscribe()
+    this.renderer.removeClass(document.body, this.element)
+
   }
 
 

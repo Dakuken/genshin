@@ -50,7 +50,7 @@ export class SearchBarComponent implements OnInit {
   }
 
   getAllCarac() {
-    return this.charac.GetCharacList().subscribe((data: {}) => {
+    return this.charac.getCharacList().subscribe((data: {}) => {
       this.allCharac = <string[]>data
       this.charachters = this.allCharac
     })

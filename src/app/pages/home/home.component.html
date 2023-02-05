@@ -1,13 +1,26 @@
-<div class="mt-8 h-full w-full" (mousemove)="backdefou($event)" id="toi">
+<div class="mt-24 w-full" id="toi">
 
-  <div class="" id="MecDuMoment">
-
+  <div id="MecDuMoment">
+    <h1 class="text-2xl font-bold mx-2 w-60 drop-shadow-lg">New Characters</h1>
+    <div class="flex flex-row flex-wrap">
+      <div *ngFor="let item of newPerso; let i = index" class="m-2 w-60 h-60">
+        <characters-card-component (click)="goTo(item)" [perso]="item" [theme]="type[i]" class="cursor-pointer"></characters-card-component>
+      </div>
+    </div>
   </div>
 
-  <div class="" id="LesAutres">
-
+  <div class="mt-4" id="LesAutres">
+    <div *ngFor="let element of elements; let i = index" class="mb-4">
+      <div class=" flex flex-row justify-start items-center">
+        <img class="h-12 w-12"  [alt]="'image of element '+ element" [src]="element.image">
+        <h3 class="text-xl font-bold">{{element.element | titlecase}}</h3>
+      </div>
+      <div class="lesPersos flex flex-row flex-wrap">
+        <div *ngFor="let item of charactersListSorted[i]" class="m-2 w-60 h-60">
+          <characters-card-component (click)="goTo(item.characters)" [perso]="item.characters" [theme]="item.element | lowercase" class="cursor-pointer"></characters-card-component>
+        </div>
+      </div>
+    </div>
   </div>
 
 </div>
-
-<div id="mouse"></div>
