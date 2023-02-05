@@ -6,7 +6,7 @@
       <div class="flex sm:flex-row flex-col">
 
         <p *ngIf="elevation" class="mx-2 text-md sm:text-lg"> Level : {{elevation?.lvl ? elevation?.lvl : "lvl"}}</p>
-        <div *ngIf="elevation" class="flex flex-row items-center">
+        <div *ngIf="elevation" class="flex flex-row items-center mx-1">
           <img alt="mora = money in genshin" class="w-8" src="./assets/mora.webp">
           <p class="mx-1 text-md sm:text-lg">{{elevation?.cost ? elevation?.cost : "cost"}}</p>
         </div>
