@@ -68,11 +68,11 @@ export class CharactersService {
   }
 
   getCard(name: string) {
-    return this.http.get(`${endpoint}characters/${name}/card`, {responseType: 'blob'})
+    return this.http.get(`${endpoint}characters/${name.toLowerCase()}/card`, {responseType: 'blob'})
   }
 
   getPortrait(name: string) {
-    return this.http.get(`${endpoint}characters/${name}/icon-big`, {responseType: 'blob'})
+    return this.http.get(`${endpoint}characters/${name.toLowerCase()}/icon-big`, {responseType: 'blob'})
   }
 
   async getCharacterElement(name: string): Promise<string> {

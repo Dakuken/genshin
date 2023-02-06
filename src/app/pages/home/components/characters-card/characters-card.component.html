@@ -1,6 +1,6 @@
 <nb-card [class]="'md:w-60 md:h-60  sm:w-40 sm:h-40 h-36 w-36 ' + theme" >
-  <nb-card-body class="flex flex-col justify-center overflow-hidden">
-    <img [src]="url" [alt]="'image portrait de '+perso " class="sm:h-44 h-20 object-scale-down">
+  <nb-card-body class="flex flex-col justify-center  items-center overflow-hidden"><app-loader *ngIf="!url"></app-loader>
+    <img *ngIf="url" [src]="url" [alt]="'image portrait de '+perso " class="sm:h-44 h-20 object-scale-down">
     <p class="text-center  font-bold mt-1">{{perso | titlecase}}</p>
   </nb-card-body>
 </nb-card>
